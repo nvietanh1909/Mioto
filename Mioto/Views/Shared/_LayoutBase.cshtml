@@ -1,0 +1,39 @@
+﻿﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/base.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Header navbar-->
+    <section class="header scroll-top">
+        <div class="m-container">
+            <!--Logo-->
+            <a href="@Url.Action("Home", "Home")" class="logo-container">
+                <div class="full-logo">
+                    <img src="~/Image/logo-mioto.png" alt="Mioto" />
+                </div>
+                <div class="short-logo">
+                    <img src="~/Image/short-logo-mioto.png" loading="lazy" />
+                </div>
+            </a>
+            <!--Menu-top-->
+            <div class="menu-container">
+                <a href="@Url.Action("About", "Home")">Về Mioto</a>
+                <a href="@Url.Action("IntroOwnerCar", "Home")">Trở thành chủ xe</a>
+                <div class="vertical-line"></div>
+                <div></div>
+                <a href="#" class="btn btn--s sign-in">Đăng ký</a>
+                <a href="@Url.Action("Login", "Account")" class="btn btn--s">Đăng nhập</a>
+            </div>
+        </div>
+    </section>
+    <!--Body-->
+    <div class="body">
+        @RenderBody()
+    </div>
+</body>
+</html>
