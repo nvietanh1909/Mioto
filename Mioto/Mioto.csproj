@@ -203,6 +203,7 @@
     <Content Include="Views\DetailAccount\ChangePassword.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Car\InfoCar.cshtml" />
+    <Content Include="Views\Home\HPhuoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

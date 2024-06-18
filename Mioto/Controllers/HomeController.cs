@@ -24,6 +24,11 @@ namespace Mioto.Controllers
         public ActionResult RegisterOwner()
         {
             return View();
+        } 
+        public ActionResult HPhuoc()
+        {
+            return View();
         }
+
     }
 }
