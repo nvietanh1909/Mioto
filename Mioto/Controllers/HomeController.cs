@@ -29,6 +29,10 @@ namespace Mioto.Controllers
         {
             return View();
         }
+        public ActionResult Viet()
+        {
+            return View();
+        }
 
     }
 }
