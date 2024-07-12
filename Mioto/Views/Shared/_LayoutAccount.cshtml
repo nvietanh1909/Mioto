@@ -24,10 +24,12 @@
             <div class="menu-container">
                 <a href="#">Về Mioto</a>
                 <a href="#">Trở thành chủ xe</a>
-                <div class="vertical-line"></div>
                 <div></div>
-                <a href="#" class="btn btn--s sign-in">Đăng ký</a>
-                <a href="@Url.Action("InfoAccount", "DetailAccount")" class="btn btn--s">Đăng nhập</a>
+                @if (Session["KhachHang"] == null)
+                {
+                    <a href="@Url.Action("Register", "Account")" class="btn btn--s sign-in">Đăng ký</a>
+                    <a href="@Url.Action("Login", "Account")" class="btn btn--s">Đăng nhập</a>
+                }
             </div>
         </div>
     </section>

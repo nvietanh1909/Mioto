@@ -29,7 +29,6 @@ namespace Mioto.Controllers
         {
             return View();
         }
-
         public ActionResult LongTermOrder()
         {
             return View();

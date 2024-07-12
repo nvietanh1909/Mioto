@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Mioto.Models;
 
 namespace Mioto.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Home()
         {
             return View();
@@ -25,14 +27,7 @@ namespace Mioto.Controllers
         {
             return View();
         } 
-        public ActionResult HPhuoc()
-        {
-            return View();
-        }
-        public ActionResult Viet()
-        {
-            return View();
-        }
+        
 
     }
 }

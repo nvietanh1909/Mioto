@@ -1,6 +1,6 @@
-﻿﻿
-<!DOCTYPE html>
+﻿@{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -24,10 +24,21 @@
             <div class="menu-container">
                 <a href="@Url.Action("About", "Home")">Về Mioto</a>
                 <a href="@Url.Action("IntroOwnerCar", "Home")">Trở thành chủ xe</a>
-                <div class="vertical-line"></div>
                 <div></div>
-                <a href="#" class="btn btn--s sign-in">Đăng ký</a>
-                <a href="@Url.Action("Login", "Account")" class="btn btn--s">Đăng nhập</a>
+                @if (Session["KhachHang"] == null)
+                {
+                    <a href="@Url.Action("Register", "Account")" class="btn btn--s sign-in">Đăng ký</a>
+                    <a href="@Url.Action("Login", "Account")" class="btn btn--s">Đăng nhập</a>
+                }
+                else
+                {
+                    if (Session["KhachHang"] != null)
+                    {
+                        <a href="@Url.Action("InfoAccount", "DetailAccount")">
+                            <span>Xin chào: <b>@guest.Ten</b></span>
+                        </a>
+                    }
+                }
             </div>
         </div>
     </section>

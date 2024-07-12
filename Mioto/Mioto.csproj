@@ -45,13 +45,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,6 +149,56 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChiTietDonThueXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChuXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DanhGia.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Mioto.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Mioto.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Mioto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Mioto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DoanhThuChuXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DoanhThuCongTy.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DonThueXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KhachHang.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaGiamGia.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MD_KhachHang.cs" />
+    <Compile Include="Models\MD_Login.cs" />
+    <Compile Include="Models\NhanVien.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThanhToan.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Xe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -160,12 +234,29 @@
     <Content Include="Image\SDFAW8Q.jpg" />
     <Content Include="Image\short-logo-mioto.png" />
     <Content Include="Image\yG29m9biewkfwfem6u8QGA.jpg" />
+    <Content Include="Models\DB_Mioto.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+      <LastGenOutput>DB_Mioto.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DB_Mioto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+      <LastGenOutput>DB_Mioto.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\DB_Mioto.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DB_Mioto.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DB_Mioto.edmx.diagram">
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -203,10 +294,10 @@
     <Content Include="Views\DetailAccount\ChangePassword.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Car\InfoCar.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -234,6 +325,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

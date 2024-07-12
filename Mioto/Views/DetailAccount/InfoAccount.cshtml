@@ -3,6 +3,7 @@
     ViewBag.Title = "InfoAccount";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
+@{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
 
 <!--User profile-->
 <div class="content-item user-profile">
@@ -37,26 +38,29 @@
                 </div>
                 <div class="info-box__item">
                     <p>Giới tính </p>
-                    <p class="main">Nam</p>
+                    <p class="main">@guest.GioiTinh</p>
                 </div>
             </div>
             <div class="info-desc">
                 <div class="info-desc__item">
-                    <div class="title-item">Số điện thoại</div>
-                    <div class="name">
-                        Thêm số điện thoại
-                        <div class="wrap-svg">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
+                    @if (guest.SDT == null)
+                    {
+                        <div class="title-item">Số điện thoại</div>
+                        <div class="name">
+                            Thêm số điện thoại
+                            <div class="wrap-svg">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
                 <div class="info-desc__item">
                     <div class="title-item">Email</div>
                     <div class="name">
-                        nvietanh.190904@gmail.com
+                        @guest.Email
                         <div class="wrap-svg">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>

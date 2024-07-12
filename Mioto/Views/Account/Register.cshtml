@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+@model Mioto.Models.MD_KhachHang
+
+<div class="modal-content" style="width: 50%;">
+    <div class="modal-header">
+        <h5>Đăng ký</h5>
+    </div>
+    <div class="modal-body">
+        <div class="modal-input-body modal-login-body">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Email</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Nhập địa chỉ email" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Họ và tên</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.Ten, new { @class = "form-control", placeholder = "Nhập họ và tên" })
+                            @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Giới tính</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.DropDownListFor(model => model.GioiTinh, (IEnumerable<SelectListItem>)ViewBag.GioiTinh, "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Mật khẩu</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Xác thực lại mật khẩu</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.PasswordFor(model => model.ConfirmMatKhau, new { @class = "form-control", placeholder = "Nhập lại mật khẩu" })
+                            @Html.ValidationMessageFor(model => model.ConfirmMatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrap-btn btn-register">
+                    <button type="submit" class="btn btn--m btn-primary">Đăng ký</button>
+                </div>
+
+                <div style="color: #f02849; font-family: SFProText-Regular, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; margin-top: 8px; text-align: center;">
+                    @TempData["Message"]
+                </div>
+            }
+        </div>
+    </div>
+</div>
