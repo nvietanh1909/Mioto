@@ -18,7 +18,6 @@ namespace Mioto.Models
         public NhanVien()
         {
             this.DoanhThuCongTy = new HashSet<DoanhThuCongTy>();
-            this.DonThueXe = new HashSet<DonThueXe>();
         }
     
         public int IDNV { get; set; }
@@ -34,7 +33,5 @@ namespace Mioto.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoanhThuCongTy> DoanhThuCongTy { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DonThueXe> DonThueXe { get; set; }
     }
 }

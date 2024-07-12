@@ -29,7 +29,7 @@ namespace Mioto.Models
         public string TinhNang { get; set; }
         public Nullable<decimal> GiaThue { get; set; }
         public string TrangThai { get; set; }
-        public Nullable<int> IDCX { get; set; }
+        public int IDCX { get; set; }
         public byte[] HinhAnh { get; set; }
         public string KhuVuc { get; set; }
     

@@ -24,7 +24,6 @@ namespace Mioto.Models
         public int IDDT { get; set; }
         public Nullable<int> IDKH { get; set; }
         public string BienSoXe { get; set; }
-        public Nullable<int> IDNVXacThuc { get; set; }
         public Nullable<System.DateTime> NgayThue { get; set; }
         public Nullable<System.DateTime> NgayTra { get; set; }
         public Nullable<System.DateTime> BDT { get; set; }
@@ -36,7 +35,6 @@ namespace Mioto.Models
         public virtual Xe Xe { get; set; }
         public virtual KhachHang KhachHang { get; set; }
         public virtual MaGiamGia MaGiamGia { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ThanhToan> ThanhToan { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mioto.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,8 @@ namespace Mioto.Controllers
 {
     public class DetailAccountController : Controller
     {
+        DB_MiotoEntities db = new DB_MiotoEntities();
+        public bool IsLoggedIn { get => Session["KhachHang"] != null; }
         // GET: DetailAccount
         public ActionResult InfoAccount()
         {
@@ -23,7 +26,14 @@ namespace Mioto.Controllers
         }
         public ActionResult MyCar()
         {
-            return View();
+            if (!IsLoggedIn)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var chuXe = Session["ChuXe"] as ChuXe;
+            var cars = db.Xe.Where(x => x.IDCX == chuXe.IDCX).ToList();
+            var car = cars.FirstOrDefault();
+            return View(car);
         }
         public ActionResult MyTrip()
         {

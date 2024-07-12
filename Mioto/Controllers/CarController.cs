@@ -41,7 +41,7 @@ namespace Mioto.Controllers
         // POST: Car/RegisterOwner
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RegisterOwner(MD_Xe xe)
+        public ActionResult RegisterOwner(MD_ChuXe cx)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Home");
@@ -50,35 +50,49 @@ namespace Mioto.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (db.Xe.Any(x => x.BienSoXe == xe.BienSoXe))
+                    var guest = Session["KhachHang"] as KhachHang;
+                    if (db.Xe.Any(x => x.BienSoXe == cx.BienSoXe))
                     {
                         ModelState.AddModelError("BienSoXe", "Biển số xe đã đăng ký trên hệ thống");
-                        return View(xe);
+                        return View(cx);
                     }
+                    var newCX = new ChuXe
+                    {
+                        IDCX = guest.IDKH,
+                        Ten = guest.Ten,
+                        Email = guest.Email,
+                        SDT = guest.SDT,
+                        DiaChi = guest.DiaChi,
+                        MatKhau = guest.MatKhau,
+                        GioiTinh = guest.GioiTinh,
+                        NgaySinh = guest.NgaySinh,
+                        TrangThai = "Hoạt động"
+                    };
                     var newCar = new Xe
                     {
-                        BienSoXe = xe.BienSoXe,
-                        HangXe = xe.HangXe,
-                        MauXe = xe.MauXe,
-                        SoGhe = xe.SoGhe,
-                        TinhNang = xe.TinhNang,
-                        GiaThue = xe.GiaThue,
-                        NamSanXuat = xe.NamSanXuat,
-                        KhuVuc = xe.KhuVuc,
+                        IDCX = guest.IDKH,
+                        BienSoXe = cx.BienSoXe,
+                        HangXe = cx.HangXe,
+                        MauXe = cx.MauXe,
+                        SoGhe = cx.SoGhe,
+                        TinhNang = cx.TinhNang,
+                        GiaThue = cx.GiaThue,
+                        NamSanXuat = cx.NamSanXuat,
+                        KhuVuc = cx.KhuVuc,
                     };
-
+                    db.ChuXe.Add(newCX);
                     db.Xe.Add(newCar);
                     db.SaveChanges();
                     TempData["Message"] = "Đăng ký thành công!";
                     return RedirectToAction("Home", "Home");
                 }
-                return View(xe);
+                return View(cx);
             }
             catch
             {
                 ViewBag.ErrorRegister = "Đăng ký không thành công. Vui lòng thử lại.";
                 ViewBag.TinhThanhPho = tinhThanhPho;
-                return View(xe);
+                return View(cx);
             }
         }
     }

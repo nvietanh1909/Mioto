@@ -69,7 +69,6 @@
           <Property Name="IDDT" Type="int" Nullable="false" />
           <Property Name="IDKH" Type="int" />
           <Property Name="BienSoXe" Type="varchar" MaxLength="20" />
-          <Property Name="IDNVXacThuc" Type="int" />
           <Property Name="NgayThue" Type="date" />
           <Property Name="NgayTra" Type="date" />
           <Property Name="BDT" Type="datetime" />
@@ -141,11 +140,11 @@
           <Property Name="TinhNang" Type="nvarchar(max)" />
           <Property Name="GiaThue" Type="decimal" Precision="15" Scale="2" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
-          <Property Name="IDCX" Type="int" />
+          <Property Name="IDCX" Type="int" Nullable="false" />
           <Property Name="HinhAnh" Type="varbinary(max)" />
           <Property Name="KhuVuc" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__ChiTietDon__IDDT__3D5E1FD2">
+        <Association Name="FK__ChiTietDon__IDDT__38996AB5">
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="0..1" />
           <End Role="ChiTietDonThueXe" Type="Self.ChiTietDonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -157,7 +156,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DanhGia__BienSoX__47DBAE45">
+        <Association Name="FK__DanhGia__BienSoX__4222D4EF">
           <End Role="Xe" Type="Self.Xe" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -169,7 +168,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DanhGia__IDKH__46E78A0C">
+        <Association Name="FK__DanhGia__IDKH__412EB0B6">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -181,7 +180,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DoanhThuCh__IDCX__4AB81AF0">
+        <Association Name="FK__DoanhThuCh__IDCX__44FF419A">
           <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="0..1" />
           <End Role="DoanhThuChuXe" Type="Self.DoanhThuChuXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -193,7 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DoanhThuCo__IDNV__4D94879B">
+        <Association Name="FK__DoanhThuCo__IDNV__47DBAE45">
           <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
           <End Role="DoanhThuCongTy" Type="Self.DoanhThuCongTy" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,7 +204,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__BienS__38996AB5">
+        <Association Name="FK__DonThueXe__BienS__34C8D9D1">
           <End Role="Xe" Type="Self.Xe" Multiplicity="0..1" />
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,7 +216,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__IDKH__37A5467C">
+        <Association Name="FK__DonThueXe__IDKH__33D4B598">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -229,7 +228,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__IDMGG__3A81B327">
+        <Association Name="FK__DonThueXe__IDMGG__35BCFE0A">
           <End Role="MaGiamGia" Type="Self.MaGiamGia" Multiplicity="0..1" />
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -241,19 +240,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__IDNVX__398D8EEE">
-          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
-          <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NhanVien">
-              <PropertyRef Name="IDNV" />
-            </Principal>
-            <Dependent Role="DonThueXe">
-              <PropertyRef Name="IDNVXacThuc" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ThanhToan__IDDT__412EB0B6">
+        <Association Name="FK__ThanhToan__IDDT__3B75D760">
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,7 +252,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ThanhToan__IDMGG__4222D4EF">
+        <Association Name="FK__ThanhToan__IDMGG__3C69FB99">
           <End Role="MaGiamGia" Type="Self.MaGiamGia" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -277,10 +264,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Xe__IDCX__29572725">
-          <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Xe__IDCX__276EDEB3">
+          <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="1" />
           <End Role="Xe" Type="Self.Xe" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuXe">
@@ -303,51 +288,47 @@
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Xe" EntityType="Self.Xe" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ChiTietDon__IDDT__3D5E1FD2" Association="Self.FK__ChiTietDon__IDDT__3D5E1FD2">
+          <AssociationSet Name="FK__ChiTietDon__IDDT__38996AB5" Association="Self.FK__ChiTietDon__IDDT__38996AB5">
             <End Role="DonThueXe" EntitySet="DonThueXe" />
             <End Role="ChiTietDonThueXe" EntitySet="ChiTietDonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DanhGia__BienSoX__47DBAE45" Association="Self.FK__DanhGia__BienSoX__47DBAE45">
+          <AssociationSet Name="FK__DanhGia__BienSoX__4222D4EF" Association="Self.FK__DanhGia__BienSoX__4222D4EF">
             <End Role="Xe" EntitySet="Xe" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
-          <AssociationSet Name="FK__DanhGia__IDKH__46E78A0C" Association="Self.FK__DanhGia__IDKH__46E78A0C">
+          <AssociationSet Name="FK__DanhGia__IDKH__412EB0B6" Association="Self.FK__DanhGia__IDKH__412EB0B6">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
-          <AssociationSet Name="FK__DoanhThuCh__IDCX__4AB81AF0" Association="Self.FK__DoanhThuCh__IDCX__4AB81AF0">
+          <AssociationSet Name="FK__DoanhThuCh__IDCX__44FF419A" Association="Self.FK__DoanhThuCh__IDCX__44FF419A">
             <End Role="ChuXe" EntitySet="ChuXe" />
             <End Role="DoanhThuChuXe" EntitySet="DoanhThuChuXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DoanhThuCo__IDNV__4D94879B" Association="Self.FK__DoanhThuCo__IDNV__4D94879B">
+          <AssociationSet Name="FK__DoanhThuCo__IDNV__47DBAE45" Association="Self.FK__DoanhThuCo__IDNV__47DBAE45">
             <End Role="NhanVien" EntitySet="NhanVien" />
             <End Role="DoanhThuCongTy" EntitySet="DoanhThuCongTy" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__BienS__38996AB5" Association="Self.FK__DonThueXe__BienS__38996AB5">
+          <AssociationSet Name="FK__DonThueXe__BienS__34C8D9D1" Association="Self.FK__DonThueXe__BienS__34C8D9D1">
             <End Role="Xe" EntitySet="Xe" />
             <End Role="DonThueXe" EntitySet="DonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__IDKH__37A5467C" Association="Self.FK__DonThueXe__IDKH__37A5467C">
+          <AssociationSet Name="FK__DonThueXe__IDKH__33D4B598" Association="Self.FK__DonThueXe__IDKH__33D4B598">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DonThueXe" EntitySet="DonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__IDMGG__3A81B327" Association="Self.FK__DonThueXe__IDMGG__3A81B327">
+          <AssociationSet Name="FK__DonThueXe__IDMGG__35BCFE0A" Association="Self.FK__DonThueXe__IDMGG__35BCFE0A">
             <End Role="MaGiamGia" EntitySet="MaGiamGia" />
             <End Role="DonThueXe" EntitySet="DonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__IDNVX__398D8EEE" Association="Self.FK__DonThueXe__IDNVX__398D8EEE">
-            <End Role="NhanVien" EntitySet="NhanVien" />
-            <End Role="DonThueXe" EntitySet="DonThueXe" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__IDDT__412EB0B6" Association="Self.FK__ThanhToan__IDDT__412EB0B6">
+          <AssociationSet Name="FK__ThanhToan__IDDT__3B75D760" Association="Self.FK__ThanhToan__IDDT__3B75D760">
             <End Role="DonThueXe" EntitySet="DonThueXe" />
             <End Role="ThanhToan" EntitySet="ThanhToan" />
           </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__IDMGG__4222D4EF" Association="Self.FK__ThanhToan__IDMGG__4222D4EF">
+          <AssociationSet Name="FK__ThanhToan__IDMGG__3C69FB99" Association="Self.FK__ThanhToan__IDMGG__3C69FB99">
             <End Role="MaGiamGia" EntitySet="MaGiamGia" />
             <End Role="ThanhToan" EntitySet="ThanhToan" />
           </AssociationSet>
-          <AssociationSet Name="FK__Xe__IDCX__29572725" Association="Self.FK__Xe__IDCX__29572725">
+          <AssociationSet Name="FK__Xe__IDCX__276EDEB3" Association="Self.FK__Xe__IDCX__276EDEB3">
             <End Role="ChuXe" EntitySet="ChuXe" />
             <End Role="Xe" EntitySet="Xe" />
           </AssociationSet>
@@ -364,7 +345,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="IDDT" Type="Int32" />
           <Property Name="TongTien" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__ChiTietDon__IDDT__3D5E1FD2" FromRole="ChiTietDonThueXe" ToRole="DonThueXe" />
+          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__ChiTietDon__IDDT__38996AB5" FromRole="ChiTietDonThueXe" ToRole="DonThueXe" />
         </EntityType>
         <EntityType Name="ChuXe">
           <Key>
@@ -381,8 +362,8 @@
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
           <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DoanhThuChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__4AB81AF0" FromRole="ChuXe" ToRole="DoanhThuChuXe" />
-          <NavigationProperty Name="Xe" Relationship="Self.FK__Xe__IDCX__29572725" FromRole="ChuXe" ToRole="Xe" />
+          <NavigationProperty Name="DoanhThuChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__44FF419A" FromRole="ChuXe" ToRole="DoanhThuChuXe" />
+          <NavigationProperty Name="Xe" Relationship="Self.FK__Xe__IDCX__276EDEB3" FromRole="ChuXe" ToRole="Xe" />
         </EntityType>
         <EntityType Name="DanhGia">
           <Key>
@@ -394,8 +375,8 @@
           <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SoSao" Type="Int32" />
           <Property Name="NgayDanhGia" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Xe" Relationship="Self.FK__DanhGia__BienSoX__47DBAE45" FromRole="DanhGia" ToRole="Xe" />
-          <NavigationProperty Name="KhachHang" Relationship="Self.FK__DanhGia__IDKH__46E78A0C" FromRole="DanhGia" ToRole="KhachHang" />
+          <NavigationProperty Name="Xe" Relationship="Self.FK__DanhGia__BienSoX__4222D4EF" FromRole="DanhGia" ToRole="Xe" />
+          <NavigationProperty Name="KhachHang" Relationship="Self.FK__DanhGia__IDKH__412EB0B6" FromRole="DanhGia" ToRole="KhachHang" />
         </EntityType>
         <EntityType Name="DoanhThuChuXe">
           <Key>
@@ -407,7 +388,7 @@
           <Property Name="DoanhThuTuan" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="DoanhThuThang" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="DoanhThuNam" Type="Decimal" Precision="15" Scale="2" />
-          <NavigationProperty Name="ChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__4AB81AF0" FromRole="DoanhThuChuXe" ToRole="ChuXe" />
+          <NavigationProperty Name="ChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__44FF419A" FromRole="DoanhThuChuXe" ToRole="ChuXe" />
         </EntityType>
         <EntityType Name="DoanhThuCongTy">
           <Key>
@@ -419,7 +400,7 @@
           <Property Name="DoanhThuTuan" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="DoanhThuThang" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="DoanhThuNam" Type="Decimal" Precision="15" Scale="2" />
-          <NavigationProperty Name="NhanVien" Relationship="Self.FK__DoanhThuCo__IDNV__4D94879B" FromRole="DoanhThuCongTy" ToRole="NhanVien" />
+          <NavigationProperty Name="NhanVien" Relationship="Self.FK__DoanhThuCo__IDNV__47DBAE45" FromRole="DoanhThuCongTy" ToRole="NhanVien" />
         </EntityType>
         <EntityType Name="DonThueXe">
           <Key>
@@ -428,18 +409,16 @@
           <Property Name="IDDT" Type="Int32" Nullable="false" />
           <Property Name="IDKH" Type="Int32" />
           <Property Name="BienSoXe" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IDNVXacThuc" Type="Int32" />
           <Property Name="NgayThue" Type="DateTime" Precision="0" />
           <Property Name="NgayTra" Type="DateTime" Precision="0" />
           <Property Name="BDT" Type="DateTime" Precision="3" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="IDMGG" Type="Int32" />
-          <NavigationProperty Name="ChiTietDonThueXe" Relationship="Self.FK__ChiTietDon__IDDT__3D5E1FD2" FromRole="DonThueXe" ToRole="ChiTietDonThueXe" />
-          <NavigationProperty Name="Xe" Relationship="Self.FK__DonThueXe__BienS__38996AB5" FromRole="DonThueXe" ToRole="Xe" />
-          <NavigationProperty Name="KhachHang" Relationship="Self.FK__DonThueXe__IDKH__37A5467C" FromRole="DonThueXe" ToRole="KhachHang" />
-          <NavigationProperty Name="MaGiamGia" Relationship="Self.FK__DonThueXe__IDMGG__3A81B327" FromRole="DonThueXe" ToRole="MaGiamGia" />
-          <NavigationProperty Name="NhanVien" Relationship="Self.FK__DonThueXe__IDNVX__398D8EEE" FromRole="DonThueXe" ToRole="NhanVien" />
-          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ThanhToan__IDDT__412EB0B6" FromRole="DonThueXe" ToRole="ThanhToan" />
+          <NavigationProperty Name="ChiTietDonThueXe" Relationship="Self.FK__ChiTietDon__IDDT__38996AB5" FromRole="DonThueXe" ToRole="ChiTietDonThueXe" />
+          <NavigationProperty Name="Xe" Relationship="Self.FK__DonThueXe__BienS__34C8D9D1" FromRole="DonThueXe" ToRole="Xe" />
+          <NavigationProperty Name="KhachHang" Relationship="Self.FK__DonThueXe__IDKH__33D4B598" FromRole="DonThueXe" ToRole="KhachHang" />
+          <NavigationProperty Name="MaGiamGia" Relationship="Self.FK__DonThueXe__IDMGG__35BCFE0A" FromRole="DonThueXe" ToRole="MaGiamGia" />
+          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ThanhToan__IDDT__3B75D760" FromRole="DonThueXe" ToRole="ThanhToan" />
         </EntityType>
         <EntityType Name="KhachHang">
           <Key>
@@ -455,8 +434,8 @@
           <Property Name="GioiTinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="MatKhau" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__IDKH__46E78A0C" FromRole="KhachHang" ToRole="DanhGia" />
-          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__IDKH__37A5467C" FromRole="KhachHang" ToRole="DonThueXe" />
+          <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__IDKH__412EB0B6" FromRole="KhachHang" ToRole="DanhGia" />
+          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__IDKH__33D4B598" FromRole="KhachHang" ToRole="DonThueXe" />
         </EntityType>
         <EntityType Name="MaGiamGia">
           <Key>
@@ -468,8 +447,8 @@
           <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
           <Property Name="NgayKetThuc" Type="DateTime" Precision="0" />
           <Property Name="SoLanSuDung" Type="Int32" />
-          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__IDMGG__3A81B327" FromRole="MaGiamGia" ToRole="DonThueXe" />
-          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ThanhToan__IDMGG__4222D4EF" FromRole="MaGiamGia" ToRole="ThanhToan" />
+          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__IDMGG__35BCFE0A" FromRole="MaGiamGia" ToRole="DonThueXe" />
+          <NavigationProperty Name="ThanhToan" Relationship="Self.FK__ThanhToan__IDMGG__3C69FB99" FromRole="MaGiamGia" ToRole="ThanhToan" />
         </EntityType>
         <EntityType Name="NhanVien">
           <Key>
@@ -485,8 +464,7 @@
           <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ChucVu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GioiTinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DoanhThuCongTy" Relationship="Self.FK__DoanhThuCo__IDNV__4D94879B" FromRole="NhanVien" ToRole="DoanhThuCongTy" />
-          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__IDNVX__398D8EEE" FromRole="NhanVien" ToRole="DonThueXe" />
+          <NavigationProperty Name="DoanhThuCongTy" Relationship="Self.FK__DoanhThuCo__IDNV__47DBAE45" FromRole="NhanVien" ToRole="DoanhThuCongTy" />
         </EntityType>
         <EntityType Name="ThanhToan">
           <Key>
@@ -499,8 +477,8 @@
           <Property Name="SoTien" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="IDMGG" Type="Int32" />
-          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__ThanhToan__IDDT__412EB0B6" FromRole="ThanhToan" ToRole="DonThueXe" />
-          <NavigationProperty Name="MaGiamGia" Relationship="Self.FK__ThanhToan__IDMGG__4222D4EF" FromRole="ThanhToan" ToRole="MaGiamGia" />
+          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__ThanhToan__IDDT__3B75D760" FromRole="ThanhToan" ToRole="DonThueXe" />
+          <NavigationProperty Name="MaGiamGia" Relationship="Self.FK__ThanhToan__IDMGG__3C69FB99" FromRole="ThanhToan" ToRole="MaGiamGia" />
         </EntityType>
         <EntityType Name="Xe">
           <Key>
@@ -514,14 +492,14 @@
           <Property Name="TinhNang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="GiaThue" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="IDCX" Type="Int32" />
+          <Property Name="IDCX" Type="Int32" Nullable="false" />
           <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="KhuVuc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ChuXe" Relationship="Self.FK__Xe__IDCX__29572725" FromRole="Xe" ToRole="ChuXe" />
-          <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__BienSoX__47DBAE45" FromRole="Xe" ToRole="DanhGia" />
-          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__BienS__38996AB5" FromRole="Xe" ToRole="DonThueXe" />
+          <NavigationProperty Name="ChuXe" Relationship="Self.FK__Xe__IDCX__276EDEB3" FromRole="Xe" ToRole="ChuXe" />
+          <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__BienSoX__4222D4EF" FromRole="Xe" ToRole="DanhGia" />
+          <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__BienS__34C8D9D1" FromRole="Xe" ToRole="DonThueXe" />
         </EntityType>
-        <Association Name="FK__ChiTietDon__IDDT__3D5E1FD2">
+        <Association Name="FK__ChiTietDon__IDDT__38996AB5">
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="0..1" />
           <End Role="ChiTietDonThueXe" Type="Self.ChiTietDonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -533,7 +511,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DoanhThuCh__IDCX__4AB81AF0">
+        <Association Name="FK__DoanhThuCh__IDCX__44FF419A">
           <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="0..1" />
           <End Role="DoanhThuChuXe" Type="Self.DoanhThuChuXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -545,10 +523,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Xe__IDCX__29572725">
-          <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Xe__IDCX__276EDEB3">
+          <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="1" />
           <End Role="Xe" Type="Self.Xe" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ChuXe">
@@ -559,7 +535,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DanhGia__BienSoX__47DBAE45">
+        <Association Name="FK__DanhGia__BienSoX__4222D4EF">
           <End Role="Xe" Type="Self.Xe" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -571,7 +547,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DanhGia__IDKH__46E78A0C">
+        <Association Name="FK__DanhGia__IDKH__412EB0B6">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -583,7 +559,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DoanhThuCo__IDNV__4D94879B">
+        <Association Name="FK__DoanhThuCo__IDNV__47DBAE45">
           <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
           <End Role="DoanhThuCongTy" Type="Self.DoanhThuCongTy" Multiplicity="*" />
           <ReferentialConstraint>
@@ -595,7 +571,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__BienS__38996AB5">
+        <Association Name="FK__DonThueXe__BienS__34C8D9D1">
           <End Role="Xe" Type="Self.Xe" Multiplicity="0..1" />
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -607,7 +583,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__IDKH__37A5467C">
+        <Association Name="FK__DonThueXe__IDKH__33D4B598">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -619,7 +595,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__IDMGG__3A81B327">
+        <Association Name="FK__DonThueXe__IDMGG__35BCFE0A">
           <End Role="MaGiamGia" Type="Self.MaGiamGia" Multiplicity="0..1" />
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -631,19 +607,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DonThueXe__IDNVX__398D8EEE">
-          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="0..1" />
-          <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NhanVien">
-              <PropertyRef Name="IDNV" />
-            </Principal>
-            <Dependent Role="DonThueXe">
-              <PropertyRef Name="IDNVXacThuc" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ThanhToan__IDDT__412EB0B6">
+        <Association Name="FK__ThanhToan__IDDT__3B75D760">
           <End Role="DonThueXe" Type="Self.DonThueXe" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -655,7 +619,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ThanhToan__IDMGG__4222D4EF">
+        <Association Name="FK__ThanhToan__IDMGG__3C69FB99">
           <End Role="MaGiamGia" Type="Self.MaGiamGia" Multiplicity="0..1" />
           <End Role="ThanhToan" Type="Self.ThanhToan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -679,51 +643,47 @@
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" />
           <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" />
           <EntitySet Name="Xe" EntityType="Self.Xe" />
-          <AssociationSet Name="FK__ChiTietDon__IDDT__3D5E1FD2" Association="Self.FK__ChiTietDon__IDDT__3D5E1FD2">
+          <AssociationSet Name="FK__ChiTietDon__IDDT__38996AB5" Association="Self.FK__ChiTietDon__IDDT__38996AB5">
             <End Role="DonThueXe" EntitySet="DonThueXe" />
             <End Role="ChiTietDonThueXe" EntitySet="ChiTietDonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DoanhThuCh__IDCX__4AB81AF0" Association="Self.FK__DoanhThuCh__IDCX__4AB81AF0">
+          <AssociationSet Name="FK__DoanhThuCh__IDCX__44FF419A" Association="Self.FK__DoanhThuCh__IDCX__44FF419A">
             <End Role="ChuXe" EntitySet="ChuXe" />
             <End Role="DoanhThuChuXe" EntitySet="DoanhThuChuXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__Xe__IDCX__29572725" Association="Self.FK__Xe__IDCX__29572725">
+          <AssociationSet Name="FK__Xe__IDCX__276EDEB3" Association="Self.FK__Xe__IDCX__276EDEB3">
             <End Role="ChuXe" EntitySet="ChuXe" />
             <End Role="Xe" EntitySet="Xe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DanhGia__BienSoX__47DBAE45" Association="Self.FK__DanhGia__BienSoX__47DBAE45">
+          <AssociationSet Name="FK__DanhGia__BienSoX__4222D4EF" Association="Self.FK__DanhGia__BienSoX__4222D4EF">
             <End Role="Xe" EntitySet="Xe" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
-          <AssociationSet Name="FK__DanhGia__IDKH__46E78A0C" Association="Self.FK__DanhGia__IDKH__46E78A0C">
+          <AssociationSet Name="FK__DanhGia__IDKH__412EB0B6" Association="Self.FK__DanhGia__IDKH__412EB0B6">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
-          <AssociationSet Name="FK__DoanhThuCo__IDNV__4D94879B" Association="Self.FK__DoanhThuCo__IDNV__4D94879B">
+          <AssociationSet Name="FK__DoanhThuCo__IDNV__47DBAE45" Association="Self.FK__DoanhThuCo__IDNV__47DBAE45">
             <End Role="NhanVien" EntitySet="NhanVien" />
             <End Role="DoanhThuCongTy" EntitySet="DoanhThuCongTy" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__BienS__38996AB5" Association="Self.FK__DonThueXe__BienS__38996AB5">
+          <AssociationSet Name="FK__DonThueXe__BienS__34C8D9D1" Association="Self.FK__DonThueXe__BienS__34C8D9D1">
             <End Role="Xe" EntitySet="Xe" />
             <End Role="DonThueXe" EntitySet="DonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__IDKH__37A5467C" Association="Self.FK__DonThueXe__IDKH__37A5467C">
+          <AssociationSet Name="FK__DonThueXe__IDKH__33D4B598" Association="Self.FK__DonThueXe__IDKH__33D4B598">
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DonThueXe" EntitySet="DonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__IDMGG__3A81B327" Association="Self.FK__DonThueXe__IDMGG__3A81B327">
+          <AssociationSet Name="FK__DonThueXe__IDMGG__35BCFE0A" Association="Self.FK__DonThueXe__IDMGG__35BCFE0A">
             <End Role="MaGiamGia" EntitySet="MaGiamGia" />
             <End Role="DonThueXe" EntitySet="DonThueXe" />
           </AssociationSet>
-          <AssociationSet Name="FK__DonThueXe__IDNVX__398D8EEE" Association="Self.FK__DonThueXe__IDNVX__398D8EEE">
-            <End Role="NhanVien" EntitySet="NhanVien" />
-            <End Role="DonThueXe" EntitySet="DonThueXe" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__IDDT__412EB0B6" Association="Self.FK__ThanhToan__IDDT__412EB0B6">
+          <AssociationSet Name="FK__ThanhToan__IDDT__3B75D760" Association="Self.FK__ThanhToan__IDDT__3B75D760">
             <End Role="DonThueXe" EntitySet="DonThueXe" />
             <End Role="ThanhToan" EntitySet="ThanhToan" />
           </AssociationSet>
-          <AssociationSet Name="FK__ThanhToan__IDMGG__4222D4EF" Association="Self.FK__ThanhToan__IDMGG__4222D4EF">
+          <AssociationSet Name="FK__ThanhToan__IDMGG__3C69FB99" Association="Self.FK__ThanhToan__IDMGG__3C69FB99">
             <End Role="MaGiamGia" EntitySet="MaGiamGia" />
             <End Role="ThanhToan" EntitySet="ThanhToan" />
           </AssociationSet>
@@ -802,7 +762,6 @@
                 <ScalarProperty Name="IDDT" ColumnName="IDDT" />
                 <ScalarProperty Name="IDKH" ColumnName="IDKH" />
                 <ScalarProperty Name="BienSoXe" ColumnName="BienSoXe" />
-                <ScalarProperty Name="IDNVXacThuc" ColumnName="IDNVXacThuc" />
                 <ScalarProperty Name="NgayThue" ColumnName="NgayThue" />
                 <ScalarProperty Name="NgayTra" ColumnName="NgayTra" />
                 <ScalarProperty Name="BDT" ColumnName="BDT" />
