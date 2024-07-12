@@ -23,11 +23,7 @@ namespace Mioto.Controllers
         {
             return View();
         }
-        public ActionResult RegisterOwner()
-        {
-            return View();
-        } 
-        
+       
 
     }
 }

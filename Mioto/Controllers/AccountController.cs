@@ -41,7 +41,7 @@ namespace Mioto.Controllers
                 Session["KhachHang"] = IsGuest;
                 return RedirectToAction("Home", "Home");
             }
-            ViewBag.ErrorLogin = "Email or password is not match";
+            ViewBag.ErrorLogin = "Email hoặc mật khẩu không chính xác";
             return View();
         }
 
@@ -72,6 +72,9 @@ namespace Mioto.Controllers
                         Ten = kh.Ten,
                         Email = kh.Email,
                         GioiTinh = kh.GioiTinh,
+                        DiaChi = kh.DiaChi,
+                        SDT = kh.SDT,
+                        NgaySinh = kh.NgaySinh,
                         MatKhau = kh.MatKhau
                     };
                     db.KhachHang.Add(newKhachHang);

@@ -28,6 +28,7 @@ namespace Mioto.Models
         public string SDT { get; set; }
         public string DiaChi { get; set; }
         public Nullable<System.DateTime> NgaySinh { get; set; }
+        public byte[] HinhAnh { get; set; }
         public string ChucVu { get; set; }
         public string GioiTinh { get; set; }
     

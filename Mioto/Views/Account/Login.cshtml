@@ -40,6 +40,10 @@
                         </div>
                     </div>
                 </div>
+                if (ViewBag.ErrorLogin != null)
+                {
+                    <div style="color: #f02849; font-family: SFProText-Regular, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; margin-top: 8px; text-align: center;">@ViewBag.ErrorLogin</div>
+                }
 
                 <div class="block-content textAlign-right">
                     <a href="#" class="fontWeight-6 font-14">Quên mật khẩu?</a>

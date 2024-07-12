@@ -30,6 +30,8 @@ namespace Mioto.Models
         public Nullable<decimal> GiaThue { get; set; }
         public string TrangThai { get; set; }
         public Nullable<int> IDCX { get; set; }
+        public byte[] HinhAnh { get; set; }
+        public string KhuVuc { get; set; }
     
         public virtual ChuXe ChuXe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

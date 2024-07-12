@@ -27,14 +27,18 @@
             <div class="avatar avatar--xl has-edit">
                 <img loading="lazy" src="https://n1-astg.mioto.vn/g/2024/04/14/10/SU9tyuEN1J72XUg9n8Yajw.jpg" alt="Viet Anh Nguyen">
             </div>
-            <h6>nvietanh</h6>
-            <p class="note">Tham gia: 14/05/2024</p>
+            <h6>@guest.Ten</h6>
         </div>
         <div class="info-user">
             <div class="info-box">
                 <div class="info-box__item">
                     <p>Ngày sinh </p>
-                    <p class="main">----/----/--------</p>
+                    <p class="main">
+                        @if (guest.NgaySinh.HasValue)
+                        {
+                            @guest.NgaySinh.Value.ToShortDateString()
+                        }
+                    </p>
                 </div>
                 <div class="info-box__item">
                     <p>Giới tính </p>
@@ -43,42 +47,21 @@
             </div>
             <div class="info-desc">
                 <div class="info-desc__item">
-                    @if (guest.SDT == null)
-                    {
-                        <div class="title-item">Số điện thoại</div>
-                        <div class="name">
-                            Thêm số điện thoại
-                            <div class="wrap-svg">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    }
+                    <div class="title-item">Số điện thoại</div>
+                    <div class="name">
+                        @guest.SDT
+                    </div>
                 </div>
                 <div class="info-desc__item">
                     <div class="title-item">Email</div>
                     <div class="name">
                         @guest.Email
-                        <div class="wrap-svg">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
                     </div>
                 </div>
                 <div class="info-desc__item">
-                    <div class="title-item">Facebook</div>
+                    <div class="title-item">Địa chỉ</div>
                     <div class="name">
-                        Thêm liên kết
-                        <div class="wrap-svg">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.36 6.18005L15.62 3.92006C16.85 2.69006 18.85 2.69006 20.08 3.92006C21.31 5.15006 21.31 7.15007 20.08 8.38007L14.66 13.8001C13.43 15.0301 11.43 15.0301 10.2 13.8001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.64 17.8201L8.38 20.0801C7.15 21.3101 5.15 21.3101 3.92 20.0801C2.69 18.8501 2.69 16.8501 3.92 15.6201L9.34 10.2001C10.57 8.97009 12.57 8.97009 13.8 10.2001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
+                        @guest.DiaChi
                     </div>
                 </div>
             </div>
