@@ -118,11 +118,6 @@ namespace Mioto.Controllers
             return View(xe);
         }
 
-        public ActionResult Car()
-        {
-            // Lấy tất cả xe từ cơ sở dữ liệu
-            var cars = db.Xe.ToList();
-            return View(cars);
-        }
+        
     }
 }

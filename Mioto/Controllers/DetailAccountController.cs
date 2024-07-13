@@ -49,6 +49,66 @@ namespace Mioto.Controllers
             var kh = db.KhachHang.Where(x => x.IDKH == guest.IDKH);
             return View(kh);
         }
+        // GET: EditInfoUser/InfoAccount
+        public ActionResult EditInfoUser(int IDKH)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            var id = db.KhachHang.FirstOrDefault(x => x.IDKH == IDKH);
+            ViewBag.GioiTinh = gioitinh;
+            return View(id);
+        }
+        // POST: EditInfoUser/InfoAccount
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditInfoUser(KhachHang kh)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Home");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var guest = Session["KhachHang"] as KhachHang;
+                    var chuxe = Session["ChuXe"] as ChuXe;
+                    kh.SoGPLX = guest.SoGPLX;
+                    kh.MatKhau = guest.MatKhau;
+                    kh.IDKH = kh.IDKH;
+                    db.Entry(kh).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    if (chuxe != null)
+                    {
+                        var newChuXe = new ChuXe
+                        {
+                            IDCX = kh.IDKH,
+                            Ten = kh.Ten,
+                            Email = kh.Email,
+                            SDT = kh.SDT,
+                            DiaChi = kh.DiaChi,
+                            MatKhau = kh.MatKhau,
+                            GioiTinh = kh.GioiTinh,
+                            NgaySinh = kh.NgaySinh,
+                            TrangThai = "Hoạt động"
+                        };
+                        db.Entry(newChuXe).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    guest = db.KhachHang.FirstOrDefault(x => x.IDKH == guest.IDKH);
+                    chuxe = db.ChuXe.FirstOrDefault(x => x.IDCX == guest.IDKH);
+
+                    // Cập nhật lại Session
+                    Session["KhachHang"] = guest;
+                    Session["ChuXe"] = chuxe;
+                    return RedirectToAction("InfoAccount");
+                }
+                return View(kh);
+            }
+            catch
+            {
+                return View(kh);
+            }
+        }
         public ActionResult FavoriteCar()
         {
             return View();
@@ -140,60 +200,7 @@ namespace Mioto.Controllers
             }
         }
 
-        // GET: EditInfoUser/InfoAccount
-        public ActionResult EditInfoUser(int IDKH)
-        {
-            if (!IsLoggedIn)
-                return RedirectToAction("Login", "Account");
-            var id = db.KhachHang.FirstOrDefault(x => x.IDKH == IDKH);
-            ViewBag.GioiTinh = gioitinh;
-            return View(id);
-        }
-        // POST: EditInfoUser/InfoAccount
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditInfoUser(KhachHang kh)
-        {
-            if (!IsLoggedIn)
-                return RedirectToAction("Login", "Home");
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var guest = Session["KhachHang"] as KhachHang;
-                    var chuxe = Session["ChuXe"] as ChuXe;
-                    kh.SoGPLX = guest.SoGPLX;
-                    kh.MatKhau = guest.MatKhau;
-                    kh.IDKH = kh.IDKH;
-                    db.Entry(kh).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    if(chuxe != null)
-                    {
-                        var newChuXe = new ChuXe
-                        {
-                            IDCX = kh.IDKH,
-                            Ten = kh.Ten,
-                            Email = kh.Email,
-                            SDT = kh.SDT,
-                            DiaChi = kh.DiaChi,
-                            MatKhau = kh.MatKhau,
-                            GioiTinh = kh.GioiTinh,
-                            NgaySinh = kh.NgaySinh,
-                            TrangThai = "Hoạt động"
-                        };
-                        db.Entry(newChuXe).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                    return RedirectToAction("InfoAccount");
-                }
-                return View(kh);
-            }
-            catch
-            {
-                return View(kh);
-            }
-        }
+       
         public ActionResult MyTrip()
         {
             return View();

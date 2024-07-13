@@ -10,6 +10,7 @@ namespace Mioto.Controllers
     public class HomeController : Controller
     {
         DB_MiotoEntities db = new DB_MiotoEntities();
+        public bool IsLoggedIn { get => Session["KhachHang"] != null || Session["ChuXe"] != null; }
         List<SelectListItem> tinhThanhPho = new List<SelectListItem>
         {
             new SelectListItem { Text = "TP Hồ Chí Minh", Value = "TP Hồ Chí Minh" },
@@ -30,6 +31,13 @@ namespace Mioto.Controllers
             ViewBag.TinhThanhPho = tinhThanhPho;
             return View();
         }
+
+        public ActionResult Car(string khuvuc)
+        {
+            var cars = db.Xe.Where(x => x.KhuVuc == khuvuc).ToList();
+            return View(cars);
+        }
+
         public ActionResult About()
         {
             return View();
