@@ -3,6 +3,109 @@
     ViewBag.Title = "InfoCar";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
+@model Mioto.Models.Xe
+<div class="modal-body">
+    <div class="detail-car">
+        <div class="cover-car">
+            <div class="m-container">
+                <div class="cover-car-container">
+                    <div class="main-img">
+                        <img loading="lazy" src="https://n1-pstg.mioto.vn/cho_thue_xe_o_to_tu_lai_thue_xe_du_lich_hochiminh/toyota_avanza_2024/p/g/2024/01/26/09/akXxQQJpkupVF4Yef-kCzg.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-container">
+            <div class="detail-container">
+                <div class="content-detail">
+                    <div class="info-car-basic">
+                        <div class="group-name">
+                            <h3>@Model.HangXe @Model.NamSanXuat</h3>
+                        </div>
+                        <div class="group-total">
+                            <span class="info">@Model.KhuVuc</span>
+                        </div>
+                        <div class="group-tag">
+                            <span class="tag-item transmission">@Model.TinhNang</span>
+                        </div>
+                    </div>
+                </div>
 
-<h2>InfoCar</h2>
+                <div class="sidebar-detail">
+                    <div class="insurance success cardetail">
+                        <img loading="lazy" src="https://www.mioto.vn/static/media/insurance-polish.f54e308a.svg">
+                        <div class="content">
+                            <p>Bảo hiểm thuê xe</p>
+                            <p class="note">Chuyến đi có mua bảo hiểm. Khách thuê bồi thường tối đa 2.000.000 VNĐ trong trường hợp có sự cố ngoài ý muốn.</p>
+                            <p class="desc"><a class="info">Xem chi tiết</a></p>
+                        </div>
+                    </div>
+                    <div class="rent-box" id="cardetail" style="position: relative;">
+                        <div class="price">
+                            <h4><span>@String.Format("{0:N0} VNĐ/ngày", Model.GiaThue)</span></h4>
+                        </div>
+                        <div class="dropdown-form">
+                            <label>Địa điểm giao xe</label>
+                            <div class="wrap-form">
+                                <span class="value">@Model.KhuVuc</span>
+                            </div>
+                        </div>
+                        <div class="line-page"></div>
+                        <div class="price-container">
+                            <div class="price-item">
+                                <p class="df-align-center">Đơn giá thuê<span class="tooltip"><span class="wrap-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.08984 9.00008C9.32495 8.33175 9.789 7.76819 10.3998 7.40921C11.0106 7.05024 11.7287 6.91902 12.427 7.03879C13.1253 7.15857 13.7587 7.52161 14.2149 8.06361C14.6712 8.60561 14.9209 9.2916 14.9198 10.0001C14.9198 12.0001 11.9198 13.0001 11.9198 13.0001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 17H12.01" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></span></p>
+                                <p class="cost"><span>1 079 120đ/ ngày</span></p>
+                            </div>
+                            <div class="price-item">
+                                <p class="df-align-center">Bảo hiểm thuê xe<span class="tooltip"><span class="wrap-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.08984 9.00008C9.32495 8.33175 9.789 7.76819 10.3998 7.40921C11.0106 7.05024 11.7287 6.91902 12.427 7.03879C13.1253 7.15857 13.7587 7.52161 14.2149 8.06361C14.6712 8.60561 14.9209 9.2916 14.9198 10.0001C14.9198 12.0001 11.9198 13.0001 11.9198 13.0001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 17H12.01" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></span></p>
+                                <p class="cost"><span>106 220đ/ ngày</span></p>
+                            </div>
+                            <div class="line-page"></div>
+                            <div class="price-item">
+                                <p>Tổng cộng</p>
+                                <p class="cost"><span>1 185 340đ </span>x&nbsp;1&nbsp;ngày</p>
+                            </div>
+                            <div class="line-page"></div>
+                            <div class="promotion-radio">
+                                <div class="promotion-radio__item">
+                                    <div class="custom-radio">
+                                        <input type="radio" id="default" name="promo" value="0" checked="">
+                                        <label for="default">
+                                            <div class="promo-text">
+                                                <div class="promo-text-main">
+                                                    <div class="wrap-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.3 10.8394C21.69 10.8394 22 10.5294 22 10.1394V9.20938C22 5.10938 20.75 3.85938 16.65 3.85938H7.35C3.25 3.85937 2 5.10938 2 9.20938V9.67938C2 10.0694 2.31 10.3794 2.7 10.3794C3.6 10.3794 4.33 11.1094 4.33 12.0094C4.33 12.9094 3.6 13.6294 2.7 13.6294C2.31 13.6294 2 13.9394 2 14.3294V14.7994C2 18.8994 3.25 20.1494 7.35 20.1494H16.65C20.75 20.1494 22 18.8994 22 14.7994C22 14.4094 21.69 14.0994 21.3 14.0994C20.4 14.0994 19.67 13.3694 19.67 12.4694C19.67 11.5694 20.4 10.8394 21.3 10.8394ZM9 8.87938C9.55 8.87938 10 9.32938 10 9.87938C10 10.4294 9.56 10.8794 9 10.8794C8.45 10.8794 8 10.4294 8 9.87938C8 9.32938 8.44 8.87938 9 8.87938ZM15 15.8794C14.44 15.8794 13.99 15.4294 13.99 14.8794C13.99 14.3294 14.44 13.8794 14.99 13.8794C15.54 13.8794 15.99 14.3294 15.99 14.8794C15.99 15.4294 15.56 15.8794 15 15.8794ZM15.9 9.47937L9.17 16.2094C9.02 16.3594 8.83 16.4294 8.64 16.4294C8.45 16.4294 8.26 16.3594 8.11 16.2094L5.34 13.4394C5.19 13.2894 5.12 13.0994 5.12 12.9094C5.12 12.7194 5.19 12.5294 5.34 12.3794C5.49 12.2294 5.68 12.1594 5.87 12.1594C6.06 12.1594 6.25 12.2294 6.4 12.3794L8.64 14.6194L14.6 8.66937C14.75 8.51937 14.94 8.44937 15.13 8.44937C15.32 8.44937 15.51 8.51937 15.66 8.66937C15.81 8.81937 15.88 9.00937 15.88 9.19937C15.88 9.38937 15.81 9.57938 15.66 9.72938L15.9 9.47937Z" fill="black"></path></svg></div><span class="promo-text-label">Sử dụng mã giảm giá</span>
+                                                </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line-page"></div>
+                            <div class="promotion-code">
+                                <input type="text" class="promo-text-input" placeholder="Nhập mã giảm giá">
+                                <button class="button-promo">Áp dụng</button>
+                            </div>
+                            <div class="line-page"></div>
+                            <div class="price-item">
+                                <p>Tổng giảm giá</p>
+                                <p class="cost" id="reduce">-120.000đ</p>
+                            </div>
+                            <div class="line-page"></div>
+                            <div class="price-item">
+                                <p>Thành tiền</p>
+                                <p class="cost">1 000 000đ</p>
+                            </div>
+                            <div class="line-page"></div>
+                        </div>
+                        <a href="#" class="btn btn-primary btn--m width-100">CHỌN THUÊ</a>
+                    </div>
+
+                </div>
+
+                <div class="content-detail">
+                    <div class="line-page"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

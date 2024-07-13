@@ -102,15 +102,26 @@ namespace Mioto.Controllers
             }
         }
 
-        public ActionResult InfoCar()
+        public ActionResult InfoCar(string BienSoXe)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
+            if (String.IsNullOrEmpty(BienSoXe))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var xe = db.Xe.FirstOrDefault(x => x.BienSoXe == BienSoXe);
+            if (xe == null)
+            {
+                return HttpNotFound();
+            }
+            return View(xe);
+        }
 
-            var guest = Session["KhachHang"] as KhachHang;
-            if (guest == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng không tồn tại");
-            var cars = db.Xe.Where(x => x.IDCX == guest.IDKH).ToList();
+        public ActionResult Car()
+        {
+            // Lấy tất cả xe từ cơ sở dữ liệu
+            var cars = db.Xe.ToList();
             return View(cars);
         }
     }

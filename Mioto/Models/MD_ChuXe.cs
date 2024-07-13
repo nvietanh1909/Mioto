@@ -47,6 +47,5 @@ namespace Mioto.Models
         [Required(ErrorMessage = "Vui lòng chọn khu vực.")]
         [StringLength(20, ErrorMessage = "Khu vực không hợp lệ.")]
         public string KhuVuc { get; set; }
-
     }
 }

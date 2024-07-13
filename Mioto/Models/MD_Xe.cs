@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,6 +36,9 @@ namespace Mioto.Models
         [Required(ErrorMessage = "Vui lòng chọn khu vực.")]
         [StringLength(20, ErrorMessage = "Khu vực không hợp lệ.")]
         public string KhuVuc { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn hình ảnh xe.")]
+        public List<string> HinhAnh { get; set; }
 
     }
 }
