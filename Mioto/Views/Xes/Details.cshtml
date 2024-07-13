@@ -1,0 +1,99 @@
+﻿@model Mioto.Models.Xe
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Xe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HangXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HangXe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MauXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MauXe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NamSanXuat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NamSanXuat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoGhe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoGhe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TinhNang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhNang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiaThue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiaThue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HinhAnh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HinhAnh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KhuVuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhuVuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChuXe.Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChuXe.Ten)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BienSoXe }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
