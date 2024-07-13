@@ -4,62 +4,73 @@
 }
 
 @model IEnumerable<Mioto.Models.Xe>
+@{var guest = Session["ChuXe"] as Mioto.Models.ChuXe;}
 
-<h2>MyCar</h2>
+<h2>Danh sách xe của tôi</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Biển số xe</th>
-            <th>Hãng xe</th>
-            <th>Màu xe</th>
-            <th>Khu vực</th>
-            <th>Năm sản xuất</th>
-            <th>Tính năng</th>
-            <th>Giá thuê</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var xe in Model)
-        {
+@if (guest != null)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.BienSoXe)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.HangXe)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.MauXe)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.KhuVuc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.NamSanXuat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.TinhNang)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.GiaThue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => xe.TrangThai)
-                </td>
-                <td>
-                    <a href="@Url.Action("RegisterOwner","Car")" class="btn">Thêm xe</a>
-                    @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
-                    {
-                        @class = "btn btn-danger",
-                    data_id = xe.BienSoXe,
-                    onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
-               })
-                </td>
+                <th>Biển số xe</th>
+                <th>Hãng xe</th>
+                <th>Màu xe</th>
+                <th>Khu vực</th>
+                <th>Năm sản xuất</th>
+                <th>Tính năng</th>
+                <th>Giá thuê</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var xe in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.BienSoXe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.HangXe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.MauXe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.KhuVuc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.NamSanXuat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.TinhNang)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.GiaThue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => xe.TrangThai)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("RegisterOwner","Car")" class="btn">Thêm xe</a>
+                        @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
+                        {
+                            @class = "btn btn-danger",
+                        data_id = xe.BienSoXe,
+                        onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                   })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else 
+{
+<div class="empty-container">
+    <img loading="lazy" src="https://www.mioto.vn/static/media/empty-mycar.e023e681.svg" alt="">
+    <p>Không tìm thấy xe nào.</p>
+</div>
+}

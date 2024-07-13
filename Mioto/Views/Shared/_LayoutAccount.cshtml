@@ -1,4 +1,4 @@
-﻿﻿
+﻿@{var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;}
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +22,10 @@
             <!--Menu-top-->
             <div class="menu-container">
                 <a href="#">Về Mioto</a>
-                <a href="#">Trở thành chủ xe</a>
+                @if (chuxe == null)
+                {
+                    <a href="@Url.Action("IntroOwnerCar", "Home")">Trở thành chủ xe</a>
+                }
                 <div></div>
                 @if (Session["KhachHang"] == null)
                 {

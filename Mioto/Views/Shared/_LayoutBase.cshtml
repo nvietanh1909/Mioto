@@ -1,5 +1,5 @@
 ﻿@{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
-
+@{var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;}
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +23,10 @@
             <!--Menu-top-->
             <div class="menu-container">
                 <a href="@Url.Action("About", "Home")">Về Mioto</a>
-                <a href="@Url.Action("IntroOwnerCar", "Home")">Trở thành chủ xe</a>
+                @if (chuxe == null)
+                {
+                    <a href="@Url.Action("IntroOwnerCar", "Home")">Trở thành chủ xe</a>
+                }
                 <div></div>
                 @if (Session["KhachHang"] == null)
                 {
@@ -32,10 +35,16 @@
                 }
                 else
                 {
-                    if (Session["KhachHang"] != null)
+                    if (Session["ChuXe"] != null)
                     {
                         <a href="@Url.Action("InfoAccount", "DetailAccount")">
-                            <span>Xin chào: <b>@guest.Ten</b></span>
+                            <span>Chủ xe: <b>@guest.Ten</b></span>
+                        </a>
+                    }
+                    else if (Session["KhachHang"] != null)
+                    {
+                        <a href="@Url.Action("InfoAccount", "DetailAccount")">
+                            <span>Khách hàng: <b>@guest.Ten</b></span>
                         </a>
                     }
                 }

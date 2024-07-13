@@ -24,7 +24,7 @@ namespace Mioto.Controllers
         // GET: Account/Login
         public ActionResult Login()
         {
-            if (Session["KhachHang"] != null || Session["NhanVien"] != null)
+            if (Session["KhachHang"] != null || Session["KhachHang"] != null)
                 return Logout();
             return View();
         }
@@ -35,10 +35,12 @@ namespace Mioto.Controllers
         public ActionResult Login(MD_Login _user)
         {
             var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
+            var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
             if (IsGuest != null)
             {
                 //Login thành công
                 Session["KhachHang"] = IsGuest;
+                Session["ChuXe"] = IsChuXe;
                 return RedirectToAction("Home", "Home");
             }
             ViewBag.ErrorLogin = "Email hoặc mật khẩu không chính xác";

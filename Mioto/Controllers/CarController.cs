@@ -12,7 +12,7 @@ namespace Mioto.Controllers
     {
         private DB_MiotoEntities db = new DB_MiotoEntities();
 
-        public bool IsLoggedIn { get => Session["KhachHang"] != null; }
+        public bool IsLoggedIn { get => Session["KhachHang"] != null || Session["ChuXe"] != null; }
 
         List<SelectListItem> tinhThanhPho = new List<SelectListItem>
         {
