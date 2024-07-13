@@ -85,6 +85,7 @@ namespace Mioto.Controllers
                         GiaThue = cx.GiaThue,
                         NamSanXuat = cx.NamSanXuat,
                         KhuVuc = cx.KhuVuc,
+                        TrangThai = "Sẵn sàng"
                     };
                     db.Xe.Add(newCar);
                     db.SaveChanges();
@@ -101,5 +102,16 @@ namespace Mioto.Controllers
             }
         }
 
+        public ActionResult InfoCar()
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            var guest = Session["KhachHang"] as KhachHang;
+            if (guest == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng không tồn tại");
+            var cars = db.Xe.Where(x => x.IDCX == guest.IDKH).ToList();
+            return View(cars);
+        }
     }
 }

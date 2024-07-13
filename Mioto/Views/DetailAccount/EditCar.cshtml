@@ -1,0 +1,142 @@
+﻿@model Mioto.Models.Xe
+
+@{
+    ViewBag.Title = "EditCar";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-content" role="document">
+        <div class="modal-header">
+            <h4 class="text-primary">Chỉnh sửa thông tin xe</h4>
+            <p class="sub-title">Bạn vui lòng điền đầy đủ thông tin, MIOTO sẽ liên hệ với bạn trong vòng một ngày làm việc.</p>
+        </div>
+        <div class="modal-body">
+            <div class="modal-input-body modal-owner-register">
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Biển số xe*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input disabled">
+                            <div class="wrap-text">
+                                <input disabled="" type="text" placeholder="@Model.BienSoXe" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Hãng xe</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.HangXe, new { @class = "form-control", placeholder = "Hãng xe của bạn" })
+                            @Html.ValidationMessageFor(model => model.HangXe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Màu xe</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.MauXe, new { @class = "form-control", placeholder = "Màu xe của bạn" })
+                            @Html.ValidationMessageFor(model => model.MauXe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Khu vực</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.DropDownListFor(model => model.KhuVuc, (IEnumerable<SelectListItem>)ViewBag.TinhThanhPho, "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.KhuVuc, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Năm sản xuất</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.NamSanXuat, new { @class = "form-control", placeholder = "Năm sản xuất của xe" })
+                            @Html.ValidationMessageFor(model => model.NamSanXuat, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Số ghế</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.SoGhe, new { @class = "form-control", placeholder = "Số ghế xe của bạn" })
+                            @Html.ValidationMessageFor(model => model.SoGhe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Tính năng</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.TinhNang, new { @class = "form-control", placeholder = "Tính năng xe của bạn" })
+                            @Html.ValidationMessageFor(model => model.TinhNang, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Giá cho thuê xe</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.GiaThue, new { @class = "form-control", placeholder = "Giá cho thuê xe của bạn" })
+                            @Html.ValidationMessageFor(model => model.GiaThue, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Trạng thái</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input disabled">
+                            <div class="wrap-text">
+                                <input disabled="" type="text" placeholder="@Model.TrangThai" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrap-btn btn-register">
+                    <button type="submit" class="btn btn--m btn-primary">Lưu thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -297,6 +297,7 @@
     <Content Include="Views\Car\InfoCar.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Car\RegisterOwner.cshtml" />
+    <Content Include="Views\DetailAccount\EditCar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
