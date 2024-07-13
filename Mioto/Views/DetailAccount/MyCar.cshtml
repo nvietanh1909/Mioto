@@ -1,99 +1,29 @@
-﻿@model Mioto.Models.Xe
-
+﻿
 @{
     ViewBag.Title = "MyCar";
-    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
 
+@model IEnumerable<Mioto.Models.Xe>
+
 <h2>MyCar</h2>
-
-<div>
-    <h4>Xe</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BienSoXe)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BienSoXe)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HangXe)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HangXe)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MauXe)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MauXe)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NamSanXuat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NamSanXuat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SoGhe)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoGhe)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TinhNang)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TinhNang)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GiaThue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GiaThue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TrangThai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IDCX)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IDCX)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KhuVuc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KhuVuc)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<table>
+    <tr>
+        <th>Biển số xe</th>
+        <th>Hãng xe</th>
+        <th>Màu xe</th>
+        <!-- Thêm các cột khác tùy theo nhu cầu -->
+    </tr>
+    @foreach (var xe in Model)
+    {
+        <tr>
+            <td>@xe.BienSoXe</td>
+            <td>@xe.HangXe</td>
+            <td>@xe.MauXe</td>
+            <td>@xe.KhuVuc</td>
+            <td>@xe.NamSanXuat</td>
+            <td>@xe.TinhNang</td>
+            <td>@xe.GiaThue</td>
+        </tr>
+    }
+</table>

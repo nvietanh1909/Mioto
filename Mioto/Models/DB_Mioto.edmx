@@ -26,7 +26,7 @@
           <Property Name="MatKhau" Type="varchar" MaxLength="255" />
           <Property Name="GioiTinh" Type="nvarchar" MaxLength="10" />
           <Property Name="NgaySinh" Type="date" />
-          <Property Name="HinhAnh" Type="varbinary(max)" />
+          <Property Name="HinhAnh" Type="nvarchar(max)" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="DanhGia">
@@ -87,7 +87,7 @@
           <Property Name="SDT" Type="varchar" MaxLength="20" />
           <Property Name="NgaySinh" Type="date" />
           <Property Name="GioiTinh" Type="nvarchar" MaxLength="10" />
-          <Property Name="HinhAnh" Type="varbinary(max)" />
+          <Property Name="HinhAnh" Type="nvarchar(max)" />
           <Property Name="MatKhau" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="MaGiamGia">
@@ -141,7 +141,7 @@
           <Property Name="GiaThue" Type="decimal" Precision="15" Scale="2" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
           <Property Name="IDCX" Type="int" Nullable="false" />
-          <Property Name="HinhAnh" Type="varbinary(max)" />
+          <Property Name="HinhAnh" Type="nvarchar(max)" />
           <Property Name="KhuVuc" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__ChiTietDon__IDDT__38996AB5">
@@ -360,7 +360,7 @@
           <Property Name="MatKhau" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="GioiTinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
-          <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DoanhThuChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__44FF419A" FromRole="ChuXe" ToRole="DoanhThuChuXe" />
           <NavigationProperty Name="Xe" Relationship="Self.FK__Xe__IDCX__276EDEB3" FromRole="ChuXe" ToRole="Xe" />
@@ -432,7 +432,7 @@
           <Property Name="SDT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
           <Property Name="GioiTinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MatKhau" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__IDKH__412EB0B6" FromRole="KhachHang" ToRole="DanhGia" />
           <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__IDKH__33D4B598" FromRole="KhachHang" ToRole="DonThueXe" />
@@ -493,7 +493,7 @@
           <Property Name="GiaThue" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="IDCX" Type="Int32" Nullable="false" />
-          <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="KhuVuc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ChuXe" Relationship="Self.FK__Xe__IDCX__276EDEB3" FromRole="Xe" ToRole="ChuXe" />
           <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__BienSoX__4222D4EF" FromRole="Xe" ToRole="DanhGia" />

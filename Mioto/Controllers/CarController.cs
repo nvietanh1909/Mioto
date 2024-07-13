@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Mioto.Models;
@@ -56,18 +57,23 @@ namespace Mioto.Controllers
                         ModelState.AddModelError("BienSoXe", "Biển số xe đã đăng ký trên hệ thống");
                         return View(cx);
                     }
-                    var newCX = new ChuXe
+                    // Kiểm tra nếu không tồn tại IDCX trùng với IDKH thì mới tạo mới ChuXe
+                    if (!db.ChuXe.Any(x => x.IDCX == guest.IDKH))
                     {
-                        IDCX = guest.IDKH,
-                        Ten = guest.Ten,
-                        Email = guest.Email,
-                        SDT = guest.SDT,
-                        DiaChi = guest.DiaChi,
-                        MatKhau = guest.MatKhau,
-                        GioiTinh = guest.GioiTinh,
-                        NgaySinh = guest.NgaySinh,
-                        TrangThai = "Hoạt động"
-                    };
+                        var newCX = new ChuXe
+                        {
+                            IDCX = guest.IDKH,
+                            Ten = guest.Ten,
+                            Email = guest.Email,
+                            SDT = guest.SDT,
+                            DiaChi = guest.DiaChi,
+                            MatKhau = guest.MatKhau,
+                            GioiTinh = guest.GioiTinh,
+                            NgaySinh = guest.NgaySinh,
+                            TrangThai = "Hoạt động"
+                        };
+                        db.ChuXe.Add(newCX);
+                    }
                     var newCar = new Xe
                     {
                         IDCX = guest.IDKH,
@@ -80,7 +86,6 @@ namespace Mioto.Controllers
                         NamSanXuat = cx.NamSanXuat,
                         KhuVuc = cx.KhuVuc,
                     };
-                    db.ChuXe.Add(newCX);
                     db.Xe.Add(newCar);
                     db.SaveChanges();
                     TempData["Message"] = "Đăng ký thành công!";
@@ -95,5 +100,6 @@ namespace Mioto.Controllers
                 return View(cx);
             }
         }
+
     }
 }

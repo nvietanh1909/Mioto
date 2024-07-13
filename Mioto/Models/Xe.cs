@@ -30,7 +30,7 @@ namespace Mioto.Models
         public Nullable<decimal> GiaThue { get; set; }
         public string TrangThai { get; set; }
         public int IDCX { get; set; }
-        public byte[] HinhAnh { get; set; }
+        public string HinhAnh { get; set; }
         public string KhuVuc { get; set; }
     
         public virtual ChuXe ChuXe { get; set; }
