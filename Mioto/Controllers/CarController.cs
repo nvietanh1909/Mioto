@@ -89,6 +89,10 @@ namespace Mioto.Controllers
                     };
                     db.Xe.Add(newCar);
                     db.SaveChanges();
+                    var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
+                    var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
+                    Session["KhachHang"] = IsGuest;
+                    Session["ChuXe"] = IsChuXe;
                     TempData["Message"] = "Đăng ký thành công!";
                     return RedirectToAction("Home", "Home");
                 }

@@ -19,6 +19,7 @@ namespace Mioto.Models
         {
             this.DanhGia = new HashSet<DanhGia>();
             this.DonThueXe = new HashSet<DonThueXe>();
+            this.GPLX = new HashSet<GPLX>();
         }
     
         public int IDKH { get; set; }
@@ -36,5 +37,7 @@ namespace Mioto.Models
         public virtual ICollection<DanhGia> DanhGia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonThueXe> DonThueXe { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GPLX> GPLX { get; set; }
     }
 }

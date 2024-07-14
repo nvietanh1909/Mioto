@@ -69,6 +69,7 @@ namespace Mioto.Controllers
                         ModelState.AddModelError("Email", "Email đã tồn tại. Vui lòng sử dụng email khác.");
                         return View(kh);
                     }
+                    
                     var newKhachHang = new KhachHang
                     {
                         Ten = kh.Ten,
@@ -81,6 +82,16 @@ namespace Mioto.Controllers
                     };
                     db.KhachHang.Add(newKhachHang);
                     db.SaveChanges();
+
+                    var newGPLX = new GPLX
+                    {
+                        IDKH = newKhachHang.IDKH,
+                        Ten = kh.Ten,
+                        NgaySinh = kh.NgaySinh,
+                    };
+                    db.GPLX.Add(newGPLX);
+                    db.SaveChanges();
+
                     TempData["Message"] = "Đăng ký thành công!";
                     return RedirectToAction("Login");
                 }

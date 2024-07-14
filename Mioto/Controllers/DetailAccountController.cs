@@ -38,6 +38,7 @@ namespace Mioto.Controllers
          new SelectListItem { Text = "Nam", Value = "Nam" },
          new SelectListItem { Text = "Nữ", Value = "Nữ" }
         };
+
         // GET: DetailAccount
         public ActionResult InfoAccount()
         {
@@ -49,6 +50,7 @@ namespace Mioto.Controllers
             var kh = db.KhachHang.Where(x => x.IDKH == guest.IDKH);
             return View(kh);
         }
+
         // GET: EditInfoUser/InfoAccount
         public ActionResult EditInfoUser(int IDKH)
         {
@@ -57,6 +59,63 @@ namespace Mioto.Controllers
             var id = db.KhachHang.FirstOrDefault(x => x.IDKH == IDKH);
             ViewBag.GioiTinh = gioitinh;
             return View(id);
+        }
+
+        // GET: EditGPLX/InfoAccount
+        public ActionResult EditGPLX(int IDKH)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            var id = db.GPLX.FirstOrDefault(x => x.IDKH == IDKH);
+            return View(id);
+        }
+        // POST: EditGPLX/InfoAccount
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditGPLX(GPLX gplx)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Home");
+            var id = db.GPLX.FirstOrDefault(x => x.IDKH == gplx.IDKH);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Lấy ID khách hàng và chủ xe
+                    var guest = db.KhachHang.FirstOrDefault(x => x.IDKH == gplx.IDKH);
+                    var chuxe = db.ChuXe.FirstOrDefault(x => x.IDCX == guest.IDKH);
+
+                    id.IDKH = gplx.IDKH;
+                    id.SoGPLX = gplx.SoGPLX;
+                    id.Ten = gplx.Ten;
+                    id.NgaySinh = gplx.NgaySinh;
+                    db.Entry(id).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    if (guest != null)
+                    {
+                        guest.SoGPLX = gplx.SoGPLX;
+                        db.Entry(guest).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    if (chuxe != null)
+                    {
+                        chuxe.SoGPLX = gplx.SoGPLX;
+                        db.Entry(chuxe).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    // Cập nhật lại Session
+                    Session["KhachHang"] = guest;
+                    Session["ChuXe"] = chuxe;
+                    return RedirectToAction("InfoAccount");
+                }
+                return View(id);
+            }
+            catch (Exception ex)
+            {
+                return View(id);
+            }
         }
         // POST: EditInfoUser/InfoAccount
         [HttpPost]

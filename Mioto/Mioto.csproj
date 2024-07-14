@@ -182,6 +182,9 @@
     <Compile Include="Models\DonThueXe.cs">
       <DependentUpon>DB_Mioto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GPLX.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\KhachHang.cs">
       <DependentUpon>DB_Mioto.tt</DependentUpon>
     </Compile>
@@ -300,6 +303,7 @@
     <Content Include="Views\DetailAccount\EditCar.cshtml" />
     <Content Include="Views\DetailAccount\EditInfoUser.cshtml" />
     <Content Include="Views\Home\Car.cshtml" />
+    <Content Include="Views\DetailAccount\EditGPLX.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

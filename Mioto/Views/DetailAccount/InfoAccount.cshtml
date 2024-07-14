@@ -4,7 +4,7 @@
 }
 @{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
 @{var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;}
-
+@{var gplx = Session["GPLX"] as Mioto.Models.GPLX;}
 <!--User profile-->
 <div class="content-item user-profile">
     <div class="title">
@@ -79,17 +79,24 @@
 
 <!--Driver license-->
 <div class="content-item driver-license">
+   @if (chuxe != null || guest != null)
+{
     <div class="title">
         <div class="title-item">
             <h6>Giấy phép lái xe</h6>
         </div>
-        <a href="#" class="btn btn--s">
+        <a href="@Url.Action("EditGPLX", "DetailAccount", new { IDKH = guest.IDKH })" class="btn btn--s">
             Chỉnh sửa
             <div class="wrap-svg">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
             </div>
         </a>
     </div>
+}
+
     <div class="note-license">
         <p><b>Lưu ý: </b> để tránh phát sinh vấn đề trong quá trình thuê xe, <u>người đặt xe</u> trên Mioto (đã xác thực GPLX) <b>ĐỒNG THỜI </b>phải là <u>người nhận xe.</u></p>
     </div>
@@ -111,12 +118,19 @@
             <div class="custom-input">
                 <div class="wrap-info">
                     <div class="title-status">
-                        <p>Số GPLX</p>
+                        <p>GPLX</p>
                     </div>
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        <input disabled="" type="text" placeholder="Nhập số GPLX đã cấp" value="">
+                        @if (guest.SoGPLX != null)
+                        {
+                            <input disabled="" type="text" placeholder="@guest.SoGPLX" value="">
+                        }
+                        else
+                        {
+                            <input disabled="" type="text" placeholder="Chưa xác thực GPLX" value="">
+                        }
                     </div>
                 </div>
             </div>
@@ -128,7 +142,7 @@
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        <input disabled="" type="text" placeholder="Nhập đầy đủ họ tên" value="">
+                        <input disabled="" type="text" placeholder="@guest.Ten" value="">
                     </div>
                 </div>
             </div>
@@ -140,7 +154,12 @@
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        <span>12-06-2024</span>
+                        <span>
+                            @if (guest.NgaySinh.HasValue)
+                            {
+                                @guest.NgaySinh.Value.ToShortDateString()
+                            }
+                        </span>
                     </div>
                 </div>
             </div>
