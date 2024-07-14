@@ -224,6 +224,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\base.css" />
+    <Content Include="Content\css\table.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -288,13 +289,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\IntroOwnerCar.cshtml" />
     <Content Include="Views\DetailAccount\InfoAccount.cshtml" />
-    <Content Include="Views\DetailAccount\FavoriteCar.cshtml" />
     <Content Include="Views\DetailAccount\Gift.cshtml" />
     <Content Include="Views\DetailAccount\MyCar.cshtml" />
     <Content Include="Views\DetailAccount\MyTrip.cshtml" />
-    <Content Include="Views\DetailAccount\LongTermOrder.cshtml" />
     <Content Include="Views\DetailAccount\RequestDeleteAccount.cshtml" />
-    <Content Include="Views\DetailAccount\MyAddress.cshtml" />
     <Content Include="Views\DetailAccount\ChangePassword.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Car\InfoCar.cshtml" />

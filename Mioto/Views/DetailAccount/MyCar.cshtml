@@ -2,75 +2,62 @@
     ViewBag.Title = "MyCar";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
-
 @model IEnumerable<Mioto.Models.Xe>
-@{var guest = Session["ChuXe"] as Mioto.Models.ChuXe;}
+@{ var guest = Session["ChuXe"] as Mioto.Models.ChuXe; }
 
+<link href="~/Content/css/table.css" rel="stylesheet" />
 <h2>Danh sách xe của tôi</h2>
-
 @if (guest != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Biển số xe</th>
-                <th>Hãng xe</th>
-                <th>Màu xe</th>
-                <th>Khu vực</th>
-                <th>Năm sản xuất</th>
-                <th>Tính năng</th>
-                <th>Giá thuê</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var xe in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.BienSoXe)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.HangXe)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.MauXe)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.KhuVuc)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.NamSanXuat)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.TinhNang)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.GiaThue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => xe.TrangThai)
-                    </td>
-                    <td>
-                        <a href="@Url.Action("RegisterOwner","Car")" class="btn">Thêm xe</a>
-                        @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
-                        {
-                            @class = "btn btn-danger",
-                        data_id = xe.BienSoXe,
-                        onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
-                   })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="">
+        <div class="table100 ver2 m-b-110">
+            <table data-vertable="ver2">
+                <thead>
+                    <tr class="row100 head" style="color: white">
+                        <th class="column100 column1">Biển số xe</th>
+                        <th class="column100 column2">Hãng xe</th>
+                        <th class="column100 column3">Màu xe</th>
+                        <th class="column100 column4">Khu vực</th>
+                        <th class="column100 column5">Năm sản xuất</th>
+                        <th class="column100 column6">Tính năng</th>
+                        <th class="column100 column7">Giá thuê</th>
+                        <th class="column100 column8">Trạng thái</th>
+                        <th class="column100 column9">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var xe in Model)
+                    {
+                        <tr class="row100">
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.BienSoXe)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.HangXe)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.MauXe)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.KhuVuc)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.NamSanXuat)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.TinhNang)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.GiaThue)</td>
+                            <td class="column100">@Html.DisplayFor(modelItem => xe.TrangThai)</td>
+                            <td class="column100">
+                                <a href="@Url.Action("RegisterOwner", "Car")" class="btn">Thêm xe</a>
+                                @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
+                                {
+                                    @class = "btn btn-danger",
+                                    data_id = xe.BienSoXe,
+                                    onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                                })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
-else 
+else
 {
-<div class="empty-container">
-    <img loading="lazy" src="https://www.mioto.vn/static/media/empty-mycar.e023e681.svg" alt="">
-    <p>Không tìm thấy xe nào.</p>
-</div>
+    <div class="empty-container">
+        <img loading="lazy" src="https://www.mioto.vn/static/media/empty-mycar.e023e681.svg" alt="">
+        <p>Không tìm thấy xe nào.</p>
+    </div>
 }

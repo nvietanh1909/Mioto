@@ -34,7 +34,7 @@ namespace Mioto.Controllers
         public ActionResult RegisterOwner()
         {
             if (!IsLoggedIn)
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Login", "Account");
             ViewBag.TinhThanhPho = tinhThanhPho;
             return View();
         }
@@ -45,7 +45,7 @@ namespace Mioto.Controllers
         public ActionResult RegisterOwner(MD_ChuXe cx)
         {
             if (!IsLoggedIn)
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             ViewBag.TinhThanhPho = tinhThanhPho;
             try
             {

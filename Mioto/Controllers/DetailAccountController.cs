@@ -112,7 +112,7 @@ namespace Mioto.Controllers
                 }
                 return View(id);
             }
-            catch (Exception ex)
+            catch
             {
                 return View(id);
             }
@@ -280,6 +280,13 @@ namespace Mioto.Controllers
         {
             return View();
         }
-       
+        public ActionResult Logout()
+        {
+            // Xóa tất cả các session của người dùng
+            Session.Clear(); 
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account"); 
+        }
+
     }
 }
