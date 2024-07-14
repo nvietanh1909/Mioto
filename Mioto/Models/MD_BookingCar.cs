@@ -33,8 +33,9 @@ namespace Mioto.Models
             return ValidationResult.Success;
         }
 
-        // Lấy ra Xe và KhachHang
+        // Lấy ra Xe/ChuXe/ThanhToan
         public Xe Xe { get; set; }
-        public KhachHang KhachHang { get; set; }
+        public ChuXe ChuXe { get; set; }
+        public ThanhToan ThanhToan { get; set; }
     }
 }

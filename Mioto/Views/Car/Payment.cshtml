@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@{var xe = Session["Xe"] as Mioto.Models.Xe;}
+
+<h2>Payment</h2>
+
+<div>
+    <h4>Payment Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>ID Đơn Thuê</dt>
+        <dd>@Model.IDDT</dd>
+
+        <dt>Phương thức thanh toán</dt>
+        <dd>@Model.PhuongThuc</dd>
+
+        <dt>Ngày thanh toán</dt>
+        <dd>@Model.NgayTT.ToString("dd/MM/yyyy")</dd>
+
+        <dt>Số tiền</dt>
+        <dd>@xe.GiaThue</dd>
+
+        <dt>Trạng thái</dt>
+        <dd>@Model.TrangThai</dd>
+    </dl>
+</div>
+
+

@@ -45,16 +45,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>Họ tên</dt>
-        <dd>@Model.KhachHang.Ten</dd>
+        <dd>@Model.ChuXe.Ten</dd>
 
         <dt>Email</dt>
-        <dd>@Model.KhachHang.Email</dd>
+        <dd>@Model.ChuXe.Email</dd>
 
         <dt>Số điện thoại</dt>
-        <dd>@Model.KhachHang.SDT</dd>
+        <dd>@Model.ChuXe.SDT</dd>
 
         <dt>Địa chỉ</dt>
-        <dd>@Model.KhachHang.DiaChi</dd>
+        <dd>@Model.ChuXe.DiaChi</dd>
     </dl>
 </div>
 
@@ -74,8 +74,10 @@
         @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
     </div>
 
-    <input type="hidden" name="Xe.BienSoXe" value="@Model.Xe.BienSoXe" />
-    <input type="hidden" name="KhachHang.IDKH" value="@Model.KhachHang.IDKH" />
+    <button type="submit" class="btn btn-primary">CHỌN THUÊ</button>
+}
 
-    <button type="submit" class="btn btn-primary">Thanh toán</button>
+@if (Model.ThanhToan != null && Model.ThanhToan.IDTT > 0)
+{
+    @Html.ActionLink("Thanh toán", "Payment", "Car", new { idtt = Model.ThanhToan.IDTT }, new { @class = "btn btn-primary" })
 }
