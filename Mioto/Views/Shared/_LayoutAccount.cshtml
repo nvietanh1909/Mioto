@@ -102,7 +102,8 @@
                                             </svg>
                                         </div>
                                         <p>
-                                            @Html.ActionLink("Đăng xuất", "Logout", "DetailAccount", null, new { @class = "logout-link" })
+                                            @Html.ActionLink("Đăng xuất", "Logout", "DetailAccount", null, new { @class = "logout-link", onclick = "return confirm('Bạn sẽ đăng xuất ra khỏi tài khoản hiện tại?');" })
+
                                         </p>
                                     </div>
                                 </div>

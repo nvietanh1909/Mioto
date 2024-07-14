@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="wrap-input">
-                            @Html.DropDownListFor(model => model.GioiTinh, new SelectList(new[] { "Nam", "Nữ" }), "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
+                            @Html.DropDownListFor(model => model.GioiTinh, new SelectList(new List<string> { "Nam", "Nữ" }, Model.GioiTinh), new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
                             @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -90,21 +90,22 @@
                             </div>
                         </div>
                         <div class="wrap-input">
-                            <input type="date" class="form-control" name="NgaySinh" value="@Model.NgaySinh?.ToString(" yyyy-MM-dd")" />
+                            @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control", type = "date", @Value = Model.NgaySinh?.ToString("yyyy-MM-dd") })
                             @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
                 </div>
 
-                <div class="wrap-btn btn-register">
-                    <button type="submit" class="btn btn--m btn-primary">Lưu thay đổi</button>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="wrap-btn btn-register" style=" width: 40%; ">
+                        <button type="submit" class="btn btn--m btn-primary">Lưu thay đổi</button>
+                    </div>
+                    <div>
+                        @Html.ActionLink("Quay lại danh sách", "InfoAccount")
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Quay lại danh sách", "InfoAccount")
-</div>

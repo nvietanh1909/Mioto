@@ -136,6 +136,15 @@ namespace Mioto.Controllers
                     db.Entry(kh).State = EntityState.Modified;
                     db.SaveChanges();
 
+                    var existingGPLX = db.GPLX.Find(kh.IDKH);
+                    if (existingGPLX != null)
+                    {
+                        existingGPLX.Ten = kh.Ten;
+                        existingGPLX.NgaySinh = kh.NgaySinh;
+                        db.Entry(existingGPLX).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
                     if (chuxe != null)
                     {
                         var newChuXe = new ChuXe
@@ -276,10 +285,66 @@ namespace Mioto.Controllers
         {
             return View();
         }
+
         public ActionResult ChangePassword()
         {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(MD_ChangePassword model)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var guest = Session["KhachHang"] as KhachHang;
+            var existingKH = db.KhachHang.Find(guest.IDKH);
+            var existingCX = db.ChuXe.Find(guest.IDKH);
+
+            if (guest == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Kiểm tra mật khẩu cũ
+            if (VerifyPassword(guest, model.OldPassword))
+            {
+                if (existingCX == null)
+                {
+                    // Cập nhật mật khẩu mới cho Khách hàng
+                    existingKH.MatKhau = model.NewPassword;
+                    db.Entry(existingKH).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["KhachHang"] = existingKH;
+                }
+                else
+                {
+                    // Cập nhật mật khẩu mới cho Khách hàng
+                    existingKH.MatKhau = model.NewPassword;
+                    db.Entry(existingKH).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["KhachHang"] = existingKH;
+                    // Cập nhật mật khẩu mới cho Chủ xe
+                    existingCX.MatKhau = model.NewPassword;
+                    db.Entry(existingCX).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["ChuXe"] = existingCX;
+                }
+                return RedirectToAction("InfoAccount");
+            }
+            else
+            {
+                // Mật khẩu cũ không đúng
+                ViewBag.ErrorMessage = "Mật khẩu hiện tại không đúng. Vui lòng thử lại.";
+                return View(model);
+            }
+        }
+
         public ActionResult Logout()
         {
             // Xóa tất cả các session của người dùng
@@ -287,6 +352,9 @@ namespace Mioto.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account"); 
         }
-
+        private bool VerifyPassword(KhachHang user, string password)
+        {
+            return user.MatKhau == password;
+        }
     }
 }

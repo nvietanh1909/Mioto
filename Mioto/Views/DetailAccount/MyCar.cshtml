@@ -6,22 +6,25 @@
 @{ var guest = Session["ChuXe"] as Mioto.Models.ChuXe; }
 
 <link href="~/Content/css/table.css" rel="stylesheet" />
-<h2>Danh sách xe của tôi</h2>
+<div class="title" style="display: flex; justify-content: space-between">
+    <div class="title-item">
+        <h5>Danh sách xe của tôi</h5>
+    </div>
+    <a href="@Url.Action("RegisterOwner", "Car")" class="btn btn-primary" style=" font-weight: 300; ">Thêm xe</a>
+</div>
 @if (guest != null)
 {
     <div class="">
         <div class="table100 ver2 m-b-110">
             <table data-vertable="ver2">
                 <thead>
-                    <tr class="row100 head" style="color: white">
+                    <tr class="row100 head" style="color: white; font-weight: 500;">
                         <th class="column100 column1">Biển số xe</th>
                         <th class="column100 column2">Hãng xe</th>
                         <th class="column100 column3">Màu xe</th>
                         <th class="column100 column4">Khu vực</th>
-                        <th class="column100 column5">Năm sản xuất</th>
                         <th class="column100 column6">Tính năng</th>
                         <th class="column100 column7">Giá thuê</th>
-                        <th class="column100 column8">Trạng thái</th>
                         <th class="column100 column9">Hành động</th>
                     </tr>
                 </thead>
@@ -33,16 +36,13 @@
                             <td class="column100">@Html.DisplayFor(modelItem => xe.HangXe)</td>
                             <td class="column100">@Html.DisplayFor(modelItem => xe.MauXe)</td>
                             <td class="column100">@Html.DisplayFor(modelItem => xe.KhuVuc)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.NamSanXuat)</td>
                             <td class="column100">@Html.DisplayFor(modelItem => xe.TinhNang)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.GiaThue)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.TrangThai)</td>
+                            <td class="column100">@string.Format("{0:N0} VNĐ", xe.GiaThue)</td>
                             <td class="column100">
-                                <a href="@Url.Action("RegisterOwner", "Car")" class="btn">Thêm xe</a>
-                                @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-efit" })
                                 @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
                                 {
-                                    @class = "btn btn-danger",
+                                    @class = "btn btn-delete",
                                     data_id = xe.BienSoXe,
                                     onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
                                 })

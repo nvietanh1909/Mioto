@@ -192,6 +192,7 @@
       <DependentUpon>DB_Mioto.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MD_BookingCar.cs" />
+    <Compile Include="Models\MD_ChangePassword.cs" />
     <Compile Include="Models\MD_ChuXe.cs" />
     <Compile Include="Models\MD_KhachHang.cs" />
     <Compile Include="Models\MD_Login.cs" />
