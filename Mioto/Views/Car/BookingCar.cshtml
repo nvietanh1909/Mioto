@@ -1,0 +1,81 @@
+﻿@model Mioto.Models.MD_BookingCar
+
+@{
+    ViewBag.Title = "Booking Car";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+<h2>Booking Car</h2>
+
+<div>
+    <h4>Thông tin xe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Biển số xe</dt>
+        <dd>@Model.Xe.BienSoXe</dd>
+
+        <dt>Hãng xe</dt>
+        <dd>@Model.Xe.HangXe</dd>
+
+        <dt>Mẫu xe</dt>
+        <dd>@Model.Xe.MauXe</dd>
+
+        <dt>Số ghế</dt>
+        <dd>@Model.Xe.SoGhe</dd>
+
+        <dt>Tính năng</dt>
+        <dd>@Model.Xe.TinhNang</dd>
+
+        <dt>Giá thuê</dt>
+        <dd>@Model.Xe.GiaThue</dd>
+
+        <dt>Năm sản xuất</dt>
+        <dd>@Model.Xe.NamSanXuat</dd>
+
+        <dt>Khu vực</dt>
+        <dd>@Model.Xe.KhuVuc</dd>
+
+        <dt>Trạng thái</dt>
+        <dd>@Model.Xe.TrangThai</dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Thông tin chủ xe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Họ tên</dt>
+        <dd>@Model.KhachHang.Ten</dd>
+
+        <dt>Email</dt>
+        <dd>@Model.KhachHang.Email</dd>
+
+        <dt>Số điện thoại</dt>
+        <dd>@Model.KhachHang.SDT</dd>
+
+        <dt>Địa chỉ</dt>
+        <dd>@Model.KhachHang.DiaChi</dd>
+    </dl>
+</div>
+
+@using (Html.BeginForm("BookingCar", "Car", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayThue, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.NgayThue, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NgayThue, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayTra, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
+    </div>
+
+    <input type="hidden" name="Xe.BienSoXe" value="@Model.Xe.BienSoXe" />
+    <input type="hidden" name="KhachHang.IDKH" value="@Model.KhachHang.IDKH" />
+
+    <button type="submit" class="btn btn-primary">Thanh toán</button>
+}

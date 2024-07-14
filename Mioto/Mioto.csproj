@@ -191,9 +191,11 @@
     <Compile Include="Models\MaGiamGia.cs">
       <DependentUpon>DB_Mioto.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MD_BookingCar.cs" />
     <Compile Include="Models\MD_ChuXe.cs" />
     <Compile Include="Models\MD_KhachHang.cs" />
     <Compile Include="Models\MD_Login.cs" />
+    <Compile Include="Models\MD_ThanhToan.cs" />
     <Compile Include="Models\MD_Xe.cs" />
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>DB_Mioto.tt</DependentUpon>
@@ -302,6 +304,7 @@
     <Content Include="Views\DetailAccount\EditInfoUser.cshtml" />
     <Content Include="Views\Home\Car.cshtml" />
     <Content Include="Views\DetailAccount\EditGPLX.cshtml" />
+    <Content Include="Views\Car\BookingCar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -122,6 +122,54 @@ namespace Mioto.Controllers
             return View(xe);
         }
 
-        
+        public ActionResult BookingCar(string BienSoXe)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            var xe = db.Xe.FirstOrDefault(x => x.BienSoXe == BienSoXe);
+            var kh = db.KhachHang.FirstOrDefault(x => x.IDKH == xe.IDCX);
+
+            if (xe == null || kh == null)
+                return HttpNotFound();
+
+            var bookingCarModel = new MD_BookingCar
+            {
+                Xe = xe,
+                KhachHang = kh
+            };
+            return View(bookingCarModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BookingCar(MD_BookingCar model)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            if (ModelState.IsValid)
+            {
+                // Lưu thông tin đơn thuê xe vào cơ sở dữ liệu
+                var donThueXe = new DonThueXe
+                {
+                    IDKH = model.KhachHang.IDKH,
+                    BienSoXe = model.Xe.BienSoXe,
+                    NgayThue = model.NgayThue,
+                    NgayTra = model.NgayTra,
+                    BDT = model.BDT,
+                    TrangThai = "Sẵn sàng"
+                };
+
+                db.DonThueXe.Add(donThueXe);
+                db.SaveChanges();
+
+                TempData["Message"] = "Đặt xe thành công!";
+                return RedirectToAction("Home", "Home");
+            }
+
+            return View(model);
+        }
+
     }
 }
