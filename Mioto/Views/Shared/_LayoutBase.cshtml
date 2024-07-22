@@ -1,5 +1,8 @@
-﻿@{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
-@{var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;}
+﻿﻿@{
+    var khachhang = Session["KhachHang"] as Mioto.Models.KhachHang;
+    var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;
+    var nhanvien = Session["NhanVien"] as Mioto.Models.NhanVien;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,23 +31,35 @@
                     <a href="@Url.Action("IntroOwnerCar", "Home")">Trở thành chủ xe</a>
                 }
                 <div></div>
-                @if (Session["KhachHang"] == null)
+                @if (khachhang == null)
                 {
                     <a href="@Url.Action("Register", "Account")" class="btn btn--s sign-in">Đăng ký</a>
                     <a href="@Url.Action("Login", "Account")" class="btn btn--s">Đăng nhập</a>
                 }
                 else
                 {
-                    if (Session["ChuXe"] != null)
+                    if (chuxe != null)
                     {
                         <a href="@Url.Action("InfoAccount", "DetailAccount")">
-                            <span>Chủ xe: <b>@guest.Ten</b></span>
+                            <span>Chủ xe: <b>@khachhang.Ten</b></span>
                         </a>
                     }
-                    else if (Session["KhachHang"] != null)
+                    else if (khachhang != null)
                     {
                         <a href="@Url.Action("InfoAccount", "DetailAccount")">
-                            <span>Khách hàng: <b>@guest.Ten</b></span>
+                            <span>Khách hàng: <b>@khachhang.Ten</b></span>
+                        </a>
+                    }
+                    else if (nhanvien.ChucVu == "Nhân viên")
+                    {
+                        <a href="@Url.Action("InfoAccount", "DetailAccount")">
+                            <span>@nhanvien.ChucVu: <b>@nhanvien.Ten</b></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("InfoAccount", "DetailAccount")">
+                            <span>@nhanvien.ChucVu: <b>@nhanvien.Ten</b></span>
                         </a>
                     }
                 }

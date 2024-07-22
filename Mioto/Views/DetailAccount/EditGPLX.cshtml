@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="wrap-input">
-                            @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control", type = "date", @Value = Model.NgaySinh?.ToString("yyyy-MM-dd") })
+                            @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control", type = "date", @Value = Model.NgaySinh.ToString("yyyy-MM-dd") })
                             @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
                         </div>
                     </div>

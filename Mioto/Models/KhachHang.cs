@@ -28,7 +28,8 @@ namespace Mioto.Models
         public string Email { get; set; }
         public string SoGPLX { get; set; }
         public string SDT { get; set; }
-        public Nullable<System.DateTime> NgaySinh { get; set; }
+        public System.DateTime NgaySinh { get; set; }
+        public string CCCD { get; set; }
         public string GioiTinh { get; set; }
         public string HinhAnh { get; set; }
         public string MatKhau { get; set; }

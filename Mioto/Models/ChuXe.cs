@@ -28,8 +28,9 @@ namespace Mioto.Models
         public string DiaChi { get; set; }
         public string SoGPLX { get; set; }
         public string MatKhau { get; set; }
+        public string CCCD { get; set; }
         public string GioiTinh { get; set; }
-        public Nullable<System.DateTime> NgaySinh { get; set; }
+        public System.DateTime NgaySinh { get; set; }
         public string HinhAnh { get; set; }
         public string TrangThai { get; set; }
     

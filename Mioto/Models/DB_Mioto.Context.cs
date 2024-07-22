@@ -25,7 +25,6 @@ namespace Mioto.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChiTietDonThueXe> ChiTietDonThueXe { get; set; }
         public virtual DbSet<ChuXe> ChuXe { get; set; }
         public virtual DbSet<DanhGia> DanhGia { get; set; }
         public virtual DbSet<DoanhThuChuXe> DoanhThuChuXe { get; set; }
@@ -35,6 +34,7 @@ namespace Mioto.Models
         public virtual DbSet<KhachHang> KhachHang { get; set; }
         public virtual DbSet<MaGiamGia> MaGiamGia { get; set; }
         public virtual DbSet<NhanVien> NhanVien { get; set; }
+        public virtual DbSet<PhiHuyChuyen> PhiHuyChuyen { get; set; }
         public virtual DbSet<ThanhToan> ThanhToan { get; set; }
         public virtual DbSet<Xe> Xe { get; set; }
     }

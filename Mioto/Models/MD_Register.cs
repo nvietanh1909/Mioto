@@ -1,20 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Mioto.Models
 {
-    public class MD_KhachHang
+    public class MD_Register
     {
-
         [Required(ErrorMessage = "Vui lòng nhập tên của bạn.")]
         [StringLength(255, ErrorMessage = "Độ dài tối đa của {0} là {1} ký tự.")]
         public string Ten { get; set; }
-
-        [Required(ErrorMessage = "Vui lòng nhập địa chỉ của bạn.")]
-        [StringLength(255, ErrorMessage = "Độ dài tối đa của {0} là {1} ký tự.")]
-        public string DiaChi { get; set; }
 
         [Remote("IsEmailAvailable", "Home", HttpMethod = "POST", ErrorMessage = "Email đã tồn tại.")]
         [Required(ErrorMessage = "Vui lòng nhập địa chỉ email của bạn.")]
@@ -27,13 +24,17 @@ namespace Mioto.Models
         [RegularExpression(@"^\d+$", ErrorMessage = "Số điện thoại chỉ chứa chữ số.")]
         public string SDT { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập ngày sinh của bạn.")]
-        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Vui lòng nhập ngày sinh.")]
+        [CustomValidation(typeof(MD_Register), "ValidateAge")]
         public DateTime NgaySinh { get; set; }
 
         [Required(ErrorMessage = "Vui lòng chọn giới tính của bạn.")]
         [StringLength(10, ErrorMessage = "Giới tính không hợp lệ.")]
         public string GioiTinh { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
+        [StringLength(255, ErrorMessage = "Địa chỉ không được vượt quá 255 ký tự.")]
+        public string DiaChi { get; set; } 
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu của bạn.")]
         [DataType(DataType.Password)]
@@ -43,5 +44,14 @@ namespace Mioto.Models
         [DataType(DataType.Password)]
         [System.ComponentModel.DataAnnotations.Compare("MatKhau", ErrorMessage = "Mật khẩu và xác nhận mật khẩu không khớp.")]
         public string ConfirmMatKhau { get; set; }
+
+        public static ValidationResult ValidateAge(DateTime date, ValidationContext context)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - date.Year;
+            if (date > today.AddYears(-age)) age--;
+
+            return age >= 18 ? ValidationResult.Success : new ValidationResult("Bạn phải ít nhất 18 tuổi để đăng ký.");
+        }
     }
 }

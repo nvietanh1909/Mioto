@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -17,6 +18,8 @@ namespace Mioto.Controllers
     {
         DB_MiotoEntities db = new DB_MiotoEntities();
         public bool IsLoggedIn { get => Session["KhachHang"] != null || Session["ChuXe"] != null; }
+        private static readonly HttpClient client = new HttpClient();
+
         List<SelectListItem> tinhThanhPho = new List<SelectListItem>
         {
             new SelectListItem { Text = "TP Hồ Chí Minh", Value = "TP Hồ Chí Minh" },
@@ -37,6 +40,14 @@ namespace Mioto.Controllers
         {
          new SelectListItem { Text = "Nam", Value = "Nam" },
          new SelectListItem { Text = "Nữ", Value = "Nữ" }
+        };
+
+
+        List<SelectListItem> TrangThaiXe = new List<SelectListItem>
+        {
+         new SelectListItem { Text = "Sẵn sàng", Value = "Sẵn sàng" },
+         new SelectListItem { Text = "Bảo trì", Value = "Bảo trì" },
+         new SelectListItem { Text = "Ngưng cho thuê", Value = "Ngưng cho thuê" }
         };
 
         // GET: DetailAccount
@@ -89,6 +100,7 @@ namespace Mioto.Controllers
                     id.SoGPLX = gplx.SoGPLX;
                     id.Ten = gplx.Ten;
                     id.NgaySinh = gplx.NgaySinh;
+                    id.TrangThai = "No";
                     db.Entry(id).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -130,6 +142,7 @@ namespace Mioto.Controllers
                 {
                     var guest = Session["KhachHang"] as KhachHang;
                     var chuxe = Session["ChuXe"] as ChuXe;
+                    kh.CCCD = guest.CCCD;
                     kh.SoGPLX = guest.SoGPLX;
                     kh.MatKhau = guest.MatKhau;
                     kh.IDKH = kh.IDKH;
@@ -156,7 +169,9 @@ namespace Mioto.Controllers
                             DiaChi = kh.DiaChi,
                             MatKhau = kh.MatKhau,
                             GioiTinh = kh.GioiTinh,
+                            CCCD = kh.CCCD,
                             NgaySinh = kh.NgaySinh,
+                            SoGPLX = kh.SoGPLX,
                             TrangThai = "Hoạt động"
                         };
                         db.Entry(newChuXe).State = EntityState.Modified;
@@ -204,6 +219,8 @@ namespace Mioto.Controllers
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
+            ViewBag.TinhThanhPho = tinhThanhPho;
+            ViewBag.TrangThaiXe = TrangThaiXe;
             if (String.IsNullOrEmpty(BienSoXe))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -213,7 +230,6 @@ namespace Mioto.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TinhThanhPho = tinhThanhPho;
             return View(xe);
         }
         // POST: EditCar/MyCar
@@ -225,14 +241,14 @@ namespace Mioto.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            ViewBag.TinhThanhPho = tinhThanhPho;
             try
             {
                 if (ModelState.IsValid)
                 {
                     var guest = Session["KhachHang"] as KhachHang;
                     xe.IDCX = guest.IDKH;
-                    xe.KhuVuc = xe.KhuVuc.ToString();
-                    xe.TrangThai = "Sẵn sàng";
+                    xe.KhuVuc = xe.KhuVuc;
                     db.Entry(xe).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("MyCar");
@@ -356,5 +372,7 @@ namespace Mioto.Controllers
         {
             return user.MatKhau == password;
         }
+        // API Check GPLX
+
     }
 }

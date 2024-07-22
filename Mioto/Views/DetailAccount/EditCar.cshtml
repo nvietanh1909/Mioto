@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="wrap-input">
-                            @Html.TextBoxFor(model => model.GiaThue, "{0:N0}", new { @class = "form-control", placeholder = "Giá cho thuê xe của bạn" })
+                            @Html.TextBoxFor(model => model.GiaThue, new { @class = "form-control", placeholder = "Giá cho thuê xe của bạn" })
                             @Html.ValidationMessageFor(model => model.GiaThue, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -124,10 +124,9 @@
                                 <p>Trạng thái</p>
                             </div>
                         </div>
-                        <div class="wrap-input disabled">
-                            <div class="wrap-text">
-                                <input disabled="" type="text" placeholder="@Model.TrangThai" value="">
-                            </div>
+                        <div class="wrap-input">
+                            @Html.DropDownListFor(model => model.TrangThai, (IEnumerable<SelectListItem>)ViewBag.TrangThaiXe, "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

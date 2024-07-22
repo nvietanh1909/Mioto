@@ -14,7 +14,6 @@ namespace Mioto.Controllers
     public class AccountController : Controller
     {
         DB_MiotoEntities db = new DB_MiotoEntities();
-
         List<SelectListItem> gioitinh = new List<SelectListItem>
         {
          new SelectListItem { Text = "Nam", Value = "Nam" },
@@ -24,7 +23,7 @@ namespace Mioto.Controllers
         // GET: Account/Login
         public ActionResult Login()
         {
-            if (Session["KhachHang"] != null || Session["KhachHang"] != null)
+            if (Session["KhachHang"] != null || Session["NhanVien"] != null)
                 return Logout();
             return View();
         }
@@ -36,13 +35,22 @@ namespace Mioto.Controllers
         {
             var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
             var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
-            if (IsGuest != null)
+            var IsNhanVien = db.NhanVien.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
+            // Khách hàng
+            if(IsGuest != null)
             {
-                //Login thành công
                 Session["KhachHang"] = IsGuest;
                 Session["ChuXe"] = IsChuXe;
                 return RedirectToAction("Home", "Home");
             }
+
+            // Nhân viên
+            if(IsNhanVien != null)
+            {
+                Session["NhanVien"] = IsNhanVien;
+                return RedirectToAction("Home", "Home");
+            }
+            
             ViewBag.ErrorLogin = "Email hoặc mật khẩu không chính xác";
             return View();
         }
@@ -57,7 +65,7 @@ namespace Mioto.Controllers
         // POST: Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(MD_KhachHang kh)
+        public ActionResult Register(MD_Register kh)
         {
             ViewBag.GioiTinh = gioitinh;
             try
@@ -69,7 +77,7 @@ namespace Mioto.Controllers
                         ModelState.AddModelError("Email", "Email đã tồn tại. Vui lòng sử dụng email khác.");
                         return View(kh);
                     }
-                    
+
                     var newKhachHang = new KhachHang
                     {
                         Ten = kh.Ten,
@@ -77,8 +85,10 @@ namespace Mioto.Controllers
                         GioiTinh = kh.GioiTinh,
                         DiaChi = kh.DiaChi,
                         SDT = kh.SDT,
+                        SoGPLX = "No",
                         NgaySinh = kh.NgaySinh,
-                        MatKhau = kh.MatKhau
+                        MatKhau = kh.MatKhau,
+                        CCCD = "No"
                     };
                     db.KhachHang.Add(newKhachHang);
                     db.SaveChanges();
@@ -88,6 +98,8 @@ namespace Mioto.Controllers
                         IDKH = newKhachHang.IDKH,
                         Ten = kh.Ten,
                         NgaySinh = kh.NgaySinh,
+                        SoGPLX = newKhachHang.SoGPLX,
+                        TrangThai = newKhachHang.SoGPLX
                     };
                     db.GPLX.Add(newGPLX);
                     db.SaveChanges();

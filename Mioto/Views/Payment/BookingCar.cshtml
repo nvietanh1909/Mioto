@@ -6,7 +6,6 @@
 }
 
 <h2>Booking Car</h2>
-
 <div>
     <h4>Thông tin xe</h4>
     <hr />
@@ -74,9 +73,15 @@
         @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
     </div>
 
+
     <button type="submit" class="btn btn-primary">CHỌN THUÊ</button>
 }
-
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
 @if (Model.ThanhToan != null && Model.ThanhToan.IDTT > 0)
 {
     @Html.ActionLink("Thanh toán", "Payment", "Car", new { idtt = Model.ThanhToan.IDTT }, new { @class = "btn btn-primary" })

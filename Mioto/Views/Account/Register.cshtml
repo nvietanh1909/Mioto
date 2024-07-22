@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 
-@model Mioto.Models.MD_KhachHang
+@model Mioto.Models.MD_Register
 
 <div class="modal-content" style="width: 50%;">
     <div class="modal-header">
@@ -93,7 +93,10 @@
                             </div>
                         </div>
                         <div class="wrap-input">
-                            @Html.DropDownListFor(model => model.GioiTinh, new SelectList(new[] { "Nam", "Nữ" }), "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
+                            @Html.DropDownListFor(model => model.GioiTinh,
+                                (IEnumerable<SelectListItem>)ViewBag.GioiTinh,
+                                "Chọn...",
+                                new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
                             @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
                         </div>
                     </div>

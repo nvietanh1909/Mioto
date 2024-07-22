@@ -24,10 +24,10 @@ namespace Mioto.Models
         public string BienSoXe { get; set; }
         public string HangXe { get; set; }
         public string MauXe { get; set; }
-        public Nullable<int> NamSanXuat { get; set; }
-        public Nullable<int> SoGhe { get; set; }
+        public int NamSanXuat { get; set; }
+        public int SoGhe { get; set; }
         public string TinhNang { get; set; }
-        public Nullable<decimal> GiaThue { get; set; }
+        public decimal GiaThue { get; set; }
         public string TrangThai { get; set; }
         public int IDCX { get; set; }
         public string HinhAnh { get; set; }

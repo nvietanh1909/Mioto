@@ -15,10 +15,10 @@ namespace Mioto.Models
     public partial class ThanhToan
     {
         public int IDTT { get; set; }
-        public Nullable<int> IDDT { get; set; }
+        public int IDDT { get; set; }
         public string PhuongThuc { get; set; }
-        public Nullable<System.DateTime> NgayTT { get; set; }
-        public Nullable<decimal> SoTien { get; set; }
+        public System.DateTime NgayTT { get; set; }
+        public decimal SoTien { get; set; }
         public string TrangThai { get; set; }
         public Nullable<int> IDMGG { get; set; }
     

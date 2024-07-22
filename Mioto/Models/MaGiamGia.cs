@@ -23,10 +23,10 @@ namespace Mioto.Models
     
         public int IDMGG { get; set; }
         public string Ma { get; set; }
-        public Nullable<int> PhanTramGiam { get; set; }
-        public Nullable<System.DateTime> NgayBatDau { get; set; }
-        public Nullable<System.DateTime> NgayKetThuc { get; set; }
-        public Nullable<int> SoLanSuDung { get; set; }
+        public int PhanTramGiam { get; set; }
+        public System.DateTime NgayBatDau { get; set; }
+        public System.DateTime NgayKetThuc { get; set; }
+        public int SoLanSuDung { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonThueXe> DonThueXe { get; set; }

@@ -15,11 +15,11 @@ namespace Mioto.Models
     public partial class DoanhThuChuXe
     {
         public int IDDTCX { get; set; }
-        public Nullable<int> IDCX { get; set; }
-        public Nullable<decimal> DoanhThuNgay { get; set; }
-        public Nullable<decimal> DoanhThuTuan { get; set; }
-        public Nullable<decimal> DoanhThuThang { get; set; }
-        public Nullable<decimal> DoanhThuNam { get; set; }
+        public int IDCX { get; set; }
+        public decimal DoanhThuNgay { get; set; }
+        public decimal DoanhThuTuan { get; set; }
+        public decimal DoanhThuThang { get; set; }
+        public decimal DoanhThuNam { get; set; }
     
         public virtual ChuXe ChuXe { get; set; }
     }

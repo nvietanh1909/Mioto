@@ -12,11 +12,15 @@ namespace Mioto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ChiTietDonThueXe
+    public partial class PhiHuyChuyen
     {
-        public int ID { get; set; }
-        public Nullable<int> IDDT { get; set; }
-        public Nullable<decimal> TongTien { get; set; }
+        public int IDHC { get; set; }
+        public int IDDT { get; set; }
+        public int LoaiHuyChuyen { get; set; }
+        public int ThoiGianHuy { get; set; }
+        public Nullable<decimal> HoanTien { get; set; }
+        public Nullable<decimal> DenTien { get; set; }
+        public string MoTa { get; set; }
     
         public virtual DonThueXe DonThueXe { get; set; }
     }

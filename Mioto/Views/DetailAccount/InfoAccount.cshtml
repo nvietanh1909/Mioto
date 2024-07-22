@@ -35,10 +35,7 @@
                 <div class="info-box__item">
                     <p>Ngày sinh </p>
                     <p class="main">
-                        @if (guest.NgaySinh.HasValue)
-                        {
-                            @guest.NgaySinh.Value.ToShortDateString()
-                        }
+                        <text>@guest.NgaySinh.ToShortDateString()</text>
                     </p>
                 </div>
                 <div class="info-box__item">
@@ -116,7 +113,7 @@
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        @if (guest.SoGPLX != null)
+                        @if (guest.SoGPLX != "No")
                         {
                             <input disabled="" type="text" placeholder="@guest.SoGPLX" value="">
                         }
@@ -148,10 +145,7 @@
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
                         <span>
-                            @if (guest.NgaySinh.HasValue)
-                            {
-                                @guest.NgaySinh.Value.ToShortDateString()
-                            }
+                            <text>@guest.NgaySinh.ToShortDateString()</text>
                         </span>
                     </div>
                 </div>

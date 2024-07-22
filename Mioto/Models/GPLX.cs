@@ -17,7 +17,7 @@ namespace Mioto.Models
         public int IDGPLX { get; set; }
         public string SoGPLX { get; set; }
         public string Ten { get; set; }
-        public Nullable<System.DateTime> NgaySinh { get; set; }
+        public System.DateTime NgaySinh { get; set; }
         public string HinhAnh { get; set; }
         public string TrangThai { get; set; }
         public int IDKH { get; set; }
