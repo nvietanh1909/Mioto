@@ -17,6 +17,7 @@ namespace Mioto.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ChuXe()
         {
+            this.ChinhSachChietKhau = new HashSet<ChinhSachChietKhau>();
             this.DoanhThuChuXe = new HashSet<DoanhThuChuXe>();
             this.Xe = new HashSet<Xe>();
         }
@@ -34,6 +35,8 @@ namespace Mioto.Models
         public string HinhAnh { get; set; }
         public string TrangThai { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChinhSachChietKhau> ChinhSachChietKhau { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoanhThuChuXe> DoanhThuChuXe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

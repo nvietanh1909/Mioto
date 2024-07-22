@@ -96,17 +96,6 @@
                     <div class="custom-input">
                         <div class="wrap-info">
                             <div class="title-status">
-                                <p>Tính năng</p>
-                            </div>
-                        </div>
-                        <div class="wrap-input">
-                            @Html.EditorFor(model => model.TinhNang, new { @class = "form-control", placeholder = "Tính năng xe của bạn" })
-                            @Html.ValidationMessageFor(model => model.TinhNang, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="custom-input">
-                        <div class="wrap-info">
-                            <div class="title-status">
                                 <p>Giá cho thuê xe</p>
                             </div>
                         </div>
@@ -115,26 +104,51 @@
                             @Html.ValidationMessageFor(model => model.GiaThue, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
 
-                <div class="line-form">
                     <div class="custom-input">
                         <div class="wrap-info">
                             <div class="title-status">
-                                <p>Trạng thái</p>
+                                <p>Đơn giá vận chuyển (số tiền/km di chuyển)</p>
                             </div>
                         </div>
                         <div class="wrap-input">
-                            @Html.DropDownListFor(model => model.TrangThai, (IEnumerable<SelectListItem>)ViewBag.TrangThaiXe, "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
-                            @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(model => model.DonGiaVanChuyen, new { @class = "form-control", placeholder = "Giá cho thuê xe của bạn" })
+                            @Html.ValidationMessageFor(model => model.DonGiaVanChuyen, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
+                    <div class="line-form">
+                        <div class="custom-input">
+                            <div class="wrap-info">
+                                <div class="title-status">
+                                    <p>Tính năng</p>
+                                </div>
+                            </div>
+                            <div class="wrap-input">
+                                @Html.EditorFor(model => model.TinhNang, new { @class = "form-control", placeholder = "Tính năng xe của bạn" })
+                                @Html.ValidationMessageFor(model => model.TinhNang, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="wrap-btn btn-register">
-                    <button type="submit" class="btn btn--m btn-primary">Lưu thay đổi</button>
+                    <div class="line-form">
+                        <div class="custom-input">
+                            <div class="wrap-info">
+                                <div class="title-status">
+                                    <p>Trạng thái</p>
+                                </div>
+                            </div>
+                            <div class="wrap-input">
+                                @Html.DropDownListFor(model => model.TrangThai, (IEnumerable<SelectListItem>)ViewBag.TrangThaiXe, "Chọn...", new { @class = "form-control", style = "font-size: 16px; width: 100%;" })
+                                @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wrap-btn btn-register">
+                        <button type="submit" class="btn btn--m btn-primary">Lưu thay đổi</button>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 }

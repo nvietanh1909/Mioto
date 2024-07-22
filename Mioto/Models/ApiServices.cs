@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -74,7 +75,6 @@ namespace Mioto.Models
             }
         }
 
-        // AddEvent Calendar API
         [HttpPost]
         [Route("api/calendar/addEvent")]
         public IHttpActionResult AddEvent([FromBody] EventRequest request)
@@ -91,6 +91,17 @@ namespace Mioto.Models
                 return NotFound();
             }
 
+            // Kiểm tra xem xe có bị trùng lịch không
+            var overlap = _context.DonThueXe.Any(dtx =>
+                dtx.BienSoXe == request.BienSoXe &&
+                ((request.NgayThue >= dtx.NgayThue && request.NgayThue <= dtx.NgayTra) ||
+                (request.NgayTra >= dtx.NgayThue && request.NgayTra <= dtx.NgayTra)));
+
+            if (overlap)
+            {
+                return Conflict(); // Trả về lỗi trùng lịch
+            }
+
             // Thêm sự kiện vào lịch
             var donThueXe = new DonThueXe
             {
@@ -99,12 +110,8 @@ namespace Mioto.Models
                 NgayThue = request.NgayThue,
                 NgayTra = request.NgayTra,
                 TongTien = CalculateTotalAmount(request.BienSoXe, request.NgayThue, request.NgayTra),
-                TrangThai = 1
-                /*
-                    -- 1 Đặt thuê xe
-                    -- 2 Hủy chuyến
-                    -- 3 Giao xe
-                 */
+                TrangThai = 1,
+                PhanTramHoaHongCTyNhan = 10 // Giả định 10% hoa hồng, bạn có thể thay đổi giá trị này
             };
 
             _context.DonThueXe.Add(donThueXe);
@@ -112,6 +119,8 @@ namespace Mioto.Models
 
             return Ok("Sự kiện đã được thêm vào lịch thành công.");
         }
+
+
 
         private decimal CalculateTotalAmount(string bienSoXe, DateTime ngayThue, DateTime ngayTra)
         {
@@ -129,6 +138,14 @@ namespace Mioto.Models
             return soNgayThue * xe.GiaThue;
         }
 
+        public async Task<HttpResponseMessage> AddEventAsync(EventRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("https://yourapiurl/api/calendar/addEvent", content);
+            return response;
+        }
+
         public class EventRequest
         {
             public string BienSoXe { get; set; }
@@ -136,5 +153,6 @@ namespace Mioto.Models
             public DateTime NgayThue { get; set; }
             public DateTime NgayTra { get; set; }
         }
+        
     }
 }

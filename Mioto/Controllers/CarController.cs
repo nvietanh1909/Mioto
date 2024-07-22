@@ -87,6 +87,7 @@ namespace Mioto.Controllers
                         GiaThue = cx.GiaThue,
                         NamSanXuat = cx.NamSanXuat,
                         KhuVuc = cx.KhuVuc,
+                        DonGiaVanChuyen = 0,
                         TrangThai = "Sẵn sàng"
                     };
                     db.Xe.Add(newCar);

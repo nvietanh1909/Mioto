@@ -32,6 +32,7 @@ namespace Mioto.Models
         public int IDCX { get; set; }
         public string HinhAnh { get; set; }
         public string KhuVuc { get; set; }
+        public decimal DonGiaVanChuyen { get; set; }
     
         public virtual ChuXe ChuXe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

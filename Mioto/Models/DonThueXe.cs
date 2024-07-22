@@ -30,6 +30,7 @@ namespace Mioto.Models
         public int TrangThai { get; set; }
         public Nullable<int> IDMGG { get; set; }
         public decimal TongTien { get; set; }
+        public decimal PhanTramHoaHongCTyNhan { get; set; }
     
         public virtual Xe Xe { get; set; }
         public virtual KhachHang KhachHang { get; set; }

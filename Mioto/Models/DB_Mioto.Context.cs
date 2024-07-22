@@ -25,6 +25,7 @@ namespace Mioto.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ChinhSachChietKhau> ChinhSachChietKhau { get; set; }
         public virtual DbSet<ChuXe> ChuXe { get; set; }
         public virtual DbSet<DanhGia> DanhGia { get; set; }
         public virtual DbSet<DoanhThuChuXe> DoanhThuChuXe { get; set; }

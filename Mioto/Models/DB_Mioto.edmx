@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="DB_MiotoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChinhSachChietKhau">
+          <Key>
+            <PropertyRef Name="IDCSC" />
+          </Key>
+          <Property Name="IDCSC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCX" Type="int" Nullable="false" />
+          <Property Name="LoaiThoiGian" Type="int" Nullable="false" />
+          <Property Name="PhanTramGiam" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="ChuXe">
           <Key>
             <PropertyRef Name="IDCX" />
@@ -68,6 +77,7 @@
           <Property Name="TrangThai" Type="int" Nullable="false" />
           <Property Name="IDMGG" Type="int" />
           <Property Name="TongTien" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PhanTramHoaHongCTyNhan" Type="decimal" Precision="5" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="GPLX">
           <Key>
@@ -162,7 +172,20 @@
           <Property Name="IDCX" Type="int" Nullable="false" />
           <Property Name="HinhAnh" Type="nvarchar(max)" />
           <Property Name="KhuVuc" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DonGiaVanChuyen" Type="decimal" Precision="15" Scale="2" Nullable="false" />
         </EntityType>
+        <Association Name="FK__ChinhSachC__IDCX__534D60F1">
+          <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="1" />
+          <End Role="ChinhSachChietKhau" Type="Self.ChinhSachChietKhau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuXe">
+              <PropertyRef Name="IDCX" />
+            </Principal>
+            <Dependent Role="ChinhSachChietKhau">
+              <PropertyRef Name="IDCX" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__DanhGia__BienSoX__44FF419A">
           <End Role="Xe" Type="Self.Xe" Multiplicity="1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
@@ -308,6 +331,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DB_MiotoModelStoreContainer">
+          <EntitySet Name="ChinhSachChietKhau" EntityType="Self.ChinhSachChietKhau" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChuXe" EntityType="Self.ChuXe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DanhGia" EntityType="Self.DanhGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DoanhThuChuXe" EntityType="Self.DoanhThuChuXe" Schema="dbo" store:Type="Tables" />
@@ -320,6 +344,10 @@
           <EntitySet Name="PhiHuyChuyen" EntityType="Self.PhiHuyChuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Xe" EntityType="Self.Xe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ChinhSachC__IDCX__534D60F1" Association="Self.FK__ChinhSachC__IDCX__534D60F1">
+            <End Role="ChuXe" EntitySet="ChuXe" />
+            <End Role="ChinhSachChietKhau" EntitySet="ChinhSachChietKhau" />
+          </AssociationSet>
           <AssociationSet Name="FK__DanhGia__BienSoX__44FF419A" Association="Self.FK__DanhGia__BienSoX__44FF419A">
             <End Role="Xe" EntitySet="Xe" />
             <End Role="DanhGia" EntitySet="DanhGia" />
@@ -374,6 +402,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_MiotoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChinhSachChietKhau">
+          <Key>
+            <PropertyRef Name="IDCSC" />
+          </Key>
+          <Property Name="IDCSC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCX" Type="Int32" Nullable="false" />
+          <Property Name="LoaiThoiGian" Type="Int32" Nullable="false" />
+          <Property Name="PhanTramGiam" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ChuXe" Relationship="Self.FK__ChinhSachC__IDCX__534D60F1" FromRole="ChinhSachChietKhau" ToRole="ChuXe" />
+        </EntityType>
         <EntityType Name="ChuXe">
           <Key>
             <PropertyRef Name="IDCX" />
@@ -390,6 +428,7 @@
           <Property Name="NgaySinh" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ChinhSachChietKhau" Relationship="Self.FK__ChinhSachC__IDCX__534D60F1" FromRole="ChuXe" ToRole="ChinhSachChietKhau" />
           <NavigationProperty Name="DoanhThuChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__47DBAE45" FromRole="ChuXe" ToRole="DoanhThuChuXe" />
           <NavigationProperty Name="Xe" Relationship="Self.FK__Xe__IDCX__286302EC" FromRole="ChuXe" ToRole="Xe" />
         </EntityType>
@@ -443,6 +482,7 @@
           <Property Name="TrangThai" Type="Int32" Nullable="false" />
           <Property Name="IDMGG" Type="Int32" />
           <Property Name="TongTien" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PhanTramHoaHongCTyNhan" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
           <NavigationProperty Name="Xe" Relationship="Self.FK__DonThueXe__BienS__3A81B327" FromRole="DonThueXe" ToRole="Xe" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK__DonThueXe__IDKH__398D8EEE" FromRole="DonThueXe" ToRole="KhachHang" />
           <NavigationProperty Name="MaGiamGia" Relationship="Self.FK__DonThueXe__IDMGG__3B75D760" FromRole="DonThueXe" ToRole="MaGiamGia" />
@@ -552,10 +592,23 @@
           <Property Name="IDCX" Type="Int32" Nullable="false" />
           <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="KhuVuc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DonGiaVanChuyen" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <NavigationProperty Name="ChuXe" Relationship="Self.FK__Xe__IDCX__286302EC" FromRole="Xe" ToRole="ChuXe" />
           <NavigationProperty Name="DanhGia" Relationship="Self.FK__DanhGia__BienSoX__44FF419A" FromRole="Xe" ToRole="DanhGia" />
           <NavigationProperty Name="DonThueXe" Relationship="Self.FK__DonThueXe__BienS__3A81B327" FromRole="Xe" ToRole="DonThueXe" />
         </EntityType>
+        <Association Name="FK__ChinhSachC__IDCX__534D60F1">
+          <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="1" />
+          <End Role="ChinhSachChietKhau" Type="Self.ChinhSachChietKhau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuXe">
+              <PropertyRef Name="IDCX" />
+            </Principal>
+            <Dependent Role="ChinhSachChietKhau">
+              <PropertyRef Name="IDCX" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__DoanhThuCh__IDCX__47DBAE45">
           <End Role="ChuXe" Type="Self.ChuXe" Multiplicity="1" />
           <End Role="DoanhThuChuXe" Type="Self.DoanhThuChuXe" Multiplicity="*" />
@@ -701,6 +754,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DB_MiotoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChinhSachChietKhau" EntityType="Self.ChinhSachChietKhau" />
           <EntitySet Name="ChuXe" EntityType="Self.ChuXe" />
           <EntitySet Name="DanhGia" EntityType="Self.DanhGia" />
           <EntitySet Name="DoanhThuChuXe" EntityType="Self.DoanhThuChuXe" />
@@ -713,6 +767,10 @@
           <EntitySet Name="PhiHuyChuyen" EntityType="Self.PhiHuyChuyen" />
           <EntitySet Name="ThanhToan" EntityType="Self.ThanhToan" />
           <EntitySet Name="Xe" EntityType="Self.Xe" />
+          <AssociationSet Name="FK__ChinhSachC__IDCX__534D60F1" Association="Self.FK__ChinhSachC__IDCX__534D60F1">
+            <End Role="ChuXe" EntitySet="ChuXe" />
+            <End Role="ChinhSachChietKhau" EntitySet="ChinhSachChietKhau" />
+          </AssociationSet>
           <AssociationSet Name="FK__DoanhThuCh__IDCX__47DBAE45" Association="Self.FK__DoanhThuCh__IDCX__47DBAE45">
             <End Role="ChuXe" EntitySet="ChuXe" />
             <End Role="DoanhThuChuXe" EntitySet="DoanhThuChuXe" />
@@ -768,6 +826,16 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DB_MiotoModelStoreContainer" CdmEntityContainer="DB_MiotoEntities">
+          <EntitySetMapping Name="ChinhSachChietKhau">
+            <EntityTypeMapping TypeName="DB_MiotoModel.ChinhSachChietKhau">
+              <MappingFragment StoreEntitySet="ChinhSachChietKhau">
+                <ScalarProperty Name="IDCSC" ColumnName="IDCSC" />
+                <ScalarProperty Name="IDCX" ColumnName="IDCX" />
+                <ScalarProperty Name="LoaiThoiGian" ColumnName="LoaiThoiGian" />
+                <ScalarProperty Name="PhanTramGiam" ColumnName="PhanTramGiam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ChuXe">
             <EntityTypeMapping TypeName="DB_MiotoModel.ChuXe">
               <MappingFragment StoreEntitySet="ChuXe">
@@ -834,6 +902,7 @@
                 <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="IDMGG" ColumnName="IDMGG" />
                 <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="PhanTramHoaHongCTyNhan" ColumnName="PhanTramHoaHongCTyNhan" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -935,6 +1004,7 @@
                 <ScalarProperty Name="IDCX" ColumnName="IDCX" />
                 <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
                 <ScalarProperty Name="KhuVuc" ColumnName="KhuVuc" />
+                <ScalarProperty Name="DonGiaVanChuyen" ColumnName="DonGiaVanChuyen" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

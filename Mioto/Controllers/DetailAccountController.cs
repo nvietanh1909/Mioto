@@ -62,16 +62,6 @@ namespace Mioto.Controllers
             return View(kh);
         }
 
-        // GET: EditInfoUser/InfoAccount
-        public ActionResult EditInfoUser(int IDKH)
-        {
-            if (!IsLoggedIn)
-                return RedirectToAction("Login", "Account");
-            var id = db.KhachHang.FirstOrDefault(x => x.IDKH == IDKH);
-            ViewBag.GioiTinh = gioitinh;
-            return View(id);
-        }
-
         // GET: EditGPLX/InfoAccount
         public ActionResult EditGPLX(int IDKH)
         {
@@ -80,6 +70,7 @@ namespace Mioto.Controllers
             var id = db.GPLX.FirstOrDefault(x => x.IDKH == IDKH);
             return View(id);
         }
+
         // POST: EditGPLX/InfoAccount
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,6 +119,16 @@ namespace Mioto.Controllers
             {
                 return View(id);
             }
+        }
+
+        // GET: EditInfoUser/InfoAccount
+        public ActionResult EditInfoUser(int IDKH)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            var id = db.KhachHang.FirstOrDefault(x => x.IDKH == IDKH);
+            ViewBag.GioiTinh = gioitinh;
+            return View(id);
         }
         // POST: EditInfoUser/InfoAccount
         [HttpPost]
@@ -361,6 +362,18 @@ namespace Mioto.Controllers
             }
         }
 
+
+        // Thay đổi avatar user
+        public ActionResult ChangeAvatarUser(string filename)
+        {
+            var kh = Session["KhachHang"] as KhachHang;
+            if(kh.HinhAnh == null)
+            {
+
+            }
+            return View();
+
+        }
         public ActionResult Logout()
         {
             // Xóa tất cả các session của người dùng

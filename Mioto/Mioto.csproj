@@ -163,6 +163,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiServices.cs" />
+    <Compile Include="Models\ChinhSachChietKhau.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChuXe.cs">
       <DependentUpon>DB_Mioto.tt</DependentUpon>
     </Compile>
