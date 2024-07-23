@@ -34,9 +34,11 @@ namespace Mioto.Models
         public System.DateTime NgaySinh { get; set; }
         public string HinhAnh { get; set; }
         public string TrangThai { get; set; }
+        public Nullable<int> IDKH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChinhSachChietKhau> ChinhSachChietKhau { get; set; }
+        public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoanhThuChuXe> DoanhThuChuXe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

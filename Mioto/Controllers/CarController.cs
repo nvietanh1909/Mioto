@@ -62,7 +62,7 @@ namespace Mioto.Controllers
                     {
                         var newCX = new ChuXe
                         {
-                            IDCX = guest.IDKH,
+                            IDKH = guest.IDKH,
                             Ten = guest.Ten,
                             Email = guest.Email,
                             SDT = guest.SDT,
@@ -78,7 +78,7 @@ namespace Mioto.Controllers
 
                         var newCar = new Xe
                         {
-                            IDCX = newCX.IDCX,
+                            IDCX = guest.IDKH,
                             BienSoXe = cx.BienSoXe,
                             HangXe = cx.HangXe,
                             MauXe = cx.MauXe,
