@@ -1,26 +1,50 @@
-﻿using Mioto.Models;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Net;
+﻿using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
+using Mioto.Models;
+using System.Net;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace Mioto.Controllers
 {
     public class PaymentController : Controller
     {
-        private DB_MiotoEntities db = new DB_MiotoEntities();
-        private readonly ApiServices _apiServices = new ApiServices();
+        private readonly DB_MiotoEntities db = new DB_MiotoEntities();
+        private readonly CalendarService _calendarService;
 
-        public bool IsLoggedIn { get => Session["KhachHang"] != null || Session["ChuXe"] != null; }
+        public PaymentController()
+        {
+            // Khởi tạo dịch vụ CalendarService bất đồng bộ
+            _calendarService = InitializeCalendarService().GetAwaiter().GetResult();
+        }
+
+        private async Task<CalendarService> InitializeCalendarService()
+        {
+            try
+            {
+                return await GoogleCalendarService.GetCalendarServiceAsync();
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi khi khởi tạo dịch vụ
+                Console.WriteLine($"Error initializing Google Calendar service: {ex.Message}");
+                throw;
+            }
+        }
+
+        public bool IsLoggedIn => Session["KhachHang"] != null || Session["ChuXe"] != null;
 
         public ActionResult InfoCar(string BienSoXe)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
 
-            if (String.IsNullOrEmpty(BienSoXe))
+            if (string.IsNullOrEmpty(BienSoXe))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -44,41 +68,19 @@ namespace Mioto.Controllers
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
 
-            var KhachHang = Session["KhachHang"] as KhachHang;
+            var khachHang = Session["KhachHang"] as KhachHang;
             var xe = db.Xe.FirstOrDefault(x => x.BienSoXe == BienSoXe);
-            var cx = db.ChuXe.FirstOrDefault(x => x.IDCX == xe.IDCX);
-            var gplx = db.GPLX.FirstOrDefault(x => x.IDKH == KhachHang.IDKH);
+            var chuXe = db.ChuXe.FirstOrDefault(x => x.IDCX == xe.IDCX);
 
-            if (xe == null || cx == null)
+            if (xe == null || chuXe == null)
                 return HttpNotFound();
 
-            //Check GPLX
-            if (KhachHang != null)
+            var bookingCarModel = new MD_BookingCar
             {
-                var session = "your_session"; 
-                var donViXuLy = "your_donViXuLy"; 
-                var maHoSo = gplx.SoGPLX;
-
-                var response = await _apiServices.VerifyDrivingLicenseAsync(session, donViXuLy, maHoSo);
-                var jsonResponse = JObject.Parse(response);
-
-                if (jsonResponse["status"].ToString() == "success")
-                {
-                    var bookingCarModel = new MD_BookingCar
-                    {
-                        Xe = xe,
-                        ChuXe = cx,
-                    };
-                    return View(bookingCarModel);
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Giấy phép lái xe chưa được xác thực! Vui lòng xác thực giấy phép lái xe trước khi thuê xe.";
-                    return RedirectToAction("InfoCar", new { BienSoXe = xe.BienSoXe });
-                }
-            }
-
-            return View();
+                Xe = xe,
+                ChuXe = chuXe,
+            };
+            return View(bookingCarModel);
         }
 
         [HttpPost]
@@ -88,32 +90,40 @@ namespace Mioto.Controllers
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
 
+            var khachHang = Session["KhachHang"] as KhachHang;
             if (ModelState.IsValid)
             {
                 var donThueXe = new DonThueXe
                 {
-                    IDKH = bookingCar.ChuXe.IDCX,
+                    IDKH = khachHang.IDKH,
                     BienSoXe = bookingCar.Xe.BienSoXe,
                     NgayThue = bookingCar.NgayThue,
                     NgayTra = bookingCar.NgayTra,
                     BDT = bookingCar.BDT,
                     TrangThai = 1,
                     PhanTramHoaHongCTyNhan = 10,
-                    TongTien = (bookingCar.Xe.GiaThue * (bookingCar.NgayTra - bookingCar.NgayThue).Days)
+                    TongTien = bookingCar.Xe.GiaThue * (bookingCar.NgayTra - bookingCar.NgayThue).Days
                 };
 
                 // Kiểm tra lịch trình xe trước khi đặt xe
-                var eventRequest = new ApiServices.EventRequest
+                var googleEvent = new Event
                 {
-                    BienSoXe = donThueXe.BienSoXe,
-                    IDKH = donThueXe.IDKH,
-                    NgayThue = donThueXe.NgayThue,
-                    NgayTra = donThueXe.NgayTra
+                    Summary = $"Booking for {donThueXe.BienSoXe}",
+                    Start = new EventDateTime()
+                    {
+                        DateTime = donThueXe.NgayThue,
+                        TimeZone = "Asia/Ho_Chi_Minh"
+                    },
+                    End = new EventDateTime()
+                    {
+                        DateTime = donThueXe.NgayTra,
+                        TimeZone = "Asia/Ho_Chi_Minh"
+                    }
                 };
 
-                var addEventResponse = await _apiServices.AddEventAsync(eventRequest);
+                var addEventResponse = await AddEventToGoogleCalendar(googleEvent);
 
-                if (addEventResponse.IsSuccessStatusCode)
+                if (addEventResponse != null)
                 {
                     db.DonThueXe.Add(donThueXe);
                     db.SaveChanges();
@@ -135,8 +145,7 @@ namespace Mioto.Controllers
                 }
                 else
                 {
-                    var errorMessage = await addEventResponse.Content.ReadAsStringAsync();
-                    TempData["ErrorMessage"] = "Xe không khả dụng trong khoảng thời gian đã chọn: " + errorMessage;
+                    TempData["ErrorMessage"] = "Xe không khả dụng trong khoảng thời gian đã chọn.";
                     return RedirectToAction("InfoCar", new { BienSoXe = bookingCar.Xe.BienSoXe });
                 }
             }
@@ -150,10 +159,10 @@ namespace Mioto.Controllers
                 return RedirectToAction("Login", "Account");
 
             var thanhToan = db.ThanhToan.FirstOrDefault(t => t.IDTT == idtt);
-            var dtx = db.DonThueXe.FirstOrDefault(t => t.IDDT == thanhToan.IDDT);
-            var xe = db.Xe.FirstOrDefault(t => t.BienSoXe == dtx.BienSoXe);
+            var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDDT == thanhToan.IDDT);
+            var xe = db.Xe.FirstOrDefault(t => t.BienSoXe == donThueXe.BienSoXe);
 
-            if (thanhToan == null || dtx == null || xe == null)
+            if (thanhToan == null || donThueXe == null || xe == null)
             {
                 return HttpNotFound();
             }
@@ -177,10 +186,26 @@ namespace Mioto.Controllers
                     existingThanhToan.TrangThai = "Yes";
                     db.SaveChanges();
 
-                    var dtx = db.DonThueXe.FirstOrDefault(t => t.IDDT == existingThanhToan.IDDT);
-                    if (dtx != null)
+                    var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDDT == existingThanhToan.IDDT);
+                    if (donThueXe != null)
                     {
-                        var addEventResponse = await AddEventCalendar(dtx);
+                        var googleEvent = new Event
+                        {
+                            Summary = $"Booking for {donThueXe.BienSoXe}",
+                            Start = new EventDateTime()
+                            {
+                                DateTime = donThueXe.NgayThue,
+                                TimeZone = "Asia/Ho_Chi_Minh"
+                            },
+                            End = new EventDateTime()
+                            {
+                                DateTime = donThueXe.NgayTra,
+                                TimeZone = "Asia/Ho_Chi_Minh"
+                            }
+                        };
+
+                        var addEventResponse = await AddEventToGoogleCalendar(googleEvent);
+
                         if (addEventResponse != null)
                         {
                             TempData["Message"] = "Thanh toán thành công và sự kiện đã được thêm vào lịch!";
@@ -199,25 +224,20 @@ namespace Mioto.Controllers
             return View(thanhToan);
         }
 
-        private async Task<string> AddEventCalendar(DonThueXe donThueXe)
+        private async Task<string> AddEventToGoogleCalendar(Event googleEvent)
         {
-            var eventRequest = new ApiServices.EventRequest
+            try
             {
-                BienSoXe = donThueXe.BienSoXe,
-                IDKH = donThueXe.IDKH,
-                NgayThue = donThueXe.NgayThue,
-                NgayTra = donThueXe.NgayTra
-            };
-
-            var response = await _apiServices.AddEventAsync(eventRequest);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsStringAsync();
+                var calendarId = "primary"; // Thay đổi nếu bạn muốn thêm vào lịch khác
+                var request = _calendarService.Events.Insert(googleEvent, calendarId);
+                var eventResponse = await request.ExecuteAsync();
+                return eventResponse.HtmlLink; // Trả về liên kết sự kiện trong lịch
             }
-
-            return null;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding event to Google Calendar: {ex.Message}");
+                return null;
+            }
         }
-
     }
 }

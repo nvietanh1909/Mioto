@@ -5,83 +5,148 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 
-<div>
-    <h4>Thông tin xe</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Biển số xe</dt>
-        <dd>@Model.Xe.BienSoXe</dd>
+<style>
+    .booking-container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        <dt>Hãng xe</dt>
-        <dd>@Model.Xe.HangXe</dd>
+        .booking-container h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
 
-        <dt>Mẫu xe</dt>
-        <dd>@Model.Xe.MauXe</dd>
+        .booking-container dl {
+            margin: 0;
+            padding: 0;
+        }
 
-        <dt>Số ghế</dt>
-        <dd>@Model.Xe.SoGhe</dd>
+        .booking-container dt {
+            font-weight: bold;
+            color: #555;
+        }
 
-        <dt>Tính năng</dt>
-        <dd>@Model.Xe.TinhNang</dd>
+        .booking-container dd {
+            margin: 0 0 10px 0;
+            padding: 0;
+            color: #777;
+        }
 
-        <dt>Giá thuê</dt>
-        <dd>@Model.Xe.GiaThue</dd>
+    .form-group label {
+        font-weight: bold;
+        color: #555;
+    }
 
-        <dt>Năm sản xuất</dt>
-        <dd>@Model.Xe.NamSanXuat</dd>
+    .form-control {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        <dt>Khu vực</dt>
-        <dd>@Model.Xe.KhuVuc</dd>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 4px;
+        color: #fff;
+        text-transform: uppercase;
+    }
 
-        <dt>Trạng thái</dt>
-        <dd>@Model.Xe.TrangThai</dd>
-    </dl>
-</div>
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
 
-<div>
-    <h4>Thông tin chủ xe</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Họ tên</dt>
-        <dd>@Model.ChuXe.Ten</dd>
+    .text-danger {
+        color: #ff0000;
+    }
+</style>
 
-        <dt>Email</dt>
-        <dd>@Model.ChuXe.Email</dd>
-
-        <dt>Số điện thoại</dt>
-        <dd>@Model.ChuXe.SDT</dd>
-
-        <dt>Địa chỉ</dt>
-        <dd>@Model.ChuXe.DiaChi</dd>
-    </dl>
-</div>
-
-@using (Html.BeginForm("BookingCar", "Car", FormMethod.Post))
+@using (Html.BeginForm("BookingCar", "Payment", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-group">
+    <div class="booking-container">
+        <h4>Thông tin xe</h4>
+        <hr />
+        <dl>
+            <dt>Biển số xe</dt>
+            <dd>@Model.Xe.BienSoXe</dd>
+            @Html.HiddenFor(model => model.Xe.BienSoXe)
+
+            <dt>Hãng xe</dt>
+            <dd>@Model.Xe.HangXe</dd>
+            @Html.HiddenFor(model => model.Xe.HangXe)
+
+            <dt>Mẫu xe</dt>
+            <dd>@Model.Xe.MauXe</dd>
+            @Html.HiddenFor(model => model.Xe.MauXe)
+
+            <dt>Số ghế</dt>
+            <dd>@Model.Xe.SoGhe</dd>
+            @Html.HiddenFor(model => model.Xe.SoGhe)
+
+            <dt>Tính năng</dt>
+            <dd>@Model.Xe.TinhNang</dd>
+            @Html.HiddenFor(model => model.Xe.TinhNang)
+
+            <dt>Giá thuê</dt>
+            <dd>@Model.Xe.GiaThue</dd>
+            @Html.HiddenFor(model => model.Xe.GiaThue)
+
+            <dt>Năm sản xuất</dt>
+            <dd>@Model.Xe.NamSanXuat</dd>
+            @Html.HiddenFor(model => model.Xe.NamSanXuat)
+
+            <dt>Khu vực</dt>
+            <dd>@Model.Xe.KhuVuc</dd>
+            @Html.HiddenFor(model => model.Xe.KhuVuc)
+
+            <dt>Trạng thái</dt>
+            <dd>@Model.Xe.TrangThai</dd>
+            @Html.HiddenFor(model => model.Xe.TrangThai)
+        </dl>
+    </div>
+
+    <div class="booking-container" style="margin-top: 20px;">
+        <h4>Thông tin chủ xe</h4>
+        <hr />
+        <dl>
+            <dt>Họ tên</dt>
+            <dd>@Model.ChuXe.Ten</dd>
+            @Html.HiddenFor(model => model.ChuXe.Ten)
+
+            <dt>Email</dt>
+            <dd>@Model.ChuXe.Email</dd>
+            @Html.HiddenFor(model => model.ChuXe.Email)
+
+            <dt>Số điện thoại</dt>
+            <dd>@Model.ChuXe.SDT</dd>
+            @Html.HiddenFor(model => model.ChuXe.SDT)
+
+            <dt>Địa chỉ</dt>
+            <dd>@Model.ChuXe.DiaChi</dd>
+            @Html.HiddenFor(model => model.ChuXe.DiaChi)
+        </dl>
+    </div>
+
+    <div class="form-group" style="margin-top: 20px;">
         @Html.LabelFor(model => model.NgayThue, htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.NgayThue, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.NgayThue, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 20px;">
         @Html.LabelFor(model => model.NgayTra, htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.NgayTra, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.NgayTra, "", new { @class = "text-danger" })
     </div>
 
-
-    <button type="submit" class="btn btn-primary">CHỌN THUÊ</button>
-}
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger">
-        @ViewBag.ErrorMessage
-    </div>
-}
-@if (Model.ThanhToan != null && Model.ThanhToan.IDTT > 0)
-{
-    @Html.ActionLink("Thanh toán", "Payment", "Car", new { idtt = Model.ThanhToan.IDTT }, new { @class = "btn btn-primary" })
+    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">CHỌN THUÊ</button>
 }

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
@@ -33,8 +35,8 @@ namespace Mioto.Models
                     mahoso = maHoSo
                 };
 
-                var json = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
-                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                var json = JsonConvert.SerializeObject(requestBody);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _client.PostAsync("ADAPTER_URL/mapi/g", content);
                 var responseString = await response.Content.ReadAsStringAsync();
@@ -77,7 +79,7 @@ namespace Mioto.Models
 
         [HttpPost]
         [Route("api/calendar/addEvent")]
-        public IHttpActionResult AddEvent([FromBody] EventRequest request)
+        public async Task<IHttpActionResult> AddEventToGoogleCalendarAsync([FromBody] EventRequest request)
         {
             if (request == null || string.IsNullOrEmpty(request.BienSoXe) || request.IDKH <= 0 || request.NgayThue == DateTime.MinValue || request.NgayTra == DateTime.MinValue)
             {
@@ -97,12 +99,33 @@ namespace Mioto.Models
                 ((request.NgayThue >= dtx.NgayThue && request.NgayThue <= dtx.NgayTra) ||
                 (request.NgayTra >= dtx.NgayThue && request.NgayTra <= dtx.NgayTra)));
 
-            if (overlap)
-            {
-                return Conflict(); // Trả về lỗi trùng lịch
-            }
+            // Trả về lỗi trùng lịch
+            if (overlap) return Conflict();
 
-            // Thêm sự kiện vào lịch
+            // Thêm sự kiện vào lịch Google
+            var calendarService = await GoogleCalendarService.GetCalendarServiceAsync();
+            var newEvent = new Event()
+            {
+                Summary = $"Đặt xe {request.BienSoXe}",
+                Location = "Địa chỉ không xác định",
+                Description = $"Khách hàng ID: {request.IDKH}, Ngày thuê: {request.NgayThue.ToShortDateString()}, Ngày trả: {request.NgayTra.ToShortDateString()}",
+                Start = new EventDateTime()
+                {
+                    DateTime = request.NgayThue,
+                    TimeZone = "Asia/Ho_Chi_Minh",
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = request.NgayTra,
+                    TimeZone = "Asia/Ho_Chi_Minh",
+                }
+            };
+
+            var calendarId = "primary"; // Sử dụng lịch chính
+            var insertRequest = calendarService.Events.Insert(newEvent, calendarId);
+            var createdEvent = await insertRequest.ExecuteAsync();
+
+            // Lưu đơn thuê xe vào cơ sở dữ liệu
             var donThueXe = new DonThueXe
             {
                 IDKH = request.IDKH,
@@ -111,16 +134,14 @@ namespace Mioto.Models
                 NgayTra = request.NgayTra,
                 TongTien = CalculateTotalAmount(request.BienSoXe, request.NgayThue, request.NgayTra),
                 TrangThai = 1,
-                PhanTramHoaHongCTyNhan = 10 // Giả định 10% hoa hồng, bạn có thể thay đổi giá trị này
+                PhanTramHoaHongCTyNhan = 10 // Giả định 10% hoa hồng
             };
 
             _context.DonThueXe.Add(donThueXe);
             _context.SaveChanges();
 
-            return Ok("Sự kiện đã được thêm vào lịch thành công.");
+            return Ok($"Sự kiện đã được thêm vào lịch Google thành công: {createdEvent.HtmlLink}");
         }
-
-
 
         private decimal CalculateTotalAmount(string bienSoXe, DateTime ngayThue, DateTime ngayTra)
         {
@@ -142,7 +163,7 @@ namespace Mioto.Models
         {
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("https://yourapiurl/api/calendar/addEvent", content);
+            var response = await _client.PostAsync("https://api.example.com/api/calendar/addEvent", content);
             return response;
         }
 
@@ -153,6 +174,5 @@ namespace Mioto.Models
             public DateTime NgayThue { get; set; }
             public DateTime NgayTra { get; set; }
         }
-        
     }
 }

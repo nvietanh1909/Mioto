@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mioto.Models
 {
@@ -10,6 +8,7 @@ namespace Mioto.Models
         // Đơn thuê xe
         [Required(ErrorMessage = "Ngày thuê là bắt buộc")]
         [DataType(DataType.Date)]
+        [CustomValidation(typeof(MD_BookingCar), "ValidateNgayThue")]
         public DateTime NgayThue { get; set; }
 
         [Required(ErrorMessage = "Ngày trả là bắt buộc")]
@@ -22,7 +21,17 @@ namespace Mioto.Models
 
         public string TrangThai { get; set; }
 
-        // Kiểm tra NgayThue và NgayTra
+        // Kiểm tra NgayThue
+        public static ValidationResult ValidateNgayThue(DateTime ngayThue, ValidationContext context)
+        {
+            if (ngayThue < DateTime.Today)
+            {
+                return new ValidationResult("Ngày thuê phải lớn hơn hoặc bằng ngày hiện tại");
+            }
+            return ValidationResult.Success;
+        }
+
+        // Kiểm tra NgayTra
         public static ValidationResult ValidateNgayTra(DateTime ngayTra, ValidationContext context)
         {
             var instance = context.ObjectInstance as MD_BookingCar;
@@ -36,6 +45,5 @@ namespace Mioto.Models
         // Lấy ra Xe/ChuXe/ThanhToan
         public Xe Xe { get; set; }
         public ChuXe ChuXe { get; set; }
-        public ThanhToan ThanhToan { get; set; }
     }
 }
