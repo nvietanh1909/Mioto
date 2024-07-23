@@ -35,19 +35,19 @@ namespace Mioto.Controllers
         public ActionResult Car(string khuvuc)
         {
             var KhachHang = Session["KhachHang"] as KhachHang;
-            var xe = db.Xe.Where(x => x.IDCX == KhachHang.IDKH);
+            var ChuXe = Session["ChuXe"] as ChuXe;
+            var xe = db.Xe.Where(x => x.IDCX == ChuXe.IDCX);
             var ds_xe = db.Xe.Where(x => x.KhuVuc == khuvuc && x.TrangThai == "Sẵn sàng").ToList();
 
-            if (xe == null || KhachHang == null)
+            if (xe == null || KhachHang == null) return View(ds_xe);
+           
+            if(ChuXe != null)
             {
-                ds_xe = db.Xe.Where(x => x.KhuVuc == khuvuc && x.TrangThai == "Sẵn sàng").ToList();
+                ds_xe = db.Xe.Where(x => x.KhuVuc == khuvuc && x.TrangThai == "Sẵn sàng" && x.IDCX != ChuXe.IDCX).ToList();
                 return View(ds_xe);
             }
-            else
-            {
-                ds_xe = db.Xe.Where(x => x.KhuVuc == khuvuc && x.TrangThai == "Sẵn sàng" && x.IDCX != KhachHang.IDKH).ToList();
-                return View(ds_xe);
-            }
+            else return View(ds_xe);
+
         }
 
         public ActionResult About()

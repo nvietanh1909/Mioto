@@ -75,23 +75,43 @@ namespace Mioto.Controllers
                             TrangThai = "Yes"
                         };
                         db.ChuXe.Add(newCX);
+
+                        var newCar = new Xe
+                        {
+                            IDCX = newCX.IDCX,
+                            BienSoXe = cx.BienSoXe,
+                            HangXe = cx.HangXe,
+                            MauXe = cx.MauXe,
+                            SoGhe = cx.SoGhe,
+                            TinhNang = cx.TinhNang,
+                            GiaThue = cx.GiaThue,
+                            NamSanXuat = cx.NamSanXuat,
+                            KhuVuc = cx.KhuVuc,
+                            DonGiaVanChuyen = 0,
+                            TrangThai = "Sẵn sàng"
+                        };
+                        db.Xe.Add(newCar);
+                        db.SaveChanges();
                     }
-                    var newCar = new Xe
+                    else
                     {
-                        IDCX = guest.IDKH,
-                        BienSoXe = cx.BienSoXe,
-                        HangXe = cx.HangXe,
-                        MauXe = cx.MauXe,
-                        SoGhe = cx.SoGhe,
-                        TinhNang = cx.TinhNang,
-                        GiaThue = cx.GiaThue,
-                        NamSanXuat = cx.NamSanXuat,
-                        KhuVuc = cx.KhuVuc,
-                        DonGiaVanChuyen = 0,
-                        TrangThai = "Sẵn sàng"
-                    };
-                    db.Xe.Add(newCar);
-                    db.SaveChanges();
+                        var newCar = new Xe
+                        {
+                            IDCX = guest.IDKH,
+                            BienSoXe = cx.BienSoXe,
+                            HangXe = cx.HangXe,
+                            MauXe = cx.MauXe,
+                            SoGhe = cx.SoGhe,
+                            TinhNang = cx.TinhNang,
+                            GiaThue = cx.GiaThue,
+                            NamSanXuat = cx.NamSanXuat,
+                            KhuVuc = cx.KhuVuc,
+                            DonGiaVanChuyen = 0,
+                            TrangThai = "Sẵn sàng"
+                        };
+                        db.Xe.Add(newCar);
+                        db.SaveChanges();
+                    }
                     var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
                     var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
                     Session["KhachHang"] = IsGuest;

@@ -207,11 +207,15 @@ namespace Mioto.Controllers
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
-
             var guest = Session["KhachHang"] as KhachHang;
+            var chuxe = Session["ChuXe"] as ChuXe;
             if (guest == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng không tồn tại");
             var cars = db.Xe.Where(x => x.IDCX == guest.IDKH).ToList();
+
+            if (guest != null) return View(cars);
+
+            cars = db.Xe.Where(x => x.IDCX == chuxe.IDCX).ToList();
             return View(cars);
         }
 

@@ -36,22 +36,20 @@
                                 <p>Số Giấy phép lái xe*</p>
                             </div>
                         </div>
-                        <div class="wrap-input">
-                            @if (Model.SoGPLX != "No")
-                            {
-                                <div class="wrap-input">
-                                    @Html.TextBoxFor(model => model.SoGPLX, new { @class = "form-control", @Value = Model.SoGPLX })
-                                    @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="wrap-input">
-                                    @Html.TextBoxFor(model => model.SoGPLX, new { @class = "form-control", @Value = "Nhập GPLX của bạn" })
-                                    @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
-                                </div>
-                            }
-                        </div>
+                        @if (Model.SoGPLX != "No")
+                        {
+                            <div class="wrap-input">
+                                @Html.TextBoxFor(model => model.SoGPLX, new { @class = "form-control", @Value = Model.SoGPLX })
+                                @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="wrap-input">
+                                @Html.TextBoxFor(model => model.SoGPLX, new { @class = "form-control", @Value = "Nhập GPLX của bạn" })
+                                @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="line-form">
