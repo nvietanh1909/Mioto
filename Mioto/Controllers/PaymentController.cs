@@ -17,25 +17,24 @@ namespace Mioto.Controllers
         private readonly DB_MiotoEntities db = new DB_MiotoEntities();
         private readonly CalendarService _calendarService;
 
-        public PaymentController()
-        {
-            // Khởi tạo dịch vụ CalendarService bất đồng bộ
-            _calendarService = InitializeCalendarService().GetAwaiter().GetResult();
-        }
+        //public PaymentController()
+        //{
+        //    _calendarService = InitializeCalendarService().GetAwaiter().GetResult();
+        //}
 
-        private async Task<CalendarService> InitializeCalendarService()
-        {
-            try
-            {
-                return await GoogleCalendarService.GetCalendarServiceAsync();
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi khi khởi tạo dịch vụ
-                Console.WriteLine($"Error initializing Google Calendar service: {ex.Message}");
-                throw;
-            }
-        }
+        //private async Task<CalendarService> InitializeCalendarService()
+        //{
+        //    try
+        //    {
+        //        return await GoogleCalendarService.GetCalendarServiceAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Xử lý lỗi khi khởi tạo dịch vụ
+        //        Console.WriteLine($"Error initializing Google Calendar service: {ex.Message}");
+        //        throw;
+        //    }
+        //}
 
         public bool IsLoggedIn => Session["KhachHang"] != null || Session["ChuXe"] != null;
 
@@ -63,6 +62,13 @@ namespace Mioto.Controllers
             return View(xe);
         }
 
+        public ActionResult Alert()
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            return View();
+        }
+
         public async Task<ActionResult> BookingCar(string BienSoXe)
         {
             if (!IsLoggedIn)
@@ -74,7 +80,20 @@ namespace Mioto.Controllers
 
             if (xe == null || chuXe == null)
                 return HttpNotFound();
-
+            if (khachHang != null)
+            {
+                if (khachHang.CCCD == "No" || khachHang.SoGPLX == "No")
+                {
+                    return RedirectToAction("Alert", "Payment");
+                }
+            }
+            else if (chuXe != null)
+            {
+                if (chuXe.CCCD == "No" || chuXe.SoGPLX == "No")
+                {
+                    return RedirectToAction("Alert", "Payment");
+                }
+            }
             var bookingCarModel = new MD_BookingCar
             {
                 Xe = xe,
@@ -93,6 +112,7 @@ namespace Mioto.Controllers
             var khachHang = Session["KhachHang"] as KhachHang;
             if (ModelState.IsValid)
             {
+
                 var donThueXe = new DonThueXe
                 {
                     IDKH = khachHang.IDKH,

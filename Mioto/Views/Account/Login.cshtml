@@ -22,8 +22,8 @@
                         </div>
                         <div class="wrap-input">
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email", autofocus = "autofocus" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -36,8 +36,8 @@
                         </div>
                         <div class="wrap-input">
                             @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
-                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
                         </div>
+                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 if (ViewBag.ErrorLogin != null)

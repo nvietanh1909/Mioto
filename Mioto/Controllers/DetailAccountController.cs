@@ -143,7 +143,7 @@ namespace Mioto.Controllers
                 {
                     var guest = Session["KhachHang"] as KhachHang;
                     var chuxe = Session["ChuXe"] as ChuXe;
-                    kh.CCCD = guest.CCCD;
+                    kh.CCCD = kh.CCCD;
                     kh.SoGPLX = guest.SoGPLX;
                     kh.MatKhau = guest.MatKhau;
                     kh.IDKH = kh.IDKH;

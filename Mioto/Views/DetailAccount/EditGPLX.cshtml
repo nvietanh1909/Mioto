@@ -37,8 +37,20 @@
                             </div>
                         </div>
                         <div class="wrap-input">
-                            @Html.EditorFor(model => model.SoGPLX, new { @class = "form-control", placeholder = "Số Giấy phép lái xe của bạn" })
-                            @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
+                            @if (Model.SoGPLX != "No")
+                            {
+                                <div class="wrap-input">
+                                    @Html.TextBoxFor(model => model.SoGPLX, new { @class = "form-control", @Value = Model.SoGPLX })
+                                    @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="wrap-input">
+                                    @Html.TextBoxFor(model => model.SoGPLX, new { @class = "form-control", @Value = "Nhập GPLX của bạn" })
+                                    @Html.ValidationMessageFor(model => model.SoGPLX, "", new { @class = "text-danger" })
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

@@ -121,7 +121,7 @@ namespace Mioto.Models
                 }
             };
 
-            var calendarId = "primary"; // Sử dụng lịch chính
+            var calendarId = "primary";
             var insertRequest = calendarService.Events.Insert(newEvent, calendarId);
             var createdEvent = await insertRequest.ExecuteAsync();
 
@@ -134,7 +134,7 @@ namespace Mioto.Models
                 NgayTra = request.NgayTra,
                 TongTien = CalculateTotalAmount(request.BienSoXe, request.NgayThue, request.NgayTra),
                 TrangThai = 1,
-                PhanTramHoaHongCTyNhan = 10 // Giả định 10% hoa hồng
+                PhanTramHoaHongCTyNhan = 10 //Hoa hồng 10%
             };
 
             _context.DonThueXe.Add(donThueXe);

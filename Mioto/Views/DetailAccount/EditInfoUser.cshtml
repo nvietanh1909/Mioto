@@ -86,6 +86,30 @@
                     <div class="custom-input">
                         <div class="wrap-info">
                             <div class="title-status">
+                                <p>Căn cước công dân</p>
+                            </div>
+                        </div>
+                        @if (Model.CCCD != "No")
+                        {
+                            <div class="wrap-input">
+                                @Html.TextBoxFor(model => model.CCCD, new { @class = "form-control", @Value = Model.CCCD })
+                                @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="wrap-input">
+                                @Html.TextBoxFor(model => model.CCCD, new { @class = "form-control", @Value = "Nhập CCCD của bạn" })
+                                @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
                                 <p>Ngày sinh</p>
                             </div>
                         </div>

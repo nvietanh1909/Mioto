@@ -340,6 +340,7 @@
     <Content Include="Views\Payment\InfoCar.cshtml" />
     <Content Include="Views\Payment\BookingCar.cshtml" />
     <Content Include="Views\Payment\Payment.cshtml" />
+    <Content Include="Views\Payment\Alert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
