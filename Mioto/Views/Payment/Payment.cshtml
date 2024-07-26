@@ -1,31 +1,84 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
-@{var xe = Session["Xe"] as Mioto.Models.Xe;}
 
-<h2>Payment</h2>
+@model Mioto.Models.MD_Payment
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div>
-    <h4>Payment Details</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>ID Đơn Thuê</dt>
-        <dd>@Model.IDDT</dd>
+@using (Html.BeginForm("Payment", "Payment", FormMethod.Post, new { @class = "payment-form" }))
+{
+    @Html.AntiForgeryToken()
 
-        <dt>Phương thức thanh toán</dt>
-        <dd>@Model.PhuongThuc</dd>
+    @Html.HiddenFor(model => model.IDDT) <!-- Hidden field để gửi ID của đơn thuê xe -->
 
-        <dt>Ngày thanh toán</dt>
-        <dd>@Model.NgayTT.ToString("dd/MM/yyyy")</dd>
+    <!-- Mã giảm giá -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaGiamGia, "Mã giảm giá")
+        @Html.TextBoxFor(model => model.MaGiamGia, new { @class = "form-control", placeholder = "Nhập mã giảm giá", id = "discountCode" })
+        <button type="button" class="btn btn-secondary" id="applyDiscount">Áp dụng mã giảm giá</button>
+    </div>
 
-        <dt>Số tiền</dt>
-        <dd>@xe.GiaThue</dd>
+    <!-- Phương thức thanh toán -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhuongThuc, "Phương thức thanh toán")
+        @Html.DropDownListFor(model => model.PhuongThuc, new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Credit Card", Value = "Credit Card" },
+            new SelectListItem { Text = "PayPal", Value = "PayPal" },
+            // Thêm các phương thức thanh toán khác nếu cần
+        }, new { @class = "form-control" })
+    </div>
 
-        <dt>Trạng thái</dt>
-        <dd>@Model.TrangThai</dd>
-    </dl>
-</div>
+    <!-- Số tiền thanh toán -->
+    <div class="form-group">
+        @Html.HiddenFor(model => model.SoTien) <!-- Số tiền sẽ được tính lại sau khi áp dụng mã giảm giá -->
+        @Html.LabelFor(model => model.SoTien, "Số tiền")
+        <h6>Hiển thị số tiền đã tính</h6>
+        <p id="totalAmount">@Model.SoTien.ToString("0,0") VNĐ</p> <!-- Hiển thị số tiền đã tính -->
+    </div>
 
+    <!-- Nút gửi form -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Thanh toán</button>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#applyDiscount').on('click', function () {
+                var discountCode = $('#discountCode').val();
+                var totalAmountElement = $('#totalAmount');
+                var originalAmount = parseFloat($('input[name="SoTien"]').val()); // Số tiền gốc
+
+                // Gửi yêu cầu Ajax để kiểm tra mã giảm giá
+                $.ajax({
+                    url: '@Url.Action("ValidateDiscountCode", "Payment")',
+                    type: 'POST',
+                    data: {
+                        discountCode: discountCode
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            var discountedAmount = originalAmount - (originalAmount * response.discountPercent / 100);
+                            if (discountedAmount < 0) discountedAmount = 0;
+
+                            // Cập nhật số tiền hiển thị
+                            totalAmountElement.text(discountedAmount.toFixed(2) + " VNĐ");
+
+                            // Cập nhật giá trị số tiền trong form
+                            $('input[name="SoTien"]').val(discountedAmount.toFixed(2));
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Đã xảy ra lỗi.');
+                    }
+                });
+            });
+        });
+    </script>
+}
 

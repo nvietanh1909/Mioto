@@ -9,33 +9,13 @@ using Mioto.Models;
 using System.Net;
 using System.Web.Mvc;
 using System.Linq;
+using System.Data.Entity;
 
 namespace Mioto.Controllers
 {
     public class PaymentController : Controller
     {
         private readonly DB_MiotoEntities db = new DB_MiotoEntities();
-        private readonly CalendarService _calendarService;
-
-        //public PaymentController()
-        //{
-        //    _calendarService = InitializeCalendarService().GetAwaiter().GetResult();
-        //}
-
-        //private async Task<CalendarService> InitializeCalendarService()
-        //{
-        //    try
-        //    {
-        //        return await GoogleCalendarService.GetCalendarServiceAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Xử lý lỗi khi khởi tạo dịch vụ
-        //        Console.WriteLine($"Error initializing Google Calendar service: {ex.Message}");
-        //        throw;
-        //    }
-        //}
-
         public bool IsLoggedIn => Session["KhachHang"] != null || Session["ChuXe"] != null;
 
         public ActionResult InfoCar(string BienSoXe)
@@ -69,7 +49,7 @@ namespace Mioto.Controllers
             return View();
         }
 
-        public async Task<ActionResult> BookingCar(string BienSoXe)
+        public ActionResult BookingCar(string BienSoXe)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
@@ -104,7 +84,7 @@ namespace Mioto.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> BookingCar(MD_BookingCar bookingCar)
+        public ActionResult BookingCar(MD_BookingCar bookingCar)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
@@ -112,7 +92,19 @@ namespace Mioto.Controllers
             var khachHang = Session["KhachHang"] as KhachHang;
             if (ModelState.IsValid)
             {
+                // Kiểm tra xe
+                var isAvailableXe = !db.DonThueXe.Any(d => d.BienSoXe == bookingCar.Xe.BienSoXe &&
+                                              ((d.NgayThue < bookingCar.NgayTra && d.NgayTra > bookingCar.NgayThue) ||
+                                               (d.NgayThue < bookingCar.NgayThue && d.NgayTra > bookingCar.NgayThue) ||
+                                               (d.NgayThue < bookingCar.NgayTra && d.NgayTra > bookingCar.NgayTra)));
 
+                if (!isAvailableXe)
+                {
+                    ModelState.AddModelError("", "Xe không còn khả dụng trong khoảng thời gian này.");
+                    return View(bookingCar);
+                }
+
+                // Tạo đơn thuê xe
                 var donThueXe = new DonThueXe
                 {
                     IDKH = khachHang.IDKH,
@@ -120,144 +112,160 @@ namespace Mioto.Controllers
                     NgayThue = bookingCar.NgayThue,
                     NgayTra = bookingCar.NgayTra,
                     BDT = bookingCar.BDT,
-                    TrangThai = 1,
+                    TrangThai = 1, 
                     PhanTramHoaHongCTyNhan = 10,
                     TongTien = bookingCar.Xe.GiaThue * (bookingCar.NgayTra - bookingCar.NgayThue).Days
                 };
 
-                // Kiểm tra lịch trình xe trước khi đặt xe
-                var googleEvent = new Event
-                {
-                    Summary = $"Booking for {donThueXe.BienSoXe}",
-                    Start = new EventDateTime()
-                    {
-                        DateTime = donThueXe.NgayThue,
-                        TimeZone = "Asia/Ho_Chi_Minh"
-                    },
-                    End = new EventDateTime()
-                    {
-                        DateTime = donThueXe.NgayTra,
-                        TimeZone = "Asia/Ho_Chi_Minh"
-                    }
-                };
+                // Thêm đơn thuê xe vào cơ sở dữ liệu
+                db.DonThueXe.Add(donThueXe);
+                db.SaveChanges();
 
-                var addEventResponse = await AddEventToGoogleCalendar(googleEvent);
-
-                if (addEventResponse != null)
-                {
-                    db.DonThueXe.Add(donThueXe);
-                    db.SaveChanges();
-
-                    var thanhToan = new ThanhToan
-                    {
-                        IDDT = donThueXe.IDDT,
-                        NgayTT = DateTime.Now,
-                        SoTien = donThueXe.TongTien,
-                        TrangThai = "No",
-                        PhuongThuc = "Online"
-                    };
-
-                    db.ThanhToan.Add(thanhToan);
-                    db.SaveChanges();
-
-                    TempData["Message"] = "Đặt xe thành công! Vui lòng thanh toán để hoàn tất giao dịch.";
-                    return RedirectToAction("Payment", new { idtt = thanhToan.IDTT });
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Xe không khả dụng trong khoảng thời gian đã chọn.";
-                    return RedirectToAction("InfoCar", new { BienSoXe = bookingCar.Xe.BienSoXe });
-                }
+                // Có thể chuyển hướng hoặc thông báo thành công
+                return RedirectToAction("Payment", new { iddt = donThueXe.IDDT });
             }
 
+            // Nếu model không hợp lệ, trở lại view với thông báo lỗi
             return View(bookingCar);
         }
 
-        public ActionResult Payment(int idtt)
+
+        public ActionResult Payment(int iddt)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
 
-            var thanhToan = db.ThanhToan.FirstOrDefault(t => t.IDTT == idtt);
-            var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDDT == thanhToan.IDDT);
-            var xe = db.Xe.FirstOrDefault(t => t.BienSoXe == donThueXe.BienSoXe);
+            var khachHang = Session["KhachHang"] as KhachHang;
+            if (khachHang == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-            if (thanhToan == null || donThueXe == null || xe == null)
+            var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDDT == iddt);
+            if (donThueXe == null)
             {
                 return HttpNotFound();
             }
 
+            var xe = db.Xe.FirstOrDefault(t => t.BienSoXe == donThueXe.BienSoXe);
+            if (xe == null)
+            {
+                return HttpNotFound();
+            }
+
+            var thanhToan = new MD_Payment
+            {
+                IDDT = donThueXe.IDDT,
+                PhuongThuc = "Chưa xác định", // Có thể để người dùng chọn phương thức thanh toán
+                NgayTT = DateTime.Now,
+                SoTien = donThueXe.TongTien,
+                TrangThai = "Chưa thanh toán",
+            };
+
+            // Lưu trữ xe trong Session nếu cần thiết
             Session["Xe"] = xe;
+
+            // Truyền thông tin thanh toán tới View để hiển thị form thanh toán
             return View(thanhToan);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Payment(ThanhToan thanhToan)
+        public ActionResult Payment(MD_Payment thanhToan)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
 
             if (ModelState.IsValid)
             {
+                // Tìm mã giảm giá (nếu có)
+                MaGiamGia maGiamGia = null;
+                if (!string.IsNullOrEmpty(thanhToan.MaGiamGia))
+                {
+                    maGiamGia = db.MaGiamGia.FirstOrDefault(m => m.Ma == thanhToan.MaGiamGia);
+                }
+
+                // Tìm đơn thuê xe
+                var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDDT == thanhToan.IDDT);
+                if (donThueXe == null)
+                {
+                    ModelState.AddModelError("", "Không tìm thấy đơn thuê xe.");
+                    return View(thanhToan);
+                }
+
+                // Tính toán số tiền thanh toán
+                var soTien = donThueXe.TongTien;
+                if (maGiamGia != null)
+                {
+                    // Áp dụng giảm giá
+                    soTien = thanhToan.SoTien;
+                    if (soTien < 0) soTien = 0;
+                    donThueXe.TongTien = soTien;
+                    donThueXe.IDMGG = maGiamGia.IDMGG;
+                    db.Entry(donThueXe).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                // Cập nhật thanh toán trong cơ sở dữ liệu
                 var existingThanhToan = db.ThanhToan.FirstOrDefault(t => t.IDTT == thanhToan.IDTT);
                 if (existingThanhToan != null)
                 {
-                    existingThanhToan.TrangThai = "Yes";
+                    existingThanhToan.TrangThai = "Đã thanh toán";
+                    existingThanhToan.SoTien = soTien; 
+                    existingThanhToan.NgayTT = DateTime.Now;
+                    db.Entry(existingThanhToan).State = EntityState.Modified;
                     db.SaveChanges();
-
-                    var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDDT == existingThanhToan.IDDT);
-                    if (donThueXe != null)
-                    {
-                        var googleEvent = new Event
-                        {
-                            Summary = $"Booking for {donThueXe.BienSoXe}",
-                            Start = new EventDateTime()
-                            {
-                                DateTime = donThueXe.NgayThue,
-                                TimeZone = "Asia/Ho_Chi_Minh"
-                            },
-                            End = new EventDateTime()
-                            {
-                                DateTime = donThueXe.NgayTra,
-                                TimeZone = "Asia/Ho_Chi_Minh"
-                            }
-                        };
-
-                        var addEventResponse = await AddEventToGoogleCalendar(googleEvent);
-
-                        if (addEventResponse != null)
-                        {
-                            TempData["Message"] = "Thanh toán thành công và sự kiện đã được thêm vào lịch!";
-                        }
-                        else
-                        {
-                            TempData["Message"] = "Thanh toán thành công nhưng không thể thêm sự kiện vào lịch.";
-                        }
-                    }
                 }
-
+                else
+                {
+                    var newThanhToan = new ThanhToan
+                    {
+                        NgayTT = thanhToan.NgayTT,
+                        TrangThai = "Đã thanh toán",
+                        PhuongThuc = thanhToan.PhuongThuc,
+                        IDDT = donThueXe.IDDT,
+                        SoTien = thanhToan.SoTien,
+                        IDMGG = maGiamGia.IDMGG
+                    };
+                    db.ThanhToan.Add(newThanhToan);
+                    db.SaveChanges();
+                }
                 TempData["Message"] = "Thanh toán thành công!";
-                return RedirectToAction("Home", "Home");
+                return View("CongratulationPaymentDone");
             }
-
-            return View(thanhToan);
+            return RedirectToAction("Home", "Home");
         }
 
-        private async Task<string> AddEventToGoogleCalendar(Event googleEvent)
+        public ActionResult CongratulationPaymentDone()
         {
-            try
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ValidateDiscountCode(string discountCode)
+        {
+            // Tìm mã giảm giá trong cơ sở dữ liệu
+            var discount = db.MaGiamGia.FirstOrDefault(m => m.Ma == discountCode);
+
+            if (discount == null)
             {
-                var calendarId = "primary"; // Thay đổi nếu bạn muốn thêm vào lịch khác
-                var request = _calendarService.Events.Insert(googleEvent, calendarId);
-                var eventResponse = await request.ExecuteAsync();
-                return eventResponse.HtmlLink; // Trả về liên kết sự kiện trong lịch
+                return Json(new { success = false, message = "Mã giảm giá không hợp lệ." });
             }
-            catch (Exception ex)
+
+            if (discount.SoLanSuDung <= 0)
             {
-                Console.WriteLine($"Error adding event to Google Calendar: {ex.Message}");
-                return null;
+                return Json(new { success = false, message = "Mã giảm giá đã hết hạn sử dụng." });
             }
+
+            // Giảm số lần sử dụng mã giảm giá
+            discount.SoLanSuDung--;
+            db.Entry(discount).State = EntityState.Modified;
+            db.SaveChanges();
+
+            // Trả về thông tin giảm giá
+            return Json(new { success = true, discountPercent = discount.PhanTramGiam });
         }
     }
 }

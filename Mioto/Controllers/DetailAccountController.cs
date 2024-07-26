@@ -1,9 +1,11 @@
-﻿using Mioto.Models;
+﻿using Google;
+using Mioto.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -62,6 +64,63 @@ namespace Mioto.Controllers
             return View(kh);
         }
 
+        // GET: EditCCCD/InfoAccount
+        public ActionResult EditCCCD(int IDKH)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            var id = db.CCCD.FirstOrDefault(x => x.IDKH == IDKH);
+            return View(id);
+        }
+        // POST: EditGPLX/InfoAccount
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCCCD(CCCD cccd)
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Home");
+            var id = db.CCCD.FirstOrDefault(x => x.IDKH == cccd.IDKH);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Lấy ID khách hàng và chủ xe
+                    var guest = db.KhachHang.FirstOrDefault(x => x.IDKH == cccd.IDKH);
+                    var chuxe = db.ChuXe.FirstOrDefault(x => x.IDCX == guest.IDKH);
+
+                    id.IDKH = cccd.IDKH;
+                    id.SoCCCD = cccd.SoCCCD;
+                    id.Ten = cccd.Ten;
+                    id.NgaySinh = cccd.NgaySinh;
+                    id.TrangThai = "No";
+                    db.Entry(id).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    if (guest != null)
+                    {
+                        guest.CCCD = cccd.SoCCCD;
+                        db.Entry(guest).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    if (chuxe != null)
+                    {
+                        chuxe.CCCD = cccd.SoCCCD;
+                        db.Entry(chuxe).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    // Cập nhật lại Session
+                    Session["KhachHang"] = guest;
+                    Session["ChuXe"] = chuxe;
+                    return RedirectToAction("InfoAccount");
+                }
+                return View(id);
+            }
+            catch
+            {
+                return View(id);
+            }
+        }
         // GET: EditGPLX/InfoAccount
         public ActionResult EditGPLX(int IDKH)
         {
@@ -143,10 +202,11 @@ namespace Mioto.Controllers
                 {
                     var guest = Session["KhachHang"] as KhachHang;
                     var chuxe = Session["ChuXe"] as ChuXe;
-                    kh.CCCD = kh.CCCD;
                     kh.SoGPLX = guest.SoGPLX;
                     kh.MatKhau = guest.MatKhau;
                     kh.IDKH = kh.IDKH;
+                    kh.CCCD = guest.CCCD;
+                    kh.HinhAnh = guest.HinhAnh;
                     db.Entry(kh).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -170,9 +230,10 @@ namespace Mioto.Controllers
                             DiaChi = kh.DiaChi,
                             MatKhau = kh.MatKhau,
                             GioiTinh = kh.GioiTinh,
-                            CCCD = kh.CCCD,
                             NgaySinh = kh.NgaySinh,
                             SoGPLX = kh.SoGPLX,
+                            CCCD = kh.CCCD,
+                            HinhAnh = guest.HinhAnh,
                             TrangThai = "Hoạt động"
                         };
                         db.Entry(newChuXe).State = EntityState.Modified;
@@ -212,10 +273,11 @@ namespace Mioto.Controllers
             if (guest == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng không tồn tại");
             var cars = db.Xe.Where(x => x.IDCX == guest.IDKH).ToList();
-
-            if (guest != null) return View(cars);
-
-            cars = db.Xe.Where(x => x.IDCX == chuxe.IDCX).ToList();
+            if (chuxe != null)
+            {
+                cars = db.Xe.Where(x => x.IDCX == chuxe.IDCX).ToList();
+                return View(cars);
+            }
             return View(cars);
         }
 
@@ -289,10 +351,21 @@ namespace Mioto.Controllers
             }
         }
 
-       
         public ActionResult MyTrip()
         {
-            return View();
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            var guest = Session["KhachHang"] as KhachHang;
+            var chuxe = Session["ChuXe"] as ChuXe;
+            if (guest == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng không tồn tại");
+            var donthuexe = db.DonThueXe.Where(x => x.IDKH == guest.IDKH).ToList();
+            if (chuxe != null)
+            {
+                donthuexe = db.DonThueXe.Where(x => x.IDKH == chuxe.IDKH).ToList();
+                return View(donthuexe);
+            }
+            return View(donthuexe);
         }
         public ActionResult LongTermOrder()
         {
@@ -366,18 +439,70 @@ namespace Mioto.Controllers
             }
         }
 
-
         // Thay đổi avatar user
-        public ActionResult ChangeAvatarUser(string filename)
+        [HttpPost]
+        public ActionResult ChangeAvatarUser(HttpPostedFileBase avatar)
         {
-            var kh = Session["KhachHang"] as KhachHang;
-            if(kh.HinhAnh == null)
+            // Kiểm tra xem file có tồn tại không
+            if (avatar != null && avatar.ContentLength > 0)
             {
+                // Kiểm tra định dạng file (chỉ cho phép các định dạng ảnh phổ biến)
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(avatar.FileName).ToLower();
 
+                if (allowedExtensions.Contains(extension))
+                {
+                    // Tạo tên file duy nhất để tránh trùng lặp
+                    var fileName = Guid.NewGuid().ToString() + extension;
+
+                    // Đường dẫn lưu file
+                    var path = Path.Combine(Server.MapPath("~/AvatarUser/"), fileName);
+
+                    // Lưu file lên server
+                    avatar.SaveAs(path);
+
+                    // Cập nhật thông tin hình ảnh của khách hàng trong cơ sở dữ liệu
+                    var guest = Session["KhachHang"] as KhachHang;
+                    var existingKH = db.KhachHang.Find(guest.IDKH);
+                    var existingCX = db.ChuXe.Find(guest.IDKH);
+
+                    if (existingKH != null)
+                    {
+                        // Lưu tên file vào cơ sở dữ liệu (lưu ý bạn cần cập nhật entity và save change)
+                        existingKH.HinhAnh = fileName;
+
+                        // Kiểm tra chủ xe
+                        if(existingCX != null)
+                        {
+                            existingCX.HinhAnh = fileName;
+                            db.Entry(existingCX).State = EntityState.Modified;
+                            Session["ChuXe"] = existingCX;
+                        }
+                        // Cập nhật cơ sở dữ liệu
+
+                        Session["KhachHang"] = existingKH;
+                        db.Entry(existingKH).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return RedirectToAction("InfoAccount");
+                }
+                else
+                {
+                    // Thông báo lỗi nếu định dạng file không hợp lệ
+                    ModelState.AddModelError("", "Định dạng file không hợp lệ. Vui lòng chọn một file ảnh.");
+                }
             }
-            return View();
+            else
+            {
+                // Thông báo lỗi nếu không có file nào được chọn
+                ModelState.AddModelError("", "Vui lòng chọn một file ảnh.");
+            }
 
+            // Trả về view với các lỗi nếu có
+            return View("InfoAccount");
         }
+        
         public ActionResult Logout()
         {
             // Xóa tất cả các session của người dùng
@@ -389,7 +514,5 @@ namespace Mioto.Controllers
         {
             return user.MatKhau == password;
         }
-        // API Check GPLX
-
     }
 }

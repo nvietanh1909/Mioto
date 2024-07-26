@@ -40,15 +40,33 @@
                 {
                     if (chuxe != null)
                     {
-                        <a href="@Url.Action("InfoAccount", "DetailAccount")">
-                            <span>Chủ xe: <b>@khachhang.Ten</b></span>
-                        </a>
+                        <div class="vertical-line"></div>
+                        <div class="dropdown-profile">
+                            <a href="@Url.Action("InfoAccount", "DetailAccount")" class="dropdown-profile">
+                                <div class="avatar avatar--s">
+                                    <img loading="lazy" src="@Url.Content("~/AvatarUser/" + (khachhang.HinhAnh ?? "DefaultAvatar.png"))" alt="Viet Anh Nguyen">
+                                </div>
+                                <span class="name">@chuxe.Ten</span>
+                                <div class="wrap-svg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M16.8998 9.20039C16.4998 8.80039 15.8998 8.80039 15.4998 9.20039L11.9998 12.7004L8.4998 9.20039C8.0998 8.80039 7.4998 8.80039 7.0998 9.20039C6.6998 9.60039 6.6998 10.2004 7.0998 10.6004L11.2998 14.8004C11.4998 15.0004 11.6998 15.1004 11.9998 15.1004C12.2998 15.1004 12.4998 15.0004 12.6998 14.8004L16.8998 10.6004C17.2998 10.2004 17.2998 9.60039 16.8998 9.20039Z" fill="black"></path></svg>
+                                </div>
+                            </a>
+                        </div>
                     }
                     else if (khachhang != null)
                     {
-                        <a href="@Url.Action("InfoAccount", "DetailAccount")">
-                            <span>Khách hàng: <b>@khachhang.Ten</b></span>
-                        </a>
+                        <div class="vertical-line"></div>
+                        <div class="dropdown-profile">
+                            <a href="@Url.Action("InfoAccount", "DetailAccount")" class="dropdown-profile">
+                                <div class="avatar avatar--s">
+                                    <img loading="lazy" src="@Url.Content("~/AvatarUser/" + (khachhang.HinhAnh ?? "DefaultAvatar.png"))" alt="Viet Anh Nguyen">
+                                </div>
+                                <span class="name">@khachhang.Ten</span>
+                                <div class="wrap-svg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M16.8998 9.20039C16.4998 8.80039 15.8998 8.80039 15.4998 9.20039L11.9998 12.7004L8.4998 9.20039C8.0998 8.80039 7.4998 8.80039 7.0998 9.20039C6.6998 9.60039 6.6998 10.2004 7.0998 10.6004L11.2998 14.8004C11.4998 15.0004 11.6998 15.1004 11.9998 15.1004C12.2998 15.1004 12.4998 15.0004 12.6998 14.8004L16.8998 10.6004C17.2998 10.2004 17.2998 9.60039 16.8998 9.20039Z" fill="black"></path></svg>
+                                </div>
+                            </a>
+                        </div>
                     }
                     else if (nhanvien.ChucVu == "Nhân viên")
                     {
@@ -70,5 +88,6 @@
     <div class="body">
         @RenderBody()
     </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

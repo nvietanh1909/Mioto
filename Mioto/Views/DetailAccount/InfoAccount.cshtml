@@ -25,11 +25,14 @@
     </div>
     <div class="content">
         <div class="avatar-box">
-            <div class="avatar avatar--xl has-edit">
-                <img loading="lazy" src="https://n1-astg.mioto.vn/g/2024/04/14/10/SU9tyuEN1J72XUg9n8Yajw.jpg" alt="Viet Anh Nguyen">
-            </div>
-            <h6>@guest.Ten</h6>
+            <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
+                <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
+                    <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (guest.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                    <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
+                </div>
+            </form>
         </div>
+
         <div class="info-user">
             <div class="info-box">
                 <div class="info-box__item">
@@ -67,7 +70,7 @@
     </div>
 </div>
 
-<!--Driver license-->
+<!--GPLX-->
 <div class="content-item driver-license">
    @if (chuxe != null || guest != null)
 {
@@ -120,6 +123,90 @@
                         else
                         {
                             <input disabled="" type="text" placeholder="Chưa xác thực GPLX" value="">
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="custom-input">
+                <div class="wrap-info">
+                    <div class="title-status">
+                        <p>Họ và tên</p>
+                    </div>
+                </div>
+                <div class="wrap-input disabled">
+                    <div class="wrap-text">
+                        <input disabled="" type="text" placeholder="@guest.Ten" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="custom-input">
+                <div class="wrap-info">
+                    <div class="title-status">
+                        <p>Ngày sinh</p>
+                    </div>
+                </div>
+                <div class="wrap-input disabled">
+                    <div class="wrap-text">
+                        <span>
+                            <text>@guest.NgaySinh.ToShortDateString()</text>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--CCCD-->
+<div class="content-item driver-license">
+    @if (chuxe != null || guest != null)
+    {
+        <div class="title">
+            <div class="title-item">
+                <h6>Căn cước công dân</h6>
+            </div>
+            <a href="@Url.Action("EditCCCD", "DetailAccount", new { IDKH = guest.IDKH })" class="btn btn--s">
+                Chỉnh sửa
+                <div class="wrap-svg">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+            </a>
+        </div>
+    }
+
+    <div class="content">
+        <div class="info-license position-relative">
+            <div class="info-license__title">
+                <p>Hình ảnh</p>
+            </div>
+            <label class="info-license__img">
+                <div class="fix-img">
+                    <img loading="lazy" class="img-license" src="data:image/png;base64,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">
+                </div>
+            </label>
+        </div>
+        <div class="info-license">
+            <div class="info-license__title">
+                <p>Thông tin chung</p>
+            </div>
+            <div class="custom-input">
+                <div class="wrap-info">
+                    <div class="title-status">
+                        <p>CCCD</p>
+                    </div>
+                </div>
+                <div class="wrap-input disabled">
+                    <div class="wrap-text">
+                        @if (guest.CCCD != "No")
+                        {
+                            <input disabled="" type="text" placeholder="@guest.SoGPLX" value="">
+                        }
+                        else
+                        {
+                            <input disabled="" type="text" placeholder="Chưa xác thực CCCD" value="">
                         }
                     </div>
                 </div>

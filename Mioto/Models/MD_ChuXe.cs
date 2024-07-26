@@ -17,7 +17,7 @@ namespace Mioto.Models
         public string TrangThai { get; set; }
         public string MatKhau { get; set; }
 
-        //Các thuộc tính của Xe
+        // Các thuộc tính của Xe
         [Required(ErrorMessage = "Vui lòng nhập biển số xe.")]
         [StringLength(20, ErrorMessage = "Độ dài tối đa của {0} là {1} ký tự.")]
         public string BienSoXe { get; set; }

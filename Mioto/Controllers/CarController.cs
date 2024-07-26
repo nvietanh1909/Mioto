@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -57,8 +58,10 @@ namespace Mioto.Controllers
                         ModelState.AddModelError("BienSoXe", "Biển số xe đã đăng ký trên hệ thống");
                         return View(cx);
                     }
-                    // Kiểm tra nếu không tồn tại IDCX trùng với IDKH thì mới tạo mới ChuXe
-                    if (!db.ChuXe.Any(x => x.IDCX == guest.IDKH))
+
+                    // Lấy hoặc thêm mới ChuXe và lấy IDCX
+                    var existingCX = db.ChuXe.SingleOrDefault(x => x.IDKH == guest.IDKH);
+                    if (existingCX == null)
                     {
                         var newCX = new ChuXe
                         {
@@ -71,47 +74,33 @@ namespace Mioto.Controllers
                             GioiTinh = guest.GioiTinh,
                             NgaySinh = guest.NgaySinh,
                             SoGPLX = guest.SoGPLX,
-                            CCCD = "0",
+                            CCCD = guest.CCCD,
+                            HinhAnh = guest.HinhAnh,
                             TrangThai = "Yes"
                         };
                         db.ChuXe.Add(newCX);
+                        db.SaveChanges();
+                        existingCX = newCX;
+                    }
 
-                        var newCar = new Xe
-                        {
-                            IDCX = guest.IDKH,
-                            BienSoXe = cx.BienSoXe,
-                            HangXe = cx.HangXe,
-                            MauXe = cx.MauXe,
-                            SoGhe = cx.SoGhe,
-                            TinhNang = cx.TinhNang,
-                            GiaThue = cx.GiaThue,
-                            NamSanXuat = cx.NamSanXuat,
-                            KhuVuc = cx.KhuVuc,
-                            DonGiaVanChuyen = 0,
-                            TrangThai = "Sẵn sàng"
-                        };
-                        db.Xe.Add(newCar);
-                        db.SaveChanges();
-                    }
-                    else
+                    // Sử dụng IDCX từ ChuXe để thêm mới Xe
+                    var newCar = new Xe
                     {
-                        var newCar = new Xe
-                        {
-                            IDCX = guest.IDKH,
-                            BienSoXe = cx.BienSoXe,
-                            HangXe = cx.HangXe,
-                            MauXe = cx.MauXe,
-                            SoGhe = cx.SoGhe,
-                            TinhNang = cx.TinhNang,
-                            GiaThue = cx.GiaThue,
-                            NamSanXuat = cx.NamSanXuat,
-                            KhuVuc = cx.KhuVuc,
-                            DonGiaVanChuyen = 0,
-                            TrangThai = "Sẵn sàng"
-                        };
-                        db.Xe.Add(newCar);
-                        db.SaveChanges();
-                    }
+                        IDCX = existingCX.IDCX,
+                        BienSoXe = cx.BienSoXe,
+                        HangXe = cx.HangXe,
+                        MauXe = cx.MauXe,
+                        SoGhe = cx.SoGhe,
+                        TinhNang = cx.TinhNang,
+                        GiaThue = cx.GiaThue,
+                        NamSanXuat = cx.NamSanXuat,
+                        KhuVuc = cx.KhuVuc,
+                        DonGiaVanChuyen = 0,
+                        TrangThai = "Sẵn sàng"
+                    };
+                    db.Xe.Add(newCar);
+                    db.SaveChanges();
+
                     var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
                     var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
                     Session["KhachHang"] = IsGuest;
@@ -129,6 +118,7 @@ namespace Mioto.Controllers
             }
         }
 
-        
+
+
     }
 }
