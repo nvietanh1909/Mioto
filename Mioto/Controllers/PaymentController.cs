@@ -212,7 +212,7 @@ namespace Mioto.Controllers
                 if (existingThanhToan != null)
                 {
                     existingThanhToan.TrangThai = "Đã thanh toán";
-                    existingThanhToan.SoTien = soTien; 
+                    existingThanhToan.SoTien = soTien;
                     existingThanhToan.NgayTT = DateTime.Now;
                     db.Entry(existingThanhToan).State = EntityState.Modified;
                     db.SaveChanges();
@@ -237,35 +237,39 @@ namespace Mioto.Controllers
             return RedirectToAction("Home", "Home");
         }
 
-        public ActionResult CongratulationPaymentDone()
-        {
-            return View();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ValidateDiscountCode(string discountCode)
+        public JsonResult ApplyDiscount(string discountCode, decimal SoTien)
         {
-            // Tìm mã giảm giá trong cơ sở dữ liệu
             var discount = db.MaGiamGia.FirstOrDefault(m => m.Ma == discountCode);
 
             if (discount == null)
             {
                 return Json(new { success = false, message = "Mã giảm giá không hợp lệ." });
             }
-
-            if (discount.SoLanSuDung <= 0)
+            else if (discount.SoLanSuDung <= 0)
             {
                 return Json(new { success = false, message = "Mã giảm giá đã hết hạn sử dụng." });
             }
+            else
+            {
+                // Giảm số lần sử dụng mã giảm giá
+                discount.SoLanSuDung--;
+                db.Entry(discount).State = EntityState.Modified;
+                db.SaveChanges();
 
-            // Giảm số lần sử dụng mã giảm giá
-            discount.SoLanSuDung--;
-            db.Entry(discount).State = EntityState.Modified;
-            db.SaveChanges();
+                // Tính toán số tiền mới
+                var discountedAmount = SoTien - (SoTien * discount.PhanTramGiam / 100);
+                if (discountedAmount < 0) discountedAmount = 0;
 
-            // Trả về thông tin giảm giá
-            return Json(new { success = true, discountPercent = discount.PhanTramGiam });
+                // Trả số tiền đã giảm
+                return Json(new { success = true, discountedAmount });
+            }
+        }
+
+        public ActionResult CongratulationPaymentDone()
+        {
+            return View();
         }
     }
 }

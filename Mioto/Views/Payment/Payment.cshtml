@@ -4,13 +4,15 @@
 }
 
 @model Mioto.Models.MD_Payment
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @using (Html.BeginForm("Payment", "Payment", FormMethod.Post, new { @class = "payment-form" }))
 {
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(model => model.IDDT) <!-- Hidden field để gửi ID của đơn thuê xe -->
+    @Html.HiddenFor(model => model.IDDT) 
+    @Html.HiddenFor(model => model.SoTien) 
 
     <!-- Mã giảm giá -->
     <div class="form-group">
@@ -32,10 +34,9 @@
 
     <!-- Số tiền thanh toán -->
     <div class="form-group">
-        @Html.HiddenFor(model => model.SoTien) <!-- Số tiền sẽ được tính lại sau khi áp dụng mã giảm giá -->
         @Html.LabelFor(model => model.SoTien, "Số tiền")
         <h6>Hiển thị số tiền đã tính</h6>
-        <p id="totalAmount">@Model.SoTien.ToString("0,0") VNĐ</p> <!-- Hiển thị số tiền đã tính -->
+        <p id="totalAmount">@Model.SoTien.ToString("0,0") VNĐ</p>
     </div>
 
     <!-- Nút gửi form -->
@@ -54,15 +55,16 @@
 
                 // Gửi yêu cầu Ajax để kiểm tra mã giảm giá
                 $.ajax({
-                    url: '@Url.Action("ValidateDiscountCode", "Payment")',
+                    url: '@Url.Action("ApplyDiscount", "Payment")',
                     type: 'POST',
                     data: {
-                        discountCode: discountCode
+                        discountCode: discountCode,
+                        SoTien: originalAmount,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
                     },
                     success: function (response) {
                         if (response.success) {
-                            var discountedAmount = originalAmount - (originalAmount * response.discountPercent / 100);
-                            if (discountedAmount < 0) discountedAmount = 0;
+                            var discountedAmount = response.discountedAmount;
 
                             // Cập nhật số tiền hiển thị
                             totalAmountElement.text(discountedAmount.toFixed(2) + " VNĐ");
@@ -81,4 +83,3 @@
         });
     </script>
 }
-
