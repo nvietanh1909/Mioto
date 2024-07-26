@@ -318,7 +318,6 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Json\google_calendar.json" />
     <EntityDeploy Include="Models\DB_Mioto.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DB_Mioto.Designer.cs</LastGenOutput>
