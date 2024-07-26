@@ -222,7 +222,7 @@ namespace Mioto.Controllers
                     var newThanhToan = new ThanhToan
                     {
                         NgayTT = thanhToan.NgayTT,
-                        TrangThai = "Đã thanh toán",
+                        TrangThai = "Chờ xét duyệt",
                         PhuongThuc = thanhToan.PhuongThuc,
                         IDDT = donThueXe.IDDT,
                         SoTien = thanhToan.SoTien,
@@ -231,7 +231,6 @@ namespace Mioto.Controllers
                     db.ThanhToan.Add(newThanhToan);
                     db.SaveChanges();
                 }
-                TempData["Message"] = "Thanh toán thành công!";
                 return View("CongratulationPaymentDone");
             }
             return RedirectToAction("Home", "Home");
@@ -248,6 +247,10 @@ namespace Mioto.Controllers
                 return Json(new { success = false, message = "Mã giảm giá không hợp lệ." });
             }
             else if (discount.SoLanSuDung <= 0)
+            {
+                return Json(new { success = false, message = "Mã giảm giá đã hết lần sử dụng." });
+            }
+            else if (discount.NgayKetThuc < DateTime.Now)
             {
                 return Json(new { success = false, message = "Mã giảm giá đã hết hạn sử dụng." });
             }
@@ -267,8 +270,11 @@ namespace Mioto.Controllers
             }
         }
 
+
         public ActionResult CongratulationPaymentDone()
         {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
             return View();
         }
     }

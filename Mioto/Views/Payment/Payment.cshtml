@@ -26,8 +26,8 @@
         @Html.LabelFor(model => model.PhuongThuc, "Phương thức thanh toán")
         @Html.DropDownListFor(model => model.PhuongThuc, new List<SelectListItem>
         {
-            new SelectListItem { Text = "Credit Card", Value = "Credit Card" },
-            new SelectListItem { Text = "PayPal", Value = "PayPal" },
+            new SelectListItem { Text = "Momo: 0123456789", Value = "Momo" },
+            new SelectListItem { Text = "Techcombank: 0123456789", Value = "Techcombank" },
             // Thêm các phương thức thanh toán khác nếu cần
         }, new { @class = "form-control" })
     </div>
