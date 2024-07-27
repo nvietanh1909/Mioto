@@ -621,7 +621,6 @@ namespace Mioto.Controllers
                         NgayTra = d.NgayTra,
                         TongTien = d.TongTien,
                         TrangThai = d.TrangThai,
-                        HinhAnh = d.Xe.HinhAnh
                     }).ToList();
 
                 return View(rentedCars);
