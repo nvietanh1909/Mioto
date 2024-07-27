@@ -1,0 +1,96 @@
+﻿@model Mioto.Models.MD_MaGiamGia
+
+@{
+    ViewBag.Title = "Thêm Mã Giảm Giá";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+<div class="modal-content" style="width: 60%;">
+    <div class="modal-header">
+        <h5 class="text-primary">Thêm Mã Giảm Giá</h5>
+        <p class="sub-title">Vui lòng điền đầy đủ thông tin để thêm mã giảm giá mới.</p>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("AddDiscount", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="modal-input-body modal-add-discount">
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Mã Giảm Giá*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.Ma, new { @class = "form-control", placeholder = "Nhập mã giảm giá" })
+                            @Html.ValidationMessageFor(model => model.Ma, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Phần Trăm Giảm*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.PhanTramGiam, new { @class = "form-control", placeholder = "Nhập phần trăm giảm" })
+                            @Html.ValidationMessageFor(model => model.PhanTramGiam, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Ngày Bắt Đầu*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.NgayBatDau, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Ngày Kết Thúc*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.NgayKetThuc, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Số Lần Sử Dụng*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.SolanSuDung, new { @class = "form-control", placeholder = "Nhập số lần sử dụng" })
+                            @Html.ValidationMessageFor(model => model.SolanSuDung, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrap-btn btn-register">
+                    <button type="submit" class="btn btn--m btn-primary">Thêm Mã Giảm Giá</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

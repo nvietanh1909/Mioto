@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "InfoAccount";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{var guest = Session["NhanVien"] as Mioto.Models.NhanVien;}
+<!--User profile-->
+<div class="content-item user-profile">
+    <div class="title">
+        <div class="title-edit">
+            <h5>Thông tin tài khoản</h5>
+        </div>
+    </div>
+    <div class="content">
+        <div class="avatar-box">
+            <form action="@Url.Action("ChangeAvatarUser", "Admin")" method="post" enctype="multipart/form-data">
+                <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
+                    <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarAdmin/" + (guest.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                    <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
+                </div>
+            </form>
+            <h6>@guest.Ten</h6>
+        </div>
+
+        <div class="info-user">
+            <div class="info-box">
+                <div class="info-box__item">
+                    <p>Ngày sinh </p>
+                    <p class="main">
+                        <text>@guest.NgaySinh.ToShortDateString()</text>
+                    </p>
+                </div>
+                <div class="info-box__item">
+                    <p>Giới tính </p>
+                    <p class="main">@guest.GioiTinh</p>
+                </div>
+            </div>
+            <div class="info-desc">
+                <div class="info-desc__item">
+                    <div class="title-item">Số điện thoại</div>
+                    <div class="name">
+                        @guest.SDT
+                    </div>
+                </div>
+                <div class="info-desc__item">
+                    <div class="title-item">Email</div>
+                    <div class="name">
+                        @guest.Email
+                    </div>
+                </div>
+                <div class="info-desc__item">
+                    <div class="title-item">Địa chỉ</div>
+                    <div class="name">
+                        @guest.DiaChi
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

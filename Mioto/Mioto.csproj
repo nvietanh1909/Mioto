@@ -45,19 +45,92 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.68.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.68.0\lib\net462\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.68.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.68.0\lib\net462\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Calendar.v3, Version=1.68.0.3473, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Calendar.v3.1.68.0.3473\lib\net462\Google.Apis.Calendar.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.68.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.68.0\lib\net462\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Json.Net, Version=1.0.33.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json.Net.1.0.33\lib\netstandard2.0\Json.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=111.4.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.111.4.0\lib\net48\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.CodeDom, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CodeDom.7.0.0\lib\net462\System.CodeDom.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.3.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.3.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -119,15 +192,85 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\DetailAccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CCCD.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChinhSachChietKhau.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChuXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DanhGia.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Mioto.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Mioto.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Mioto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DB_Mioto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DoanhThuChuXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DoanhThuCongTy.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DonThueXe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GPLX.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KhachHang.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaGiamGia.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MD_BookingCar.cs" />
+    <Compile Include="Models\MD_ChangePassword.cs" />
+    <Compile Include="Models\MD_ChuXe.cs" />
+    <Compile Include="Models\MD_Login.cs" />
+    <Compile Include="Models\MD_MaGiamGia.cs" />
+    <Compile Include="Models\MD_MyTrip.cs" />
+    <Compile Include="Models\MD_Payment.cs" />
+    <Compile Include="Models\MD_Register.cs" />
+    <Compile Include="Models\MD_RentedCar.cs" />
+    <Compile Include="Models\MD_Xe.cs" />
+    <Compile Include="Models\NhanVien.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhiHuyChuyen.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThanhToan.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Xe.cs">
+      <DependentUpon>DB_Mioto.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AvatarAdmin\DefaultAvatar.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -145,12 +288,16 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\base.css" />
+    <Content Include="Content\css\table.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ImageCCCD\default.png" />
+    <Content Include="ImageGPLX\default.png" />
     <Content Include="Image\1KSBN9MF.jpg" />
     <Content Include="Image\3xs0FlxgHOhatF6xsPekng.jpg" />
     <Content Include="Image\BR7YYDU3.jpg" />
+    <Content Include="AvatarUser\DefaultAvatar.png" />
     <Content Include="Image\download-appstore.png" />
     <Content Include="Image\download-google.png" />
     <Content Include="Image\FP9y_5Lg454RArfyqFjPeg.jpg" />
@@ -160,12 +307,29 @@
     <Content Include="Image\SDFAW8Q.jpg" />
     <Content Include="Image\short-logo-mioto.png" />
     <Content Include="Image\yG29m9biewkfwfem6u8QGA.jpg" />
+    <Content Include="Models\DB_Mioto.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+      <LastGenOutput>DB_Mioto.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DB_Mioto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+      <LastGenOutput>DB_Mioto.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\DB_Mioto.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DB_Mioto.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DB_Mioto.edmx.diagram">
+      <DependentUpon>DB_Mioto.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -191,22 +355,37 @@
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\IntroOwnerCar.cshtml" />
-    <Content Include="Views\Home\RegisterOwner.cshtml" />
     <Content Include="Views\DetailAccount\InfoAccount.cshtml" />
-    <Content Include="Views\DetailAccount\FavoriteCar.cshtml" />
     <Content Include="Views\DetailAccount\Gift.cshtml" />
     <Content Include="Views\DetailAccount\MyCar.cshtml" />
     <Content Include="Views\DetailAccount\MyTrip.cshtml" />
-    <Content Include="Views\DetailAccount\LongTermOrder.cshtml" />
     <Content Include="Views\DetailAccount\RequestDeleteAccount.cshtml" />
-    <Content Include="Views\DetailAccount\MyAddress.cshtml" />
     <Content Include="Views\DetailAccount\ChangePassword.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Car\InfoCar.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Car\RegisterOwner.cshtml" />
+    <Content Include="Views\DetailAccount\EditCar.cshtml" />
+    <Content Include="Views\DetailAccount\EditInfoUser.cshtml" />
+    <Content Include="Views\Home\Car.cshtml" />
+    <Content Include="Views\DetailAccount\EditGPLX.cshtml" />
+    <Content Include="Views\Payment\InfoCar.cshtml" />
+    <Content Include="Views\Payment\BookingCar.cshtml" />
+    <Content Include="Views\Payment\Payment.cshtml" />
+    <Content Include="Views\Payment\Alert.cshtml" />
+    <Content Include="Views\DetailAccount\EditCCCD.cshtml" />
+    <Content Include="Views\Payment\CongratulationPaymentDone.cshtml" />
+    <Content Include="Views\DetailAccount\RentedCar.cshtml" />
+    <Content Include="Views\DetailAccount\RevenueChart.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\AdminPaymentVerification.cshtml" />
+    <Content Include="Views\Admin\InfoAccount.cshtml" />
+    <Content Include="Views\Admin\ManagerDiscount.cshtml" />
+    <Content Include="Views\Admin\AddDiscount.cshtml" />
+    <Content Include="Views\Admin\EditDiscount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="CarImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -234,6 +413,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

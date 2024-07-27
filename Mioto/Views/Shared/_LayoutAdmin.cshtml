@@ -1,0 +1,95 @@
+﻿@{var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/base.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Header navbar-->
+    <section class="header scroll-top">
+        <div class="m-container">
+            <!--Logo-->
+            <a href="@Url.Action("Home", "Home")" class="logo-container">
+                <div class="full-logo">
+                    <img src="~/Image/logo-mioto.png" alt="Mioto" />
+                </div>
+                <div class="short-logo">
+                    <img src="~/Image/short-logo-mioto.png" loading="lazy" />
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="body">
+        <div class="account-section sec space">
+            <div class="m-container">
+                <div class="account-container">
+                    <!--Slidebar left-->
+                    <div class="sidebar-account">
+                        <div>
+                            <div style="padding-bottom: 0px;"></div>
+                            <div class="sidebar-account-sticky" style="transform: translateZ(0px);">
+                                <div class="title">
+                                    <h4>Xin chào bạn!</h4>
+                                </div>
+                                <div class="sidebar">
+                                    <a href="@Url.Action("InfoAccount", "Admin")" class="sidebar-item active">
+                                        <div class="wrap-svg">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.76 10.86C13.3782 10.86 14.69 9.54819 14.69 7.93C14.69 6.31181 13.3782 5 11.76 5C10.1418 5 8.83 6.31181 8.83 7.93C8.83 9.54819 10.1418 10.86 11.76 10.86Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5.84 19.0001V17.3301C5.84 15.3801 7.42 13.8101 9.36 13.8101H14.63C16.58 13.8101 18.15 15.3901 18.15 17.3301V19.0001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </div>
+                                        <p>Tài khoản của tôi</p>
+                                    </a>
+
+                                    <a href="@Url.Action("ManagerDiscount", "Admin")" class="sidebar-item ">
+                                        <div class="wrap-svg">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M21.3 10.8394C21.69 10.8394 22 10.5294 22 10.1394V9.20938C22 5.10938 20.75 3.85938 16.65 3.85938H7.35C3.25 3.85937 2 5.10938 2 9.20938V9.67938C2 10.0694 2.31 10.3794 2.7 10.3794C3.6 10.3794 4.33 11.1094 4.33 12.0094C4.33 12.9094 3.6 13.6294 2.7 13.6294C2.31 13.6294 2 13.9394 2 14.3294V14.7994C2 18.8994 3.25 20.1494 7.35 20.1494H16.65C20.75 20.1494 22 18.8994 22 14.7994C22 14.4094 21.69 14.0994 21.3 14.0994C20.4 14.0994 19.67 13.3694 19.67 12.4694C19.67 11.5694 20.4 10.8394 21.3 10.8394ZM9 8.87938C9.55 8.87938 10 9.32938 10 9.87938C10 10.4294 9.56 10.8794 9 10.8794C8.45 10.8794 8 10.4294 8 9.87938C8 9.32938 8.44 8.87938 9 8.87938ZM15 15.8794C14.44 15.8794 13.99 15.4294 13.99 14.8794C13.99 14.3294 14.44 13.8794 14.99 13.8794C15.54 13.8794 15.99 14.3294 15.99 14.8794C15.99 15.4294 15.56 15.8794 15 15.8794ZM15.9 9.47937L9.17 16.2094C9.02 16.3594 8.83 16.4294 8.64 16.4294C8.45 16.4294 8.26 16.3594 8.11 16.2094C7.82 15.9194 7.82 15.4394 8.11 15.1494L14.84 8.41938C15.13 8.12938 15.61 8.12938 15.9 8.41938C16.19 8.70938 16.19 9.18937 15.9 9.47937Z" fill="#F26A2B" style="fill: black;"></path>
+                                            </svg>
+                                        </div>
+                                        <p>Mã giảm giá</p>
+                                    </a>
+
+                                    <a href="@Url.Action("AdminPaymentVerification", "Admin")" class="sidebar-item ">
+                                        <div class="wrap-svg">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.15 15.7199H19.6C20.51 15.7199 21.24 14.8599 21.24 13.8399V12.4499C21.24 11.7199 20.86 11.0399 20.27 10.7399L18.79 9.96995L17.47 7.59994C17.09 6.90994 16.42 6.49994 15.71 6.50994H10.12C9.47 6.50994 8.86 6.84995 8.47 7.42995L6.77 9.93994L3.96 10.7999C3.24 11.0199 2.75 11.7599 2.75 12.5999V13.8299C2.75 14.8499 3.48 15.7099 4.39 15.7099H4.63" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.86914 15.7207H14.7691" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6.68914 17.4603C7.83237 17.4603 8.75914 16.5335 8.75914 15.3903C8.75914 14.2471 7.83237 13.3203 6.68914 13.3203C5.54591 13.3203 4.61914 14.2471 4.61914 15.3903C4.61914 16.5335 5.54591 17.4603 6.68914 17.4603Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.0798 17.4603C18.223 17.4603 19.1498 16.5335 19.1498 15.3903C19.1498 14.2471 18.223 13.3203 17.0798 13.3203C15.9365 13.3203 15.0098 14.2471 15.0098 15.3903C15.0098 16.5335 15.9365 17.4603 17.0798 17.4603Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </div>
+                                        <p>Danh sách xe trên hệ thống</p>
+                                    </a>
+
+
+                                    <a href="@Url.Action("AdminPaymentVerification", "Admin")" class="sidebar-item ">
+                                        <div class="wrap-svg">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.27 7.17993H2.75V17.1999C2.75 18.8499 4.09 20.1799 5.73 20.1799H18.26C19.91 20.1799 21.24 18.8399 21.24 17.1999V10.1699C21.25 8.51993 19.91 7.17993 18.27 7.17993Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.98047 3.82007H14.1105C15.8105 3.82007 17.1905 5.33007 17.1905 7.18007" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M2.75 10.8601V5.89014" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.48 7.18007H4.29C3.44 7.18007 2.75 6.43007 2.75 5.50007C2.75 4.57007 3.44 3.82007 4.29 3.82007H11.48" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.7102 14.1899C17.9919 14.1899 18.2202 13.9616 18.2202 13.6799C18.2202 13.3983 17.9919 13.1699 17.7102 13.1699C17.4285 13.1699 17.2002 13.3983 17.2002 13.6799C17.2002 13.9616 17.4285 14.1899 17.7102 14.1899Z" fill="black" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        </div>
+                                        <p>Xác thực thanh toán</p>
+                                    </a>
+
+                                    <div class="sidebar-item">
+                                        <div class="wrap-svg">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2.74907H18.12C18.9125 2.71374 19.6868 2.99377 20.2734 3.52788C20.86 4.06199 21.2111 4.8067 21.25 5.59907V18.3991C21.2111 19.1914 20.86 19.9362 20.2734 20.4703C19.6868 21.0044 18.9125 21.2844 18.12 21.2491H12" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M14.9993 12H2.7793" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M2.75 12L6.75 16" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M2.75 12L6.75 8" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+                                        <p>
+                                            @Html.ActionLink("Đăng xuất", "Logout", "DetailAccount", null, new { @class = "logout-link", onclick = "return confirm('Bạn sẽ đăng xuất ra khỏi tài khoản hiện tại?');" })
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Slidebar right-->
+                    <div class="content-account">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

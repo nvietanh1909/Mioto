@@ -1,9 +1,8 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
-
+@model Mioto.Models.MD_Login
 
 <div class="modal-content" style="width: 50%;">
     <div class="modal-header">
@@ -11,64 +10,66 @@
     </div>
     <div class="modal-body">
         <div class="modal-input-body modal-login-body">
-            <div class="line-form">
-                <div class="custom-input">
-                    <div class="wrap-info">
-                        <div class="title-status">
-                            <p>Số điện thoại hoặc email</p>
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Email</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="wrap-input">
-                        <div class="wrap-text">
-                            <input type="text" name="ip_username" placeholder="" value="">
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email", autofocus = "autofocus" })
                         </div>
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
 
-            <div class="line-form">
-                <div class="custom-input">
-                    <div class="wrap-info">
-                        <div class="title-status">
-                            <p>Mật khẩu</p>
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Mật khẩu</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="wrap-input">
-                        <div class="wrap-text">
-                            <input type="password" name="ip_username" placeholder="" value="">
+                        <div class="wrap-input">
+                            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
                         </div>
-                        <div class="wrap-svg">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http:www.w3.org/2000/svg"><path d="M14.52 18.6297C13.71 18.8397 12.87 18.9397 12 18.9397C8.73 18.9397 5.8 17.4097 3.8 14.9897C2.4 13.2997 2.4 10.6897 3.8 9.00969C3.96 8.80969 4.14 8.61969 4.32 8.42969" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.2 14.9896C19.4 15.9496 18.45 16.7696 17.4 17.4096L6.58997 6.58957C8.17997 5.60957 10.02 5.05957 12 5.05957C15.27 5.05957 18.2 6.58957 20.2 9.00957C21.6 10.6896 21.6 13.3096 20.2 14.9896Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.0799 11.9999C15.0799 12.8499 14.7299 13.6199 14.1799 14.1799L9.81995 9.81992C10.3699 9.25992 11.1499 8.91992 11.9999 8.91992C13.7099 8.91992 15.0799 10.2899 15.0799 11.9999Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M2.75 2.75L6.59 6.59L9.82 9.82L14.18 14.18L17.41 17.41L21.25 21.25" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        </div>
+                            @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
+                if (ViewBag.ErrorLogin != null)
+                {
+                    <div style="color: #f02849; font-family: SFProText-Regular, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; margin-top: 8px; text-align: center;">@ViewBag.ErrorLogin</div>
+                }
 
-            <div class="block-content textAlign-right">
-                <a class="fontWeight-6 font-14">Quên mật khẩu?</a>
-            </div>
+                <div class="block-content textAlign-right">
+                    <a href="#" class="fontWeight-6 font-14">Quên mật khẩu?</a>
+                </div>
 
-            <div class="wrap-btn btn-register">
-                <a class="btn btn--m btn-primary" href="@Url.Action("InfoAccount", "DetailAccount")">Đăng nhập</a>
-            </div>
+                <div class="wrap-btn btn-register">
+                    <button type="submit" class="btn btn--m btn-primary" style=" width: 100%;">Đăng nhập</button>
+                </div>
 
-            <p class="wrap-btn btn-register" style="text-align: center;">Bạn chưa là thành viên? <a href="#" style="color: #5fcf86;">Đăng ký ngay</a></p>
-            <div class="wrap-btn db-btn-svg" style=" display: flex; gap: 10px;">
-                <a href="#" class="btn btn--s btn-secondary">
-                    <div class="wrap-svg">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" fill="#1877F2"></circle><path d="M10.6069 10.1408L10.9178 8.16505H8.97261V6.8835C8.97261 6.34285 9.24383 5.81553 10.1151 5.81553H11V4.1335C11 4.1335 10.1973 4 9.43013 4C7.82742 4 6.78083 4.94647 6.78083 6.65922V8.16505H5V10.1408H6.78083V14.9172C7.13835 14.972 7.50412 15 7.87672 15C8.24932 15 8.61509 14.972 8.97261 14.9172V10.1408H10.6069Z" fill="white"></path></svg>
-                    </div>
-                    <span>Facebook</span>
-                </a>
+                <p class="wrap-btn btn-register" style="text-align: center;">Bạn chưa là thành viên? <a href="@Url.Action("Register", "Account")" style="color: #5fcf86;">Đăng ký ngay</a></p>
+                <!--<div class="wrap-btn db-btn-svg" style=" display: flex; gap: 10px;">
+                    <a href="#" class="btn btn--s btn-secondary">
+                        <div class="wrap-svg">-->
+                            <!-- Replace with Facebook SVG icon -->
+                        <!--</div>
+                        <span>Facebook</span>
+                    </a>
 
-                <a href="#" class="btn btn--s btn-secondary">
-                    <div class="wrap-svg">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.0007 8.15571C15.0007 7.58016 14.953 7.16016 14.8499 6.72461H8.14357V9.32236H12.08C12.0007 9.96793 11.5721 10.9402 10.6197 11.5935L10.6064 11.6804L12.7268 13.2902L12.8737 13.3046C14.2229 12.0835 15.0007 10.2868 15.0007 8.15571Z" fill="#4285F4"></path><path d="M8.14312 15.0004C10.0717 15.0004 11.6907 14.3781 12.8733 13.3048L10.6193 11.5936C10.0161 12.0059 9.20659 12.2936 8.14312 12.2936C6.25425 12.2936 4.6511 11.0726 4.07962 9.38477L3.99585 9.39174L1.79101 11.064L1.76218 11.1425C2.93676 13.4292 5.34946 15.0004 8.14312 15.0004Z" fill="#34A853"></path><path d="M4.08003 9.38399C3.92924 8.94844 3.84197 8.48174 3.84197 7.99954C3.84197 7.51729 3.92924 7.05064 4.0721 6.61509L4.06811 6.52233L1.83563 4.82324L1.76259 4.85729C1.27848 5.80619 1.0007 6.87177 1.0007 7.99954C1.0007 9.12732 1.27848 10.1928 1.76259 11.1417L4.08003 9.38399Z" fill="#FBBC05"></path><path d="M8.14316 3.70665C9.48441 3.70665 10.3892 4.27442 10.905 4.7489L12.9209 2.82C11.6829 1.69223 10.0717 1 8.14316 1C5.34948 1 2.93677 2.5711 1.76218 4.85775L4.0717 6.61555C4.65111 4.92777 6.25428 3.70665 8.14316 3.70665Z" fill="#EA4335"></path></svg>
-                    </div>
-                    <span>Google</span>
-                </a>
-            </div>
+                    <a href="#" class="btn btn--s btn-secondary">
+                        <div class="wrap-svg">-->
+                            <!-- Replace with Google SVG icon -->
+                        <!--</div>
+                        <span>Google</span>
+                    </a>
+                </div>-->
+            }
         </div>
     </div>
 </div>
-

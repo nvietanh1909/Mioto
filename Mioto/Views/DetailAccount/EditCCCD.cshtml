@@ -1,0 +1,82 @@
+﻿@model Mioto.Models.CCCD
+
+@{
+    ViewBag.Title = "EditCCCD";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-content" role="document">
+        <div class="modal-header">
+            <h4 class="text-primary">Thông tin Căn cước công dân</h4>
+        </div>
+        <div class="modal-body">
+            <div class="modal-input-body modal-owner-register">
+                <div class="line-form">
+
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Tên*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.EditorFor(model => model.Ten, new { @class = "form-control", placeholder = "Tên của bạn" })
+                            @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Số Căn cước công dân*</p>
+                            </div>
+                        </div>
+                        @if (Model.SoCCCD != "No")
+                        {
+                            <div class="wrap-input">
+                                @Html.TextBoxFor(model => model.SoCCCD, new { @class = "form-control", @Value = Model.SoCCCD })
+                                @Html.ValidationMessageFor(model => model.SoCCCD, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="wrap-input">
+                                @Html.TextBoxFor(model => model.SoCCCD, new { @class = "form-control", @Value = "Nhập CCCD của bạn" })
+                                @Html.ValidationMessageFor(model => model.SoCCCD, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Ngày sinh*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control", type = "date", @Value = Model.NgaySinh.ToString("yyyy-MM-dd") })
+                            @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="wrap-btn btn-register" style=" width: 40%; ">
+                        <button type="submit" class="btn btn--m btn-primary">Lưu thay đổi</button>
+                    </div>
+                    <div>
+                        @Html.ActionLink("Quay lại danh sách", "InfoAccount")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Mioto.Models.MaGiamGia>
+@{
+    ViewBag.Title = "ManagerDiscount";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="~/Content/css/table.css" rel="stylesheet" />
+
+<div class="title" style="display: flex; justify-content: space-between">
+    <div class="title-item">
+        <h5>Danh sách mã giảm giá</h5>
+    </div>
+    <a href="@Url.Action("AddDiscount", "Admin")" class="btn btn-primary" style=" font-weight: 300; ">Thêm mã</a>
+</div>
+@if (Model.Any())
+{
+    <div class="table100 ver2 m-b-110">
+        <table data-vertable="ver2">
+            <thead>
+                <tr class="row100 head" style="color: white; font-weight: 500;">
+                    <th class="column100 column1">Mã giảm giá</th>
+                    <th class="column100 column2">% giảm</th>
+                    <th class="column100 column4">Ngày bắt đầu</th>
+                    <th class="column100 column1">Ngày kết thúc</th>
+                    <th class="column100 column1">Số lần sử dụng</th>
+                    <th class="column100 column6">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="row100">
+                        <td class="column100 column1">@item.Ma</td>
+                        <td class="column100 column2">@item.PhanTramGiam%</td>
+                        <td class="column100 column3">@item.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                        <td class="column100 column3">@item.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                        <td class="column100 column3">@item.SoLanSuDung</td>
+                        <td class="column100 column6">
+                            @Html.ActionLink("Sửa", "EditDiscount", new { idmgg = item.IDMGG }, new { @class = "btn btn-efit" })
+                            @Html.ActionLink("Xóa", "DeleteDiscount", new { idmgg = item.IDMGG }, new
+                                            {
+                                                @class = "btn btn-delete",
+                                                onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                                            })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-container">
+        <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="No discounts available" />
+        <p>Không có mã giảm giá nào.</p>
+    </div>
+}

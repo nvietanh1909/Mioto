@@ -1,39 +1,95 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "MyTrip";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
+@model IEnumerable<Mioto.Models.MD_MyTrip>
+@{ var guest = Session["KhachHang"] as Mioto.Models.KhachHang; }
 
-<div class="content-title">
-    <h4>Chuyến của tôi</h4>
-</div>
-<div class="mytrips-mode">
-    <div class="tab-mode">
-        <a class="tab-mode__item active">Chuyến hiện tại</a>
-        <a class="tab-mode__item ">Lịch sử chuyến</a>
+<link href="~/Content/css/table.css" rel="stylesheet" />
+<div class="title" style="display: flex; justify-content: space-between">
+    <div class="title-item">
+        <h5>Thông tin xe đang thuê</h5>
     </div>
-    <a class="btn btn--s ">
-        <div class="wrap-svg">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.7932 3.23242H14.1665" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M1.83325 3.23242H10.0532" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M11.4266 4.59305C12.185 4.59305 12.7999 3.98415 12.7999 3.23305C12.7999 2.48194 12.185 1.87305 11.4266 1.87305C10.6681 1.87305 10.0532 2.48194 10.0532 3.23305C10.0532 3.98415 10.6681 4.59305 11.4266 4.59305Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12.7932 12.7656H14.1665" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M1.83325 12.7656H10.0532" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M11.4266 14.1263C12.185 14.1263 12.7999 13.5174 12.7999 12.7663C12.7999 12.0151 12.185 11.4062 11.4266 11.4062C10.6681 11.4062 10.0532 12.0151 10.0532 12.7663C10.0532 13.5174 10.6681 14.1263 11.4266 14.1263Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M5.94653 8H14.1665" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M1.83325 8H3.20658" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M4.57328 9.36063C5.33175 9.36063 5.94664 8.75173 5.94664 8.00063C5.94664 7.24952 5.33175 6.64062 4.57328 6.64062C3.81481 6.64062 3.19995 7.24952 3.19995 8.00063C3.19995 8.75173 3.81481 9.36063 4.57328 9.36063Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
+</div>
+
+@if (guest != null)
+{
+    if (Model.Any())
+    {
+        <div class="table100 ver2 m-b-110">
+            <table data-vertable="ver2">
+                <thead>
+                    <tr class="row100 head" style="color: white; font-weight: 500;">
+                        <th class="column100 column1">Biển số xe</th>
+                        <th class="column100 column4">Ngày thuê</th>
+                        <th class="column100 column4">Ngày trả</th>
+                        <th class="column100 column6">Tổng tiền</th>
+                        <th class="column100 column5">Trạng thái</th>
+                        <th class="column100 column6">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var trip in Model)
+                    {
+                        if (trip.TrangThai == 1)
+                        {
+                            <tr class="row100">
+                                <td class="column100">@trip.BienSoXe</td>
+                                <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
+                                <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
+                                <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
+                                <td class="column100">
+                                    @if (trip.ThanhToan != null)
+                                    {
+                                        if (trip.ThanhToan.TrangThai == "Đã thanh toán")
+                                        {
+                                            <span>Đã thanh toán</span>
+                                        }
+                                        else if (trip.ThanhToan.TrangThai == "Chờ xét duyệt")
+                                        {
+                                            <span>Chờ xét duyệt</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Chưa thanh toán</span>
+                                    }
+                                </td>
+                                <td class="column100">
+
+                                    @Html.ActionLink("Hủy chuyến", "DeleteTrip", new { id = trip.IDDT }, new
+                                    {
+                                        @class = "btn btn-delete",
+                                        onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                                    })
+                                </td>
+                            </tr>
+                        }
+
+                        if (trip.TrangThai == 2)
+                        {
+                <tr class="row100">
+                    <td class="column100">@trip.BienSoXe</td>
+                    <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
+                    <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
+                    <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
+                    <td class="column100">
+                        <span>Đã hủy</span>
+                    </td>
+                    <td class="column100">
+                    </td>
+                </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-        Bộ lọc
-    </a>
-</div>
-<div class="list-car my-trips">
-    <div class="empty-container">
-        <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="">
-        <p>Bạn chưa có chuyến</p>
-    </div>
-</div>
-
-
+    }
+    else
+    {
+        <div class="empty-container">
+            <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="">
+            <p>Bạn chưa có xe đang thuê nào</p>
+        </div>
+    }
+}

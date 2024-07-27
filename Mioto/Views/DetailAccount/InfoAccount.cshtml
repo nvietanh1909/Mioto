@@ -1,80 +1,82 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "InfoAccount";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
-
+@{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
+@{var chuxe = Session["ChuXe"] as Mioto.Models.ChuXe;}
+@{var gplx = Session["GPLX"] as Mioto.Models.GPLX;}
 <!--User profile-->
 <div class="content-item user-profile">
     <div class="title">
         <div class="title-edit">
             <h5>Thông tin tài khoản</h5>
             <div class="wrap-svg">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                @if (chuxe != null || guest != null)
+                {
+                    <a href="@Url.Action("EditInfoUser", "DetailAccount", new { IDKH = guest.IDKH })">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </a>
+                }
             </div>
-        </div>
-        <div class="total-trips">
-            <div class="wrap-svg">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3535_118649)"><path d="M15.0938 1.82812C15.0938 1.59553 15.283 1.40625 15.5156 1.40625H17.9531C18.1858 1.40625 18.375 1.59553 18.375 1.82812V4.34133H19.7812V1.82812C19.7812 0.820078 18.9612 0 17.9531 0H15.5156C14.5076 0 13.6875 0.820078 13.6875 1.82812V4.34133H15.0938V1.82812Z" fill="#5FCF86"></path><path d="M8.54709 22.5937C8.23987 22.1164 8.0625 21.5512 8.0625 20.9531V10.4116H1.64062C0.735984 10.4116 0 11.1476 0 12.0522V20.9531C0 21.7782 0.612234 22.4626 1.40625 22.5767V23.2967C1.40625 23.685 1.72106 23.9998 2.10938 23.9998C2.49769 23.9998 2.8125 23.685 2.8125 23.2967V22.5937H8.54709V22.5937ZM2.8125 12.9897C2.8125 12.6014 3.12731 12.2866 3.51562 12.2866C3.90394 12.2866 4.21875 12.6014 4.21875 12.9897V20.0156C4.21875 20.4039 3.90394 20.7187 3.51562 20.7187C3.12731 20.7187 2.8125 20.4039 2.8125 20.0156V12.9897Z" fill="#5FCF86"></path><path d="M6.5625 7.89844C6.5625 7.66584 6.75178 7.47656 6.98438 7.47656H8.0625V7.3882C8.0625 6.91641 8.17031 6.46936 8.36259 6.07031H6.98438C5.97633 6.07031 5.15625 6.89039 5.15625 7.89844V9.00539H6.5625V7.89844Z" fill="#5FCF86"></path><path d="M22.3594 5.74756H11.1094C10.2047 5.74756 9.46875 6.48354 9.46875 7.38818V20.9531C9.46875 21.7782 10.081 22.4626 10.875 22.5767V23.2967C10.875 23.685 11.1898 23.9998 11.5781 23.9998C11.9664 23.9998 12.2812 23.685 12.2812 23.2967V22.5937H21.1875V23.2967C21.1875 23.685 21.5023 23.9998 21.8906 23.9998C22.2789 23.9998 22.5938 23.685 22.5938 23.2967V22.5767C23.3877 22.4626 24 21.7782 24 20.9531V7.38818C24 6.4835 23.264 5.74756 22.3594 5.74756ZM13.6875 20.0156C13.6875 20.4039 13.3727 20.7187 12.9844 20.7187C12.5961 20.7187 12.2812 20.4039 12.2812 20.0156V8.32568C12.2812 7.93737 12.5961 7.62256 12.9844 7.62256C13.3727 7.62256 13.6875 7.93737 13.6875 8.32568V20.0156ZM20.4844 20.7187C20.0961 20.7187 19.7812 20.4039 19.7812 20.0156V8.32568C19.7812 7.93737 20.0961 7.62256 20.4844 7.62256C20.8727 7.62256 21.1875 7.93737 21.1875 8.32568V20.0156C21.1875 20.4039 20.8727 20.7187 20.4844 20.7187Z" fill="#5FCF86"></path></g><defs><clipPath id="clip0_3535_118649"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>
-            </div>
-            <p class="count">0</p>
-            <span>chuyến</span>
         </div>
     </div>
     <div class="content">
         <div class="avatar-box">
-            <div class="avatar avatar--xl has-edit">
-                <img loading="lazy" src="https://n1-astg.mioto.vn/g/2024/04/14/10/SU9tyuEN1J72XUg9n8Yajw.jpg" alt="Viet Anh Nguyen">
-            </div>
-            <h6>nvietanh</h6>
-            <p class="note">Tham gia: 14/05/2024</p>
+            @if (guest != null)
+            {
+                <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
+                    <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
+                        <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (guest.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                        <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
+                    </div>
+                </form>
+                <h6>@guest.Ten</h6>
+            }
+            else if (chuxe != null)
+            {
+                <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
+                    <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
+                        <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (chuxe.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                        <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
+                    </div>
+                </form>
+                <h6>@chuxe.Ten</h6>
+            }
         </div>
+
         <div class="info-user">
             <div class="info-box">
                 <div class="info-box__item">
                     <p>Ngày sinh </p>
-                    <p class="main">----/----/--------</p>
+                    <p class="main">
+                        <text>@guest.NgaySinh.ToShortDateString()</text>
+                    </p>
                 </div>
                 <div class="info-box__item">
                     <p>Giới tính </p>
-                    <p class="main">Nam</p>
+                    <p class="main">@guest.GioiTinh</p>
                 </div>
             </div>
             <div class="info-desc">
                 <div class="info-desc__item">
                     <div class="title-item">Số điện thoại</div>
                     <div class="name">
-                        Thêm số điện thoại
-                        <div class="wrap-svg">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
+                        @guest.SDT
                     </div>
                 </div>
                 <div class="info-desc__item">
                     <div class="title-item">Email</div>
                     <div class="name">
-                        nvietanh.190904@gmail.com
-                        <div class="wrap-svg">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
+                        @guest.Email
                     </div>
                 </div>
                 <div class="info-desc__item">
-                    <div class="title-item">Facebook</div>
+                    <div class="title-item">Địa chỉ</div>
                     <div class="name">
-                        Thêm liên kết
-                        <div class="wrap-svg">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.36 6.18005L15.62 3.92006C16.85 2.69006 18.85 2.69006 20.08 3.92006C21.31 5.15006 21.31 7.15007 20.08 8.38007L14.66 13.8001C13.43 15.0301 11.43 15.0301 10.2 13.8001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.64 17.8201L8.38 20.0801C7.15 21.3101 5.15 21.3101 3.92 20.0801C2.69 18.8501 2.69 16.8501 3.92 15.6201L9.34 10.2001C10.57 8.97009 12.57 8.97009 13.8 10.2001" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
+                        @guest.DiaChi
                     </div>
                 </div>
             </div>
@@ -82,19 +84,26 @@
     </div>
 </div>
 
-<!--Driver license-->
+<!--GPLX-->
 <div class="content-item driver-license">
+   @if (chuxe != null || guest != null)
+{
     <div class="title">
         <div class="title-item">
             <h6>Giấy phép lái xe</h6>
         </div>
-        <a href="#" class="btn btn--s">
+        <a href="@Url.Action("EditGPLX", "DetailAccount", new { IDKH = guest.IDKH })" class="btn btn--s">
             Chỉnh sửa
             <div class="wrap-svg">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
             </div>
         </a>
     </div>
+}
+
     <div class="note-license">
         <p><b>Lưu ý: </b> để tránh phát sinh vấn đề trong quá trình thuê xe, <u>người đặt xe</u> trên Mioto (đã xác thực GPLX) <b>ĐỒNG THỜI </b>phải là <u>người nhận xe.</u></p>
     </div>
@@ -116,12 +125,19 @@
             <div class="custom-input">
                 <div class="wrap-info">
                     <div class="title-status">
-                        <p>Số GPLX</p>
+                        <p>GPLX</p>
                     </div>
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        <input disabled="" type="text" placeholder="Nhập số GPLX đã cấp" value="">
+                        @if (guest.SoGPLX != "No")
+                        {
+                            <input disabled="" type="text" placeholder="@guest.SoGPLX" value="">
+                        }
+                        else
+                        {
+                            <input disabled="" type="text" placeholder="Chưa xác thực GPLX" value="">
+                        }
                     </div>
                 </div>
             </div>
@@ -133,7 +149,7 @@
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        <input disabled="" type="text" placeholder="Nhập đầy đủ họ tên" value="">
+                        <input disabled="" type="text" placeholder="@guest.Ten" value="">
                     </div>
                 </div>
             </div>
@@ -145,7 +161,9 @@
                 </div>
                 <div class="wrap-input disabled">
                     <div class="wrap-text">
-                        <span>12-06-2024</span>
+                        <span>
+                            <text>@guest.NgaySinh.ToShortDateString()</text>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -153,35 +171,86 @@
     </div>
 </div>
 
-<!--My card-->
-<div class="content-item my-cards">
-    <div class="title">
-        <h6>Thẻ của tôi</h6>
-        <a href="#" class="btn btn--s">
-            Thêm thẻ
-            <div class="wrap-svg">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.8672 9.22595L11.9096 14.6141" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.19531 11.8988L14.5835 11.9412" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<!--CCCD-->
+<div class="content-item driver-license">
+    @if (chuxe != null || guest != null)
+    {
+        <div class="title">
+            <div class="title-item">
+                <h6>Căn cước công dân</h6>
             </div>
-        </a>
-    </div>
-    <div class="empty-container">
-        <img loading="lazy" src="/static/media/my-card.c94c4868.svg" alt="">
-        <p>Bạn chưa có thẻ nào</p>
-    </div>
-</div>
+            <a href="@Url.Action("EditCCCD", "DetailAccount", new { IDKH = guest.IDKH })" class="btn btn--s">
+                Chỉnh sửa
+                <div class="wrap-svg">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.30732 14.1607L14.1673 4.30065L11.7007 1.83398L1.84065 11.694L1.83398 14.1673L4.30732 14.1607Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.2344 4.08789L11.9144 5.76788" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+            </a>
+        </div>
+    }
 
-<!--List car-->
-<div class="content-item car-owner">
-    <div class="title">
-        <h6>Danh sách xe</h6>
-        <div class="tab-mode">
-            <div class="tab-mode__item active">Có tài xế</div>
-            <div class="tab-mode__item">Tự lái</div>
+    <div class="content">
+        <div class="info-license position-relative">
+            <div class="info-license__title">
+                <p>Hình ảnh</p>
+            </div>
+            <label class="info-license__img">
+                <div class="fix-img">
+                    <img loading="lazy" class="img-license" src="data:image/png;base64,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">
+                </div>
+            </label>
+        </div>
+        <div class="info-license">
+            <div class="info-license__title">
+                <p>Thông tin chung</p>
+            </div>
+            <div class="custom-input">
+                <div class="wrap-info">
+                    <div class="title-status">
+                        <p>CCCD</p>
+                    </div>
+                </div>
+                <div class="wrap-input disabled">
+                    <div class="wrap-text">
+                        @if (guest.CCCD != "No")
+                        {
+                            <input disabled="" type="text" placeholder="@guest.SoGPLX" value="">
+                        }
+                        else
+                        {
+                            <input disabled="" type="text" placeholder="Chưa xác thực CCCD" value="">
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="custom-input">
+                <div class="wrap-info">
+                    <div class="title-status">
+                        <p>Họ và tên</p>
+                    </div>
+                </div>
+                <div class="wrap-input disabled">
+                    <div class="wrap-text">
+                        <input disabled="" type="text" placeholder="@guest.Ten" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="custom-input">
+                <div class="wrap-info">
+                    <div class="title-status">
+                        <p>Ngày sinh</p>
+                    </div>
+                </div>
+                <div class="wrap-input disabled">
+                    <div class="wrap-text">
+                        <span>
+                            <text>@guest.NgaySinh.ToShortDateString()</text>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="empty-container">
-        <img loading="lazy" src="https://www.mioto.vn/static/media/empty-mycar.e023e681.svg" alt="">
-        <p>Không tìm thấy xe nào.</p>
-    </div>
 </div>
-
