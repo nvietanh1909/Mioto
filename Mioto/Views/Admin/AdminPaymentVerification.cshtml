@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "AdminPaymentVerification";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<Mioto.Models.ThanhToan>
+
+@{ var guest = Session["NhanVien"] as Mioto.Models.NhanVien; }
+
+<link href="~/Content/css/table.css" rel="stylesheet" />
+<div class="title" style="display: flex; justify-content: space-between">
+    <div class="title-item">
+        <h5>Danh sách thanh toán</h5>
+    </div>
+</div>
+@if (guest != null)
+{
+    <div class="table100 ver2 m-b-110">
+        <table data-vertable="ver2">
+            <thead>
+                <tr class="row100 head" style="color: white; font-weight: 500;">
+                    <th class="column100 column4">Phương thức</th>
+                    <th class="column100 column7">Ngày thanh toán</th>
+                    <th class="column100 column5">Số tiền</th>
+                    <th class="column100 column5">Trạng thái</th>
+                    <th class="column100 column9">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tt in Model)
+                {
+                    <tr class="row100">
+                        <td class="column100">@Html.DisplayFor(modelItem => tt.PhuongThuc)</td>
+                        <td class="column100">@tt.NgayTT.ToString("dd/MM/yyyy")</td>
+                        <td class="column100">
+                            @string.Format("{0:N0} VNĐ", tt.SoTien)
+                        </td>
+                        <td class="column100">@Html.DisplayFor(modelItem => tt.TrangThai)</td>
+                        <td class="column100">
+                            @if (tt.TrangThai != "Đã thanh toán")
+                            {
+                                @Html.ActionLink("Xét duyệt", "ApprovePayment", new { idtt = tt.IDTT }, new
+                                    {
+                                        @class = "btn btn-delete",
+                                        onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                                    })
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-container">
+        <img loading="lazy" src="https://www.mioto.vn/static/media/empty-mycar.e023e681.svg" alt="Không có giao dịch nào">
+        <p>Không có giao dịch nào chờ xét duyệt.</p>
+    </div>
+}

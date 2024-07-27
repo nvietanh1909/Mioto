@@ -25,12 +25,26 @@
     </div>
     <div class="content">
         <div class="avatar-box">
-            <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
-                <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
-                    <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (guest.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
-                    <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
-                </div>
-            </form>
+            @if (guest != null)
+            {
+                <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
+                    <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
+                        <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (guest.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                        <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
+                    </div>
+                </form>
+                <h6>@guest.Ten</h6>
+            }
+            else if (chuxe != null)
+            {
+                <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
+                    <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
+                        <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (chuxe.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                        <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
+                    </div>
+                </form>
+                <h6>@chuxe.Ten</h6>
+            }
         </div>
 
         <div class="info-user">

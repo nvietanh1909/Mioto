@@ -192,6 +192,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\DetailAccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\MD_ChangePassword.cs" />
     <Compile Include="Models\MD_ChuXe.cs" />
     <Compile Include="Models\MD_Login.cs" />
+    <Compile Include="Models\MD_MaGiamGia.cs" />
     <Compile Include="Models\MD_MyTrip.cs" />
     <Compile Include="Models\MD_Payment.cs" />
     <Compile Include="Models\MD_Register.cs" />
@@ -268,6 +270,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AvatarAdmin\DefaultAvatar.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -372,6 +375,13 @@
     <Content Include="Views\DetailAccount\EditCCCD.cshtml" />
     <Content Include="Views\Payment\CongratulationPaymentDone.cshtml" />
     <Content Include="Views\DetailAccount\RentedCar.cshtml" />
+    <Content Include="Views\DetailAccount\RevenueChart.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Admin\AdminPaymentVerification.cshtml" />
+    <Content Include="Views\Admin\InfoAccount.cshtml" />
+    <Content Include="Views\Admin\ManagerDiscount.cshtml" />
+    <Content Include="Views\Admin\AddDiscount.cshtml" />
+    <Content Include="Views\Admin\EditDiscount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

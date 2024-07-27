@@ -40,7 +40,7 @@ namespace Mioto.Controllers
             var ds_xe = db.Xe.Where(x => x.KhuVuc == khuvuc && x.TrangThai == "Sẵn sàng").ToList();
 
             if (xe == null || KhachHang == null) return View(ds_xe);
-           
+
             if(ChuXe != null)
             {
                 ds_xe = db.Xe.Where(x => x.KhuVuc == khuvuc && x.TrangThai == "Sẵn sàng" && x.IDCX != ChuXe.IDCX).ToList();

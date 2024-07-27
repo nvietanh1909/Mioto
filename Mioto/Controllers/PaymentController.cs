@@ -260,7 +260,7 @@ namespace Mioto.Controllers
 
             if (discount == null)
             {
-                return Json(new { success = false, message = "Mã giảm giá không hợp lệ." });
+                return Json(new { success = false, message = "Mã giảm giá không đúng." });
             }
             else if (discount.SoLanSuDung <= 0)
             {

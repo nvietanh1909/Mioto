@@ -477,7 +477,7 @@ namespace Mioto.Controllers
                     // Cập nhật thông tin hình ảnh của khách hàng trong cơ sở dữ liệu
                     var guest = Session["KhachHang"] as KhachHang;
                     var existingKH = db.KhachHang.Find(guest.IDKH);
-                    var existingCX = db.ChuXe.Find(guest.IDKH);
+                    var existingCX = db.ChuXe.FirstOrDefault(x => x.IDKH == guest.IDKH);
 
                     if (existingKH != null)
                     {
@@ -704,5 +704,12 @@ namespace Mioto.Controllers
             return RedirectToAction("RentedCar");
         }
 
+        public ActionResult RevenueChart()
+        {
+            var doanhThu = db.ThanhToan
+            .Where(d => d.TrangThai == "Đã thanh toán")
+            .Sum(d => d.SoTien);
+            return View();  
+        }
     }
 }

@@ -144,7 +144,7 @@
           <Property Name="SDT" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="DiaChi" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="NgaySinh" Type="date" Nullable="false" />
-          <Property Name="HinhAnh" Type="varbinary(max)" />
+          <Property Name="HinhAnh" Type="nvarchar(max)" />
           <Property Name="ChucVu" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="GioiTinh" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
@@ -612,7 +612,7 @@
           <Property Name="SDT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DiaChi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NgaySinh" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ChucVu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="GioiTinh" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="DoanhThuCongTy" Relationship="Self.FK__DoanhThuCo__IDNV__4F7CD00D" FromRole="NhanVien" ToRole="DoanhThuCongTy" />
