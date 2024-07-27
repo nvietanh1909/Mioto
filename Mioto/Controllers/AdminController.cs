@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -30,16 +31,82 @@ namespace Mioto.Controllers
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
+
             try
             {
+                // Lấy thông tin thanh toán
                 var thanhtoan = db.ThanhToan.Find(idtt);
                 if (thanhtoan == null)
                 {
                     return HttpNotFound();
                 }
-                var chuxe = db.ChuXe.FirstOrDefault(x => x.IDCX)
+
+                // Lấy thông tin đặt thuê xe
+                var donthuexe = db.DonThueXe.FirstOrDefault(x => x.IDDT == thanhtoan.IDDT);
+                if (donthuexe == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Lấy thông tin xe
+                var xe = db.Xe.FirstOrDefault(x => x.BienSoXe == donthuexe.BienSoXe);
+                if (xe == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Lấy thông tin chủ xe
+                var chuxe = db.ChuXe.FirstOrDefault(x => x.IDCX == xe.IDCX);
+                if (chuxe == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Cập nhật trạng thái thanh toán
                 thanhtoan.TrangThai = "Đã thanh toán";
                 db.Entry(thanhtoan).State = EntityState.Modified;
+                db.SaveChanges();
+
+                // Cập nhật doanh thu cho chủ xe
+                var doanhThuChuXe = db.DoanhThuChuXe.FirstOrDefault(d => d.IDCX == chuxe.IDCX);
+                if (doanhThuChuXe == null)
+                {
+                    // Tạo mới nếu không có doanh thu cho chủ xe
+                    doanhThuChuXe = new DoanhThuChuXe
+                    {
+                        IDCX = chuxe.IDCX,
+                        DoanhThuNgay = 0,
+                        DoanhThuTuan = 0,
+                        DoanhThuThang = 0,
+                        DoanhThuNam = 0
+                    };
+                    db.DoanhThuChuXe.Add(doanhThuChuXe);
+                    db.SaveChanges();
+                }
+
+                // Cập nhật doanh thu theo ngày
+                doanhThuChuXe.DoanhThuNgay += donthuexe.TongTien;
+
+                // Cập nhật doanh thu theo tuần
+                var weekOfYear = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(donthuexe.NgayThue, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                if (weekOfYear == CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday))
+                {
+                    doanhThuChuXe.DoanhThuTuan += donthuexe.TongTien;
+                }
+
+                // Cập nhật doanh thu theo tháng
+                if (donthuexe.NgayThue.Month == DateTime.Today.Month && donthuexe.NgayThue.Year == DateTime.Today.Year)
+                {
+                    doanhThuChuXe.DoanhThuThang += donthuexe.TongTien;
+                }
+
+                // Cập nhật doanh thu theo năm
+                if (donthuexe.NgayThue.Year == DateTime.Today.Year)
+                {
+                    doanhThuChuXe.DoanhThuNam += donthuexe.TongTien;
+                }
+
+                db.Entry(doanhThuChuXe).State = EntityState.Modified;
                 db.SaveChanges();
 
                 return RedirectToAction("AdminPaymentVerification");
@@ -50,6 +117,7 @@ namespace Mioto.Controllers
                 return RedirectToAction("AdminPaymentVerification");
             }
         }
+
 
         // GET: DetailAccount
         public ActionResult InfoAccount()

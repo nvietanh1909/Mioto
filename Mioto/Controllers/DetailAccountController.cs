@@ -697,7 +697,7 @@ namespace Mioto.Controllers
             }
 
             // Xóa đơn thuê xe
-            donThueXe.TrangThai = 2; // Đánh dấu là đã hủy
+            donThueXe.TrangThai = 2; // Hủy
             db.Entry(donThueXe).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -706,10 +706,46 @@ namespace Mioto.Controllers
 
         public ActionResult RevenueChart()
         {
-            var doanhThu = db.ThanhToan
-            .Where(d => d.TrangThai == "Đã thanh toán")
-            .Sum(d => d.SoTien);
-            return View();  
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            var chuxe = Session["ChuXe"] as ChuXe;
+            var khachhang = Session["KhachHang"] as KhachHang;
+            if (chuxe == null)
+            {
+                var view_kh = new DoanhThuChuXe
+                {
+                    DoanhThuNgay = 0,
+                    DoanhThuTuan = 0,
+                    DoanhThuThang = 0,
+                    DoanhThuNam = 0
+                };
+                return View(view_kh);
+            }
+                
+            var doanhThu = db.DoanhThuChuXe.FirstOrDefault(x => x.IDCX == chuxe.IDCX);
+            if (doanhThu == null)
+            {
+                doanhThu = new DoanhThuChuXe
+                {
+                    DoanhThuNgay = 0,
+                    DoanhThuTuan = 0,
+                    DoanhThuThang = 0,
+                    DoanhThuNam = 0
+                };
+            }
+
+            var viewModel = new DoanhThuChuXe
+            {
+                DoanhThuNgay = doanhThu.DoanhThuNgay,
+                DoanhThuTuan = doanhThu.DoanhThuTuan,
+                DoanhThuThang = doanhThu.DoanhThuThang,
+                DoanhThuNam = doanhThu.DoanhThuNam
+            };
+
+            return View(viewModel);
         }
+
     }
 }
