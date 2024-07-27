@@ -23,8 +23,8 @@
                         <th class="column100 column1">Biển số xe</th>
                         <th class="column100 column4">Ngày thuê</th>
                         <th class="column100 column4">Ngày trả</th>
-                        <th class="column100 column5">Trạng thái</th>
                         <th class="column100 column6">Tổng tiền</th>
+                        <th class="column100 column5">Trạng thái</th>
                         <th class="column100 column6">Hành động</th>
                     </tr>
                 </thead>
@@ -37,6 +37,7 @@
                                 <td class="column100">@trip.BienSoXe</td>
                                 <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
                                 <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
+                                <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
                                 <td class="column100">
                                     @if (trip.ThanhToan != null)
                                     {
@@ -48,18 +49,14 @@
                                         {
                                             <span>Chờ xét duyệt</span>
                                         }
-                                        else
-                                        {
-                                            <span>Chưa thanh toán</span>
-                                        }
                                     }
                                     else
                                     {
                                         <span>Chưa thanh toán</span>
                                     }
                                 </td>
-                                <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
                                 <td class="column100">
+
                                     @Html.ActionLink("Hủy chuyến", "DeleteTrip", new { id = trip.IDDT }, new
                                     {
                                         @class = "btn btn-delete",
@@ -67,6 +64,21 @@
                                     })
                                 </td>
                             </tr>
+                        }
+
+                        if (trip.TrangThai == 2)
+                        {
+                <tr class="row100">
+                    <td class="column100">@trip.BienSoXe</td>
+                    <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
+                    <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
+                    <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
+                    <td class="column100">
+                        <span>Đã hủy</span>
+                    </td>
+                    <td class="column100">
+                    </td>
+                </tr>
                         }
                     }
                 </tbody>

@@ -251,6 +251,7 @@
     <Compile Include="Models\MD_MyTrip.cs" />
     <Compile Include="Models\MD_Payment.cs" />
     <Compile Include="Models\MD_Register.cs" />
+    <Compile Include="Models\MD_RentedCar.cs" />
     <Compile Include="Models\MD_Xe.cs" />
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>DB_Mioto.tt</DependentUpon>
@@ -370,6 +371,7 @@
     <Content Include="Views\Payment\Alert.cshtml" />
     <Content Include="Views\DetailAccount\EditCCCD.cshtml" />
     <Content Include="Views\Payment\CongratulationPaymentDone.cshtml" />
+    <Content Include="Views\DetailAccount\RentedCar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

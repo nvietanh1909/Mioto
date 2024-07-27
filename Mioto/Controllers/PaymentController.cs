@@ -96,7 +96,7 @@ namespace Mioto.Controllers
                 var isAvailableXe = !db.DonThueXe.Any(d => d.BienSoXe == bookingCar.Xe.BienSoXe &&
                                               ((d.NgayThue < bookingCar.NgayTra && d.NgayTra > bookingCar.NgayThue) ||
                                                (d.NgayThue < bookingCar.NgayThue && d.NgayTra > bookingCar.NgayThue) ||
-                                               (d.NgayThue < bookingCar.NgayTra && d.NgayTra > bookingCar.NgayTra)));
+                                               (d.NgayThue < bookingCar.NgayTra && d.NgayTra > bookingCar.NgayTra)) && d.TrangThai == 1);
 
                 if (!isAvailableXe)
                 {

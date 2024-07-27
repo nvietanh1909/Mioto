@@ -328,28 +328,6 @@ namespace Mioto.Controllers
             }
         }
 
-        public ActionResult DeleteCar(string BienSoXe)
-        {
-            if (!IsLoggedIn)
-                return RedirectToAction("Login", "Account");
-            try
-            {
-                var xe = db.Xe.FirstOrDefault(x => x.BienSoXe == BienSoXe);
-                if (xe != null)
-                {
-                    db.Xe.Remove(xe);
-                    db.SaveChanges();
-                    return RedirectToAction("MyCar");
-                }
-                return HttpNotFound();
-            }
-            catch (Exception ex)
-            {
-                // Ghi log lỗi hoặc xử lý lỗi
-                ViewBag.ErrorMessage = "Không thể xóa xe: " + ex.Message;
-                return View("Error"); // Hoặc trang lỗi tùy chỉnh của bạn
-            }
-        }
 
         public ActionResult MyTrip()
         {
@@ -576,7 +554,7 @@ namespace Mioto.Controllers
                 else if (timeDifference > 7)
                 {
                     // Hủy trước chuyến đi > 7 ngày
-                    hoanTien = donThueXe.TongTien * 0.70m; // Hoàn tiền 70%
+                    hoanTien = donThueXe.TongTien * 70/100; // Hoàn tiền 70%
                 }
                 else
                 {
@@ -618,6 +596,113 @@ namespace Mioto.Controllers
             db.SaveChanges();
 
             return RedirectToAction("MyTrip");
+        }
+        // GET: RentedCar
+        public ActionResult RentedCar()
+        {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+            var chuxe = Session["ChuXe"] as ChuXe;
+            var khachhang = Session["KhachHang"] as KhachHang;
+
+            if(chuxe != null)
+            {
+                // Lấy danh sách các xe đang được thuê của chủ xe
+                var rentedCars = db.DonThueXe
+                    .Where(d => d.Xe.IDCX == chuxe.IDCX)
+                    .Select(d => new MD_RentedCar
+                    {
+                        IDDT = d.IDDT,
+                        BienSoXe = d.BienSoXe,
+                        HangXe = d.Xe.HangXe,
+                        MauXe = d.Xe.MauXe,
+                        NgayThue = d.NgayThue,
+                        NgayTra = d.NgayTra,
+                        TongTien = d.TongTien,
+                        TrangThai = d.TrangThai,
+                        HinhAnh = d.Xe.HinhAnh
+                    }).ToList();
+
+                return View(rentedCars);
+            }
+            return View();
+        }
+
+        public ActionResult DeleteRentedCar(int id)
+        {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            // Lấy thông tin chuyến thuê xe
+            var donThueXe = db.DonThueXe.FirstOrDefault(x => x.IDDT == id);
+            if (donThueXe == null)
+                return HttpNotFound("Chuyến thuê không tồn tại");
+
+            var currentDateTime = DateTime.Now;
+            var bookingDateTime = donThueXe.BDT;
+            var timeDifference = (currentDateTime - bookingDateTime).TotalDays;
+
+            // Xác định người dùng hủy chuyến
+            var guest = Session["KhachHang"] as KhachHang;
+            var chuxe = Session["ChuXe"] as ChuXe;
+
+            decimal denTien = 0;
+            
+            if (chuxe != null)
+            {
+                // Chủ xe hủy chuyến
+                if (currentDateTime <= bookingDateTime.AddHours(1))
+                {
+                    // <= 1 giờ sau giữ chỗ
+                    denTien = 0; // Không mất phí
+                }
+                else if (timeDifference > 7)
+                {
+                    // Hủy trước chuyến đi > 7 ngày
+                    denTien = donThueXe.TongTien * 30/100; // Đền tiền 30%
+                }
+                else
+                {
+                    // Hủy <= 7 ngày trước chuyến đi
+                    denTien = donThueXe.TongTien; // Đền tiền 100%
+                }
+
+                // Lưu thông tin phí hủy chuyến cho chủ xe
+                var phiHuyChuyen = new PhiHuyChuyen
+                {
+                    IDDT = id,
+                    LoaiHuyChuyen = 2, // Chủ xe
+                    ThoiGianHuy = (currentDateTime <= bookingDateTime.AddHours(1)) ? 1 : (timeDifference > 7 ? 2 : 3),
+                    HoanTien = 0,
+                    DenTien = denTien,
+                    MoTa = "Hủy chuyến do chủ xe yêu cầu."
+                };
+
+                db.PhiHuyChuyen.Add(phiHuyChuyen);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Người dùng không hợp lệ");
+            }
+
+            db.SaveChanges();
+
+            // Xóa đơn thanh toán
+            var thanhtoan = db.ThanhToan.FirstOrDefault(x => x.IDDT == donThueXe.IDDT);
+            if (thanhtoan != null)
+            {
+                db.ThanhToan.Remove(thanhtoan);
+                db.SaveChanges();
+            }
+
+            // Xóa đơn thuê xe
+            donThueXe.TrangThai = 2; // Đánh dấu là đã hủy
+            db.Entry(donThueXe).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("RentedCar");
         }
 
     }
