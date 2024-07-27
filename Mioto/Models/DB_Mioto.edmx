@@ -156,8 +156,8 @@
           <Property Name="IDDT" Type="int" Nullable="false" />
           <Property Name="LoaiHuyChuyen" Type="int" Nullable="false" />
           <Property Name="ThoiGianHuy" Type="int" Nullable="false" />
-          <Property Name="HoanTien" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="DenTien" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="HoanTien" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="DenTien" Type="decimal" Precision="15" Scale="2" />
           <Property Name="MoTa" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ThanhToan">
@@ -168,7 +168,7 @@
           <Property Name="IDDT" Type="int" Nullable="false" />
           <Property Name="PhuongThuc" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NgayTT" Type="date" Nullable="false" />
-          <Property Name="SoTien" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SoTien" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="TrangThai" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="IDMGG" Type="int" />
         </EntityType>
@@ -625,8 +625,8 @@
           <Property Name="IDDT" Type="Int32" Nullable="false" />
           <Property Name="LoaiHuyChuyen" Type="Int32" Nullable="false" />
           <Property Name="ThoiGianHuy" Type="Int32" Nullable="false" />
-          <Property Name="HoanTien" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="DenTien" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="HoanTien" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DenTien" Type="Decimal" Precision="15" Scale="2" />
           <Property Name="MoTa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DonThueXe" Relationship="Self.FK__PhiHuyChuy__IDDT__5441852A" FromRole="PhiHuyChuyen" ToRole="DonThueXe" />
         </EntityType>
@@ -638,7 +638,7 @@
           <Property Name="IDDT" Type="Int32" Nullable="false" />
           <Property Name="PhuongThuc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NgayTT" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SoTien" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SoTien" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IDMGG" Type="Int32" />
           <NavigationProperty Name="DonThueXe" Relationship="Self.FK__ThanhToan__IDDT__4316F928" FromRole="ThanhToan" ToRole="DonThueXe" />

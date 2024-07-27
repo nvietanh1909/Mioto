@@ -1,56 +1,83 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "MyTrip";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
-@model IEnumerable<Mioto.Models.DonThueXe>
+@model IEnumerable<Mioto.Models.MD_MyTrip>
 @{ var guest = Session["KhachHang"] as Mioto.Models.KhachHang; }
 
-<div class="content-title">
-    <h4>Thông tin xe đã thuê</h4>
+<link href="~/Content/css/table.css" rel="stylesheet" />
+<div class="title" style="display: flex; justify-content: space-between">
+    <div class="title-item">
+        <h5>Thông tin xe đang thuê</h5>
+    </div>
 </div>
+
 @if (guest != null)
 {
-    if (Model != null)
+    if (Model.Any())
     {
-        <div class="mytrips-mode">
-            <div class="tab-mode">
-                <a class="tab-mode__item active">Chuyến hiện tại</a>
-            </div>
-            <thead>
-                <tr class="row100 head" style="color: white; font-weight: 500;">
-                    <th class="column100 column1">Biển số xe</th>
-                    <th class="column100 column2">Hãng xe</th>
-                    <th class="column100 column3">Màu xe</th>
-                    <th class="column100 column4">Khu vực</th>
-                    <th class="column100 column6">Tính năng</th>
-                    <th class="column100 column7">Tổng tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var donthuexe in Model)
-                {
-                    <tr class="row100">
-                        <td class="column100">@Html.DisplayFor(modelItem => donthuexe.BienSoXe)</td>
-                        <td class="column100">@Html.DisplayFor(modelItem => donthuexe.NgayThue)</td>
-                        <td class="column100">@Html.DisplayFor(modelItem => donthuexe.NgayTra)</td>
-                        <td class="column100">@Html.DisplayFor(modelItem => donthuexe.BDT)</td>
-                        <td class="column100">@Html.DisplayFor(modelItem => donthuexe.TongTien)</td>
+        <div class="table100 ver2 m-b-110">
+            <table data-vertable="ver2">
+                <thead>
+                    <tr class="row100 head" style="color: white; font-weight: 500;">
+                        <th class="column100 column1">Biển số xe</th>
+                        <th class="column100 column4">Ngày thuê</th>
+                        <th class="column100 column4">Ngày trả</th>
+                        <th class="column100 column5">Trạng thái</th>
+                        <th class="column100 column6">Tổng tiền</th>
+                        <th class="column100 column6">Hành động</th>
                     </tr>
-                }
-            </tbody>
+                </thead>
+                <tbody>
+                    @foreach (var trip in Model)
+                    {
+                        if (trip.TrangThai == 1)
+                        {
+                            <tr class="row100">
+                                <td class="column100">@trip.BienSoXe</td>
+                                <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
+                                <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
+                                <td class="column100">
+                                    @if (trip.ThanhToan != null)
+                                    {
+                                        if (trip.ThanhToan.TrangThai == "Đã thanh toán")
+                                        {
+                                            <span>Đã thanh toán</span>
+                                        }
+                                        else if (trip.ThanhToan.TrangThai == "Chờ xét duyệt")
+                                        {
+                                            <span>Chờ xét duyệt</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Chưa thanh toán</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Chưa thanh toán</span>
+                                    }
+                                </td>
+                                <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
+                                <td class="column100">
+                                    @Html.ActionLink("Hủy chuyến", "DeleteTrip", new { id = trip.IDDT }, new
+                                    {
+                                        @class = "btn btn-delete",
+                                        onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                                    })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
     }
     else
     {
-        <div class="list-car my-trips">
-            <div class="empty-container">
-                <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="">
-                <p>Bạn chưa có chuyến</p>
-            </div>
+        <div class="empty-container">
+            <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="">
+            <p>Bạn chưa có xe đang thuê nào</p>
         </div>
     }
 }
-
-
-

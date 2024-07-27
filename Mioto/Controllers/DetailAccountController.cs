@@ -355,18 +355,53 @@ namespace Mioto.Controllers
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
+
             var guest = Session["KhachHang"] as KhachHang;
             var chuxe = Session["ChuXe"] as ChuXe;
-            if (guest == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng không tồn tại");
-            var donthuexe = db.DonThueXe.Where(x => x.IDKH == guest.IDKH).ToList();
+
+            if (guest == null && chuxe == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Khách hàng hoặc chủ xe không tồn tại");
+
+            List<MD_MyTrip> myTrips = new List<MD_MyTrip>();
+
+            if (guest != null)
+            {
+                myTrips = db.DonThueXe
+                    .Where(x => x.IDKH == guest.IDKH)
+                    .Select(dtx => new MD_MyTrip
+                    {
+                        IDDT = dtx.IDDT,
+                        BienSoXe = dtx.BienSoXe,
+                        NgayThue = dtx.NgayThue,
+                        NgayTra = dtx.NgayTra,
+                        BDT = dtx.BDT,
+                        TongTien = dtx.TongTien,
+                        TrangThai = dtx.TrangThai,
+                        ThanhToan = dtx.ThanhToan.FirstOrDefault(x => x.IDDT == dtx.IDDT),
+                        ChuXe = db.ChuXe.FirstOrDefault(cx => cx.IDCX == dtx.Xe.IDCX),
+                    }).ToList();
+            }
+
             if (chuxe != null)
             {
-                donthuexe = db.DonThueXe.Where(x => x.IDKH == chuxe.IDKH).ToList();
-                return View(donthuexe);
+                myTrips = db.DonThueXe
+                    .Where(x => x.IDKH == chuxe.IDKH)
+                    .Select(dtx => new MD_MyTrip
+                    {
+                        IDDT = dtx.IDDT,
+                        BienSoXe = dtx.BienSoXe,
+                        NgayThue = dtx.NgayThue,
+                        NgayTra = dtx.NgayTra,
+                        BDT = dtx.BDT,
+                        TrangThai = dtx.TrangThai,
+                        TongTien = dtx.TongTien,
+                        ThanhToan = dtx.ThanhToan.FirstOrDefault(x => x.IDDT == dtx.IDDT),
+                        ChuXe = db.ChuXe.FirstOrDefault(cx => cx.IDCX == dtx.Xe.IDCX)
+                    }).ToList();
             }
-            return View(donthuexe);
+            return View(myTrips);
         }
+
         public ActionResult LongTermOrder()
         {
             return View();
@@ -468,7 +503,6 @@ namespace Mioto.Controllers
 
                     if (existingKH != null)
                     {
-                        // Lưu tên file vào cơ sở dữ liệu (lưu ý bạn cần cập nhật entity và save change)
                         existingKH.HinhAnh = fileName;
 
                         // Kiểm tra chủ xe
@@ -479,7 +513,6 @@ namespace Mioto.Controllers
                             Session["ChuXe"] = existingCX;
                         }
                         // Cập nhật cơ sở dữ liệu
-
                         Session["KhachHang"] = existingKH;
                         db.Entry(existingKH).State = EntityState.Modified;
                         db.SaveChanges();
@@ -489,13 +522,11 @@ namespace Mioto.Controllers
                 }
                 else
                 {
-                    // Thông báo lỗi nếu định dạng file không hợp lệ
                     ModelState.AddModelError("", "Định dạng file không hợp lệ. Vui lòng chọn một file ảnh.");
                 }
             }
             else
             {
-                // Thông báo lỗi nếu không có file nào được chọn
                 ModelState.AddModelError("", "Vui lòng chọn một file ảnh.");
             }
 
@@ -514,5 +545,80 @@ namespace Mioto.Controllers
         {
             return user.MatKhau == password;
         }
+
+        public ActionResult DeleteTrip(int id)
+        {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            // Lấy thông tin chuyến thuê xe
+            var donThueXe = db.DonThueXe.FirstOrDefault(x => x.IDDT == id);
+            if (donThueXe == null)
+                return HttpNotFound("Chuyến thuê không tồn tại");
+
+            var currentDateTime = DateTime.Now;
+            var bookingDateTime = donThueXe.BDT;
+            var timeDifference = (currentDateTime - donThueXe.BDT).TotalDays;
+
+            // Xác định người dùng hủy chuyến
+            var guest = Session["KhachHang"] as KhachHang;
+
+            decimal hoanTien = 0;
+            if (guest != null)
+            {
+                // Khách hàng hủy chuyến
+                if (currentDateTime <= bookingDateTime.AddHours(1))
+                {
+                    // <= 1 giờ sau giữ chỗ
+                    hoanTien = donThueXe.TongTien; // Hoàn tiền 100%
+                }
+                else if (timeDifference > 7)
+                {
+                    // Hủy trước chuyến đi > 7 ngày
+                    hoanTien = donThueXe.TongTien * 0.70m; // Hoàn tiền 70%
+                }
+                else
+                {
+                    // Hủy <= 7 ngày trước chuyến đi
+                    hoanTien = 0; // Không hoàn tiền
+                }
+
+                // Lưu thông tin phí hủy chuyến cho khách hàng
+                var phiHuyChuyen = new PhiHuyChuyen
+                {
+                    IDDT = id,
+                    LoaiHuyChuyen = 1, // Khách hàng
+                    ThoiGianHuy = (currentDateTime <= bookingDateTime.AddHours(1)) ? 1 : (timeDifference > 7 ? 2 : 3),
+                    HoanTien = hoanTien,
+                    DenTien = 0,
+                    MoTa = "Hủy chuyến do khách hàng yêu cầu."
+                };
+
+                db.PhiHuyChuyen.Add(phiHuyChuyen);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Người dùng không hợp lệ");
+            }
+
+            db.SaveChanges();
+
+            // Xóa đơn thanh toán
+            var thanhtoan = db.ThanhToan.FirstOrDefault(x => x.IDDT == donThueXe.IDDT);
+            if (thanhtoan != null)
+            {
+                db.ThanhToan.Remove(thanhtoan);
+                db.SaveChanges();
+            }
+
+            // Xóa đơn thuê xe
+            donThueXe.TrangThai = 2;
+            db.Entry(donThueXe).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("MyTrip");
+        }
+
     }
 }

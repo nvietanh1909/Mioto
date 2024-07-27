@@ -14,45 +14,45 @@
 </div>
 @if (guest != null)
 {
-    <div class="">
-        <div class="table100 ver2 m-b-110">
-            <table data-vertable="ver2">
-                <thead>
-                    <tr class="row100 head" style="color: white; font-weight: 500;">
-                        <th class="column100 column1">Biển số xe</th>
-                        <th class="column100 column2">Hãng xe</th>
-                        <th class="column100 column3">Màu xe</th>
-                        <th class="column100 column4">Khu vực</th>
-                        <th class="column100 column6">Tính năng</th>
-                        <th class="column100 column7">Giá thuê</th>
-                        <th class="column100 column9">Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var xe in Model)
-                    {
-                        <tr class="row100">
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.BienSoXe)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.HangXe)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.MauXe)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.KhuVuc)</td>
-                            <td class="column100">@Html.DisplayFor(modelItem => xe.TinhNang)</td>
-                            <td class="column100">@string.Format("{0:N0} VNĐ", xe.GiaThue)</td>
-                            <td class="column100">
-                                @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-efit" })
-                                @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
-                                {
-                                    @class = "btn btn-delete",
-                                    data_id = xe.BienSoXe,
-                                    onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
-                                })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+   <div class="">
+       <div class="table100 ver2 m-b-110">
+           <table data-vertable="ver2">
+               <thead>
+                   <tr class="row100 head" style="color: white; font-weight: 500;">
+                       <th class="column100 column1">Biển số xe</th>
+                       <th class="column100 column2">Hãng xe</th>
+                       <th class="column100 column3">Màu xe</th>
+                       <th class="column100 column4">Khu vực</th>
+                       <th class="column100 column6">Tính năng</th>
+                       <th class="column100 column7">Giá thuê</th>
+                       <th class="column100 column9">Hành động</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   @foreach (var xe in Model)
+                   {
+                       <tr class="row100">
+                           <td class="column100">@Html.DisplayFor(modelItem => xe.BienSoXe)</td>
+                           <td class="column100">@Html.DisplayFor(modelItem => xe.HangXe)</td>
+                           <td class="column100">@Html.DisplayFor(modelItem => xe.MauXe)</td>
+                           <td class="column100">@Html.DisplayFor(modelItem => xe.KhuVuc)</td>
+                           <td class="column100">@Html.DisplayFor(modelItem => xe.TinhNang)</td>
+                           <td class="column100">@string.Format("{0:N0} VNĐ", xe.GiaThue)</td>
+                           <td class="column100">
+                               @Html.ActionLink("Chỉnh sửa", "EditCar", new { BienSoXe = xe.BienSoXe }, new { @class = "btn btn-efit" })
+                               @Html.ActionLink("Xóa", "DeleteCar", new { BienSoXe = xe.BienSoXe }, new
+                               {
+                                   @class = "btn btn-delete",
+                                   data_id = xe.BienSoXe,
+                                   onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
+                               })
+                           </td>
+                       </tr>
+                   }
+               </tbody>
+           </table>
+       </div>
+   </div>
 }
 else
 {
@@ -61,3 +61,4 @@ else
         <p>Không tìm thấy xe nào.</p>
     </div>
 }
+

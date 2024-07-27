@@ -219,17 +219,33 @@ namespace Mioto.Controllers
                 }
                 else
                 {
-                    var newThanhToan = new ThanhToan
+                   if(maGiamGia != null)
                     {
-                        NgayTT = thanhToan.NgayTT,
-                        TrangThai = "Chờ xét duyệt",
-                        PhuongThuc = thanhToan.PhuongThuc,
-                        IDDT = donThueXe.IDDT,
-                        SoTien = thanhToan.SoTien,
-                        IDMGG = maGiamGia.IDMGG
-                    };
-                    db.ThanhToan.Add(newThanhToan);
-                    db.SaveChanges();
+                        var newThanhToan = new ThanhToan
+                        {
+                            NgayTT = thanhToan.NgayTT,
+                            TrangThai = "Chờ xét duyệt",
+                            PhuongThuc = thanhToan.PhuongThuc,
+                            IDDT = donThueXe.IDDT,
+                            SoTien = thanhToan.SoTien,
+                            IDMGG = maGiamGia.IDMGG,
+                        };
+                        db.ThanhToan.Add(newThanhToan);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        var newThanhToan = new ThanhToan
+                        {
+                            NgayTT = thanhToan.NgayTT,
+                            TrangThai = "Chờ xét duyệt",
+                            PhuongThuc = thanhToan.PhuongThuc,
+                            IDDT = donThueXe.IDDT,
+                            SoTien = thanhToan.SoTien,
+                        };
+                        db.ThanhToan.Add(newThanhToan);
+                        db.SaveChanges();
+                    }
                 }
                 return View("CongratulationPaymentDone");
             }

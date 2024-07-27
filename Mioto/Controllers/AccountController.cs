@@ -36,10 +36,10 @@ namespace Mioto.Controllers
             var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
             var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
             var IsNhanVien = db.NhanVien.SingleOrDefault(s => s.Email == _user.Email && s.MatKhau == _user.MatKhau);
-            var GPLX = db.GPLX.SingleOrDefault(x => x.IDKH == IsGuest.IDKH);
             // Khách hàng
             if(IsGuest != null)
             {
+                var GPLX = db.GPLX.SingleOrDefault(x => x.IDKH == IsGuest.IDKH);
                 Session["KhachHang"] = IsGuest;
                 Session["ChuXe"] = IsChuXe;
                 Session["GPLX"] = GPLX;
