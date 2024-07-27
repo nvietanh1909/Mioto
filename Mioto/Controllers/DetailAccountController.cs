@@ -746,6 +746,5 @@ namespace Mioto.Controllers
 
             return View(viewModel);
         }
-
     }
 }

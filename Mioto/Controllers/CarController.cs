@@ -117,8 +117,5 @@ namespace Mioto.Controllers
                 return View(cx);
             }
         }
-
-
-
     }
 }

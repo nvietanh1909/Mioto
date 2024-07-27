@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aff446d3ea8a496384ce20e296befb11" Name="Diagram1">
+      <Diagram DiagramId="c347ac2b257741a59d2a77e3e871921d" Name="Diagram1">
         <EntityTypeShape EntityType="DB_MiotoModel.CCCD" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_MiotoModel.ChinhSachChietKhau" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_MiotoModel.ChuXe" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />

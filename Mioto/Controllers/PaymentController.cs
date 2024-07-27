@@ -286,7 +286,6 @@ namespace Mioto.Controllers
             }
         }
 
-
         public ActionResult CongratulationPaymentDone()
         {
             if (!IsLoggedIn)

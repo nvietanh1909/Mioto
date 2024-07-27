@@ -61,7 +61,7 @@
           <Key>
             <PropertyRef Name="IDDTCX" />
           </Key>
-          <Property Name="IDDTCX" Type="int" Nullable="false" />
+          <Property Name="IDDTCX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDCX" Type="int" Nullable="false" />
           <Property Name="DoanhThuNgay" Type="decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuTuan" Type="decimal" Precision="15" Scale="2" Nullable="false" />
@@ -72,7 +72,7 @@
           <Key>
             <PropertyRef Name="IDDTC" />
           </Key>
-          <Property Name="IDDTC" Type="int" Nullable="false" />
+          <Property Name="IDDTC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDNV" Type="int" Nullable="false" />
           <Property Name="DoanhThuNgay" Type="decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuTuan" Type="decimal" Precision="15" Scale="2" Nullable="false" />
@@ -514,7 +514,7 @@
           <Key>
             <PropertyRef Name="IDDTCX" />
           </Key>
-          <Property Name="IDDTCX" Type="Int32" Nullable="false" />
+          <Property Name="IDDTCX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDCX" Type="Int32" Nullable="false" />
           <Property Name="DoanhThuNgay" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuTuan" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
@@ -526,7 +526,7 @@
           <Key>
             <PropertyRef Name="IDDTC" />
           </Key>
-          <Property Name="IDDTC" Type="Int32" Nullable="false" />
+          <Property Name="IDDTC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDNV" Type="Int32" Nullable="false" />
           <Property Name="DoanhThuNgay" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuTuan" Type="Decimal" Precision="15" Scale="2" Nullable="false" />

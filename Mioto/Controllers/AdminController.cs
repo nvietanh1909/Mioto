@@ -301,6 +301,8 @@ namespace Mioto.Controllers
 
         public ActionResult DeleteDiscount(int idmgg)
         {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
             try
             {
                 var discount = db.MaGiamGia.Find(idmgg);
@@ -318,6 +320,15 @@ namespace Mioto.Controllers
                 ModelState.AddModelError("", "Xảy ra lỗi khi xóa mã giảm giá: " + ex.Message);
                 return RedirectToAction("ManagerDiscount");
             }
+        }
+
+        public ActionResult ListCarsInSystem()
+        {
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            var xe = db.Xe.ToList();
+            return View();
         }
      }
 }

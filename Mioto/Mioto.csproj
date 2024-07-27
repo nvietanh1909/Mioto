@@ -382,6 +382,7 @@
     <Content Include="Views\Admin\ManagerDiscount.cshtml" />
     <Content Include="Views\Admin\AddDiscount.cshtml" />
     <Content Include="Views\Admin\EditDiscount.cshtml" />
+    <Content Include="Views\Admin\ListCarsInSystem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
