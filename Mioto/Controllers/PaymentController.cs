@@ -275,23 +275,19 @@ namespace Mioto.Controllers
             }
             else
             {
-                // Check if the user has already used this discount code
                 var hasUsedCode = db.ThanhToan.Any(t => t.IDMGG == discount.IDMGG && t.IDDT == donThueXe.IDDT);
                 if (hasUsedCode)
                 {
                     return Json(new { success = false, message = "Bạn đã sử dụng mã giảm giá này." });
                 }
 
-                // Reduce the usage count of the discount code
                 discount.SoLanSuDung--;
                 db.Entry(discount).State = EntityState.Modified;
                 db.SaveChanges();
 
-                // Calculate the new amount after discount
                 var discountedAmount = SoTien - (SoTien * discount.PhanTramGiam / 100);
                 if (discountedAmount < 0) discountedAmount = 0;
 
-                // Return the discounted amount
                 return Json(new { success = true, discountedAmount = discountedAmount.ToString("N0") });
             }
         }
