@@ -7,39 +7,101 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<style>
+    .payment-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        color: white;
+    }
+
+    h6 {
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    #totalAmount {
+        font-size: 20px;
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+
 @using (Html.BeginForm("Payment", "Payment", FormMethod.Post, new { @class = "payment-form" }))
 {
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(model => model.IDDT) 
-    @Html.HiddenFor(model => model.SoTien) 
+    @Html.HiddenFor(model => model.IDDT)
+    @Html.HiddenFor(model => model.SoTien)
 
-    <!-- Mã giảm giá -->
     <div class="form-group">
         @Html.LabelFor(model => model.MaGiamGia, "Mã giảm giá")
         @Html.TextBoxFor(model => model.MaGiamGia, new { @class = "form-control", placeholder = "Nhập mã giảm giá", id = "discountCode" })
         <button type="button" class="btn btn-secondary" id="applyDiscount">Áp dụng mã giảm giá</button>
     </div>
 
-    <!-- Phương thức thanh toán -->
     <div class="form-group">
         @Html.LabelFor(model => model.PhuongThuc, "Phương thức thanh toán")
         @Html.DropDownListFor(model => model.PhuongThuc, new List<SelectListItem>
         {
             new SelectListItem { Text = "Momo: 0123456789", Value = "Momo" },
             new SelectListItem { Text = "Techcombank: 0123456789", Value = "Techcombank" },
-            // Thêm các phương thức thanh toán khác nếu cần
         }, new { @class = "form-control" })
     </div>
 
-    <!-- Số tiền thanh toán -->
     <div class="form-group">
         @Html.LabelFor(model => model.SoTien, "Số tiền")
         <h6>Hiển thị số tiền đã tính</h6>
-        <p id="totalAmount">@Model.SoTien.ToString("0,0") VNĐ</p>
+        <p id="totalAmount">@Model.SoTien.ToString("N0") VNĐ</p>
     </div>
 
-    <!-- Nút gửi form -->
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Thanh toán</button>
     </div>
@@ -51,9 +113,8 @@
             $('#applyDiscount').on('click', function () {
                 var discountCode = $('#discountCode').val();
                 var totalAmountElement = $('#totalAmount');
-                var originalAmount = parseFloat($('input[name="SoTien"]').val()); // Số tiền gốc
+                var originalAmount = parseFloat($('input[name="SoTien"]').val());
 
-                // Gửi yêu cầu Ajax để kiểm tra mã giảm giá
                 $.ajax({
                     url: '@Url.Action("ApplyDiscount", "Payment")',
                     type: 'POST',
@@ -66,10 +127,12 @@
                         if (response.success) {
                             var discountedAmount = response.discountedAmount;
 
-                            // Cập nhật số tiền hiển thị
-                            totalAmountElement.text(discountedAmount.toFixed(2) + " VNĐ");
+                            // Format the amount as "100,000 VNĐ"
+                            var formattedAmount = discountedAmount.toLocaleString('vi-VN') + " VNĐ";
 
-                            // Cập nhật giá trị số tiền trong form
+                            totalAmountElement.text(formattedAmount);
+
+                            // Update the hidden input with the new amount
                             $('input[name="SoTien"]').val(discountedAmount.toFixed(2));
                         } else {
                             alert(response.message);

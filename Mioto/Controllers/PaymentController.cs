@@ -256,6 +256,9 @@ namespace Mioto.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult ApplyDiscount(string discountCode, decimal SoTien)
         {
+            var khachhang = Session["KhachHang"] as KhachHang;
+            var donThueXe = db.DonThueXe.FirstOrDefault(t => t.IDKH == khachhang.IDKH);
+
             var discount = db.MaGiamGia.FirstOrDefault(m => m.Ma == discountCode);
 
             if (discount == null)
@@ -272,17 +275,24 @@ namespace Mioto.Controllers
             }
             else
             {
-                // Giảm số lần sử dụng mã giảm giá
+                // Check if the user has already used this discount code
+                var hasUsedCode = db.ThanhToan.Any(t => t.IDMGG == discount.IDMGG && t.IDDT == donThueXe.IDDT);
+                if (hasUsedCode)
+                {
+                    return Json(new { success = false, message = "Bạn đã sử dụng mã giảm giá này." });
+                }
+
+                // Reduce the usage count of the discount code
                 discount.SoLanSuDung--;
                 db.Entry(discount).State = EntityState.Modified;
                 db.SaveChanges();
 
-                // Tính toán số tiền mới
+                // Calculate the new amount after discount
                 var discountedAmount = SoTien - (SoTien * discount.PhanTramGiam / 100);
                 if (discountedAmount < 0) discountedAmount = 0;
 
-                // Trả số tiền đã giảm
-                return Json(new { success = true, discountedAmount });
+                // Return the discounted amount
+                return Json(new { success = true, discountedAmount = discountedAmount.ToString("N0") });
             }
         }
 
