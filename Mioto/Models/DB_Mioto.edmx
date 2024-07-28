@@ -67,6 +67,8 @@
           <Property Name="DoanhThuTuan" Type="decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuThang" Type="decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuNam" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="NgayCapNhat" Type="datetime" Nullable="false" />
+          <Property Name="SoTuanTrongNam" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DoanhThuCongTy">
           <Key>
@@ -78,6 +80,8 @@
           <Property Name="DoanhThuTuan" Type="decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuThang" Type="decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuNam" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="NgayCapNhat" Type="datetime" Nullable="false" />
+          <Property Name="SoTuanTrongNam" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DonThueXe">
           <Key>
@@ -520,6 +524,8 @@
           <Property Name="DoanhThuTuan" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuThang" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuNam" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="NgayCapNhat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SoTuanTrongNam" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChuXe" Relationship="Self.FK__DoanhThuCh__IDCX__4CA06362" FromRole="DoanhThuChuXe" ToRole="ChuXe" />
         </EntityType>
         <EntityType Name="DoanhThuCongTy">
@@ -532,6 +538,8 @@
           <Property Name="DoanhThuTuan" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuThang" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
           <Property Name="DoanhThuNam" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="NgayCapNhat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SoTuanTrongNam" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK__DoanhThuCo__IDNV__4F7CD00D" FromRole="DoanhThuCongTy" ToRole="NhanVien" />
         </EntityType>
         <EntityType Name="DonThueXe">
@@ -991,6 +999,8 @@
                 <ScalarProperty Name="DoanhThuTuan" ColumnName="DoanhThuTuan" />
                 <ScalarProperty Name="DoanhThuThang" ColumnName="DoanhThuThang" />
                 <ScalarProperty Name="DoanhThuNam" ColumnName="DoanhThuNam" />
+                <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
+                <ScalarProperty Name="SoTuanTrongNam" ColumnName="SoTuanTrongNam" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1003,6 +1013,8 @@
                 <ScalarProperty Name="DoanhThuTuan" ColumnName="DoanhThuTuan" />
                 <ScalarProperty Name="DoanhThuThang" ColumnName="DoanhThuThang" />
                 <ScalarProperty Name="DoanhThuNam" ColumnName="DoanhThuNam" />
+                <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
+                <ScalarProperty Name="SoTuanTrongNam" ColumnName="SoTuanTrongNam" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
