@@ -118,10 +118,6 @@ namespace Mioto.Controllers
             }
         }
 
-
-
-
-
         // GET: DetailAccount
         public ActionResult InfoAccount()
         {
@@ -329,9 +325,108 @@ namespace Mioto.Controllers
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
-
             var xe = db.Xe.ToList();
             return View();
         }
-     }
+
+        public ActionResult RentedCompany()
+        {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            // Lấy ID từ Session NhanVien đang đăng nhập hiện tại
+            var nhanvien = Session["NhanVien"] as NhanVien;
+
+            // Lấy ngày, tuần, tháng, năm hiện tại
+            var ngayHienTai = DateTime.Now;
+            var tuanHienTai = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(ngayHienTai, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            var thangHienTai = ngayHienTai.Month;
+            var namHienTai = ngayHienTai.Year;
+
+            // Tính doanh thu công ty theo ngày, tuần, tháng, năm
+            var thanhToanDaThanhToan = db.ThanhToan
+                                         .Where(x => x.TrangThai == "Đã thanh toán")
+                                         .ToList();
+
+            decimal doanhThuNgay = 0;
+            decimal doanhThuTuan = 0;
+            decimal doanhThuThang = 0;
+            decimal doanhThuNam = 0;
+
+            foreach (var thanhToan in thanhToanDaThanhToan)
+            {
+                var donThueXe = db.DonThueXe.FirstOrDefault(x => x.IDDT == thanhToan.IDDT);
+                if (donThueXe != null)
+                {
+                    decimal hoaHong = thanhToan.SoTien * (donThueXe.PhanTramHoaHongCTyNhan / 100);
+
+                    // Xác định thời gian của giao dịch
+                    var ngayGiaoDich = thanhToan.NgayTT; 
+                    var tuanGiaoDich = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(ngayGiaoDich, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                    var thangGiaoDich = ngayGiaoDich.Month;
+                    var namGiaoDich = ngayGiaoDich.Year;
+
+                    if (ngayGiaoDich.Date == ngayHienTai.Date)
+                        doanhThuNgay += hoaHong;
+
+                    if (tuanGiaoDich == tuanHienTai && namGiaoDich == namHienTai)
+                        doanhThuTuan += hoaHong;
+
+                    if (thangGiaoDich == thangHienTai && namGiaoDich == namHienTai)
+                        doanhThuThang += hoaHong;
+
+                    if (namGiaoDich == namHienTai)
+                        doanhThuNam += hoaHong;
+                }
+            }
+
+            // Kiểm tra xem đã có doanh thu công ty trong cơ sở dữ liệu chưa
+            var doanhThuCongTy = db.DoanhThuCongTy
+                .FirstOrDefault(d =>
+                    d.NgayCapNhat.Year == namHienTai &&
+                    d.NgayCapNhat.Month == thangHienTai &&
+                    d.NgayCapNhat.Day == ngayHienTai.Day);
+
+            if (doanhThuCongTy == null)
+            {
+                // Nếu chưa có, tạo mới và lưu vào cơ sở dữ liệu
+                doanhThuCongTy = new DoanhThuCongTy
+                {
+                    IDNV = nhanvien.IDNV,
+                    DoanhThuNgay = doanhThuNgay,
+                    DoanhThuTuan = doanhThuTuan,
+                    DoanhThuThang = doanhThuThang,
+                    DoanhThuNam = doanhThuNam,
+                    NgayCapNhat = ngayHienTai
+                };
+                db.DoanhThuCongTy.Add(doanhThuCongTy);
+            }
+            else
+            {
+                // Cập nhật doanh thu hiện tại
+                doanhThuCongTy.DoanhThuNgay = doanhThuNgay;
+                doanhThuCongTy.DoanhThuTuan = doanhThuTuan;
+                doanhThuCongTy.DoanhThuThang = doanhThuThang;
+                doanhThuCongTy.DoanhThuNam = doanhThuNam;
+                doanhThuCongTy.NgayCapNhat = ngayHienTai;
+                db.Entry(doanhThuCongTy).State = EntityState.Modified;
+            }
+
+            db.SaveChanges();
+
+            // Truyền dữ liệu doanh thu tới ViewModel
+            var model = new DoanhThuCongTy
+            {
+                DoanhThuNgay = doanhThuCongTy.DoanhThuNgay,
+                DoanhThuTuan = doanhThuCongTy.DoanhThuTuan,
+                DoanhThuThang = doanhThuCongTy.DoanhThuThang,
+                DoanhThuNam = doanhThuCongTy.DoanhThuNam
+            };
+
+            return View(model);
+        }
+
+
+    }
 }

@@ -1,0 +1,80 @@
+﻿@model Mioto.Models.DoanhThuCongTy
+
+@{
+    ViewBag.Title = "RentedCompany";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var doanhThuNgay = Model.DoanhThuNgay;
+    var doanhThuTuan = Model.DoanhThuTuan;
+    var doanhThuThang = Model.DoanhThuThang;
+    var doanhThuNam = Model.DoanhThuNam;
+}
+
+<div class="title-item">
+    <h5>Doanh thu công ty</h5>
+</div>
+<canvas id="revenueChart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Ngày', 'Tuần', 'Tháng', 'Năm'],
+            datasets: [{
+                label: 'Doanh thu',
+                data: [
+                    @doanhThuNgay,
+                    @doanhThuTuan,
+                    @doanhThuThang,
+                    @doanhThuNam
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Doanh Thu (VND)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Thời Gian'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
