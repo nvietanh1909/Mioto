@@ -55,7 +55,6 @@ namespace Mioto.Controllers
                 if (ModelState.IsValid)
                 {
                     var guest = Session["KhachHang"] as KhachHang;
-
                     if (db.Xe.Any(x => x.BienSoXe == cx.BienSoXe))
                     {
                         ModelState.AddModelError("BienSoXe", "Biển số xe đã đăng ký trên hệ thống");
@@ -119,7 +118,7 @@ namespace Mioto.Controllers
 
                     db.Xe.Add(xe);
                     db.SaveChanges();
-
+                    Session["ChuXe"] = existingCX;
                     return RedirectToAction("Home", "Home");
                 }
             }
