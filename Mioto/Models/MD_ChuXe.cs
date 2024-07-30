@@ -8,6 +8,7 @@ namespace Mioto.Models
 {
     public class MD_ChuXe
     {
+        public int IDCX { get; set; }
         public string Ten { get; set; }
         public string DiaChi { get; set; }
         public string Email { get; set; }
@@ -16,6 +17,7 @@ namespace Mioto.Models
         public string GioiTinh { get; set; }
         public string TrangThai { get; set; }
         public string MatKhau { get; set; }
+        public string HinhAnh { get; set; }
 
         // Các thuộc tính của Xe
         [Required(ErrorMessage = "Vui lòng nhập biển số xe.")]

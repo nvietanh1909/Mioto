@@ -1,9 +1,9 @@
-﻿﻿@{
+﻿@{
     ViewBag.Title = "RegisterOwner";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 @model Mioto.Models.MD_ChuXe
-@{var guest = Session["KhachHang"] as Mioto.Models.KhachHang;}
+@{ var guest = Session["KhachHang"] as Mioto.Models.KhachHang; }
 
 <div class="modal-content" role="document" style="width: 60%;">
     <div class="modal-header">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            @using (Html.BeginForm("RegisterOwner", "Car", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("RegisterOwner", "Car", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -144,6 +144,20 @@
                         <div class="wrap-input">
                             @Html.TextBoxFor(model => model.GiaThue, new { @class = "form-control", placeholder = "Giá cho thuê xe của bạn" })
                             @Html.ValidationMessageFor(model => model.GiaThue, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-form">
+                    <div class="custom-input">
+                        <div class="wrap-info">
+                            <div class="title-status">
+                                <p>Hình ảnh xe*</p>
+                            </div>
+                        </div>
+                        <div class="wrap-input">
+                            <input type="file" name="HinhAnh[]" class="form-control" multiple />
+                            @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

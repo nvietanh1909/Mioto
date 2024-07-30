@@ -17,5 +17,6 @@ namespace Mioto.Models
         public int TrangThai { get; set; }   
         public DonThueXe DonThueXe { get; set; }
         public Xe Xe { get; set; }
+        public KhachHang KhachHang { get; set; }
     }
 }

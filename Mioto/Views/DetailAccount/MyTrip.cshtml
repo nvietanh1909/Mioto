@@ -1,11 +1,13 @@
-﻿@{
-    ViewBag.Title = "MyTrip";
+﻿@model IEnumerable<Mioto.Models.MD_MyTrip>
+
+@{
+    ViewBag.Title = "Thông tin xe đang thuê";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    var guest = Session["KhachHang"] as Mioto.Models.KhachHang;
 }
-@model IEnumerable<Mioto.Models.MD_MyTrip>
-@{ var guest = Session["KhachHang"] as Mioto.Models.KhachHang; }
 
 <link href="~/Content/css/table.css" rel="stylesheet" />
+
 <div class="title" style="display: flex; justify-content: space-between">
     <div class="title-item">
         <h5>Thông tin xe đang thuê</h5>
@@ -31,55 +33,36 @@
                 <tbody>
                     @foreach (var trip in Model)
                     {
-                        if (trip.TrangThai == 1)
-                        {
-                            <tr class="row100">
-                                <td class="column100">@trip.BienSoXe</td>
-                                <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
-                                <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
-                                <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
-                                <td class="column100">
-                                    @if (trip.ThanhToan != null)
-                                    {
-                                        if (trip.ThanhToan.TrangThai == "Đã thanh toán")
-                                        {
-                                            <span>Đã thanh toán</span>
-                                        }
-                                        else if (trip.ThanhToan.TrangThai == "Chờ xét duyệt")
-                                        {
-                                            <span>Chờ xét duyệt</span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <span>Chưa thanh toán</span>
-                                    }
-                                </td>
-                                <td class="column100">
-
+                        <tr class="row100" data-id="@trip.IDDT" onclick="viewDetails(this)">
+                            <td class="column100">@trip.BienSoXe</td>
+                            <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
+                            <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
+                            <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
+                            <td class="column100">
+                                @if (trip.TrangThai == 1)
+                                {
+                                    <span class="badge bg-success">Đang thuê</span>
+                                }
+                                else if (trip.TrangThai == 2)
+                                {
+                                    <span class="badge bg-secondary">Đã hủy</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Hoàn tất</span>
+                                }
+                            </td>
+                            <td class="column100">
+                                @if (trip.TrangThai == 1)
+                                {
                                     @Html.ActionLink("Hủy chuyến", "DeleteTrip", new { id = trip.IDDT }, new
                                     {
                                         @class = "btn btn-delete",
                                         onclick = "return confirm('Hành động này không thể khôi phục. Tiếp tục?');"
                                     })
-                                </td>
-                            </tr>
-                        }
-
-                        if (trip.TrangThai == 2)
-                        {
-                <tr class="row100">
-                    <td class="column100">@trip.BienSoXe</td>
-                    <td class="column100">@trip.NgayThue.ToString("dd/MM/yyyy")</td>
-                    <td class="column100">@trip.NgayTra.ToString("dd/MM/yyyy")</td>
-                    <td class="column100">@string.Format("{0:N0} VNĐ", trip.TongTien)</td>
-                    <td class="column100">
-                        <span>Đã hủy</span>
-                    </td>
-                    <td class="column100">
-                    </td>
-                </tr>
-                        }
+                                }
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -88,8 +71,24 @@
     else
     {
         <div class="empty-container">
-            <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="">
-            <p>Bạn chưa có xe đang thuê nào</p>
+            <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="No trips" />
+            <p>Bạn chưa có xe nào đang thuê.</p>
         </div>
     }
+}
+else
+{
+    <div class="empty-container">
+        <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="No trips" />
+        <p>Bạn chưa có xe nào đang thuê.</p>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        function viewDetails(row) {
+            var id = row.getAttribute('data-id');
+            window.location.href = '@Url.Action("OwnerDetailt", "DetailAccount")/' + id;
+        }
+    </script>
 }

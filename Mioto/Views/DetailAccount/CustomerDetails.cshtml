@@ -1,0 +1,141 @@
+﻿@model Mioto.Models.MD_CustomerDetails
+
+@{
+    ViewBag.Title = "CustomerDetails";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="text-primary">Thông tin thuê xe</h4>
+    </div>
+    <div class="modal-body">
+        <div class="modal-input-body">
+            <div class="line-form">
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Biển số xe</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.BienSoXe</p>
+                    </div>
+                </div>
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Hãng xe</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.HangXe</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-form">
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Màu xe</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.MauXe</p>
+                    </div>
+                </div>
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Ngày thuê</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.NgayThue.ToString("dd/MM/yyyy")</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-form">
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Ngày trả</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.NgayTra.ToString("dd/MM/yyyy")</p>
+                    </div>
+                </div>
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Tổng tiền</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.TongTien.ToString("N0") VND</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="text-primary">Thông tin khách hàng</h4>
+    </div>
+    <div class="modal-body">
+        <div class="modal-input-body">
+            <div class="line-form">
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Tên khách hàng</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.KhachHang.Ten</p>
+                    </div>
+                </div>
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Email</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.KhachHang.Email</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-form">
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Số di động</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.KhachHang.SDT</p>
+                    </div>
+                </div>
+                <div class="custom-input">
+                    <div class="wrap-info">
+                        <div class="title-status">
+                            <p>Địa chỉ</p>
+                        </div>
+                    </div>
+                    <div class="wrap-input">
+                        <p>@Model.KhachHang.DiaChi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("RentedCar", "DetailAccount")" class="btn btn-primary">Quay lại</a>

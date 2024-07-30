@@ -130,12 +130,10 @@
                         if (response.success) {
                             var discountedAmount = response.discountedAmount;
 
-                            // Format the amount as "100,000 VNĐ"
                             var formattedAmount = discountedAmount.toLocaleString('vi-VN') + " VNĐ";
 
                             totalAmountElement.text(formattedAmount);
 
-                            // Update the hidden input with the new amount
                             $('input[name="SoTien"]').val(discountedAmount.toFixed(2));
                         } else {
                             alert(response.message);

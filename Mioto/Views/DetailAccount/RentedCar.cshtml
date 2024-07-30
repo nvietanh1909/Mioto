@@ -37,7 +37,7 @@
                     {
                         if (car.TrangThai == 1)
                         {
-                            <tr class="row100">
+                            <tr class="row100" data-id="@car.IDDT" onclick="viewDetails(this)">
                                 <td class="column100 column1">@car.BienSoXe</td>
                                 <td class="column100 column2">@car.HangXe</td>
                                 <td class="column100 column4">@car.NgayThue.ToString("dd/MM/yyyy")</td>
@@ -58,7 +58,6 @@
                                     }
                                 </td>
                                 <td class="column100">
-
                                     @Html.ActionLink("Hủy chuyến", "DeleteRentedCar", new { id = car.IDDT }, new
                                     {
                                         @class = "btn btn-delete",
@@ -90,7 +89,6 @@
                                     }
                                 </td>
                                 <td class="column100">
-
                                 </td>
                             </tr>
                         }
@@ -114,4 +112,13 @@ else
         <img loading="lazy" src="https://www.mioto.vn/static/media/empty-trip.8f191e42.svg" alt="No rented cars" />
         <p>Bạn chưa có xe nào đang được thuê.</p>
     </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        function viewDetails(row) {
+            var id = row.getAttribute('data-id');
+            window.location.href = '@Url.Action("CustomerDetails", "DetailAccount")/' + id;
+        }
+    </script>
 }

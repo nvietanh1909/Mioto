@@ -628,6 +628,66 @@ namespace Mioto.Controllers
             return View();
         }
 
+        // GET: RentedCar/CustomerDetails/5
+        public ActionResult CustomerDetails(int id)
+        {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            var rentedCar = db.DonThueXe
+                .Where(d => d.IDDT == id)
+                .Select(d => new MD_CustomerDetails
+                {
+                    BienSoXe = d.Xe.BienSoXe,
+                    HangXe = d.Xe.HangXe,
+                    MauXe = d.Xe.MauXe,
+                    NgayThue = d.NgayThue,
+                    NgayTra = d.NgayTra,
+                    TongTien = d.TongTien,
+                    TrangThai = d.TrangThai,
+                    KhachHang = d.KhachHang
+                })
+                .FirstOrDefault();
+
+            if (rentedCar == null)
+                return HttpNotFound();
+
+            return View(rentedCar);
+        }
+
+        // GET: RentedCar/OwnerDetailt/5
+        public ActionResult OwnerDetailt(int id)
+        {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!IsLoggedIn)
+                return RedirectToAction("Login", "Account");
+
+            // Lấy thông tin thuê xe từ cơ sở dữ liệu
+            var donthuexe = db.DonThueXe.FirstOrDefault(x => x.IDDT == id);
+            if (donthuexe == null)
+                return HttpNotFound();
+
+            // Lấy thông tin chủ xe từ cơ sở dữ liệu
+            var chuxe = db.ChuXe.FirstOrDefault(x => x.IDCX == donthuexe.Xe.IDCX);
+
+            // Tạo đối tượng MD_OwnerDetailt từ dữ liệu đã lấy
+            var ownerDetailt = new MD_OwnerDetailt
+            {
+                BienSoXe = donthuexe.Xe.BienSoXe,
+                NgayThue = donthuexe.NgayThue,
+                NgayTra = donthuexe.NgayTra,
+                TongTien = donthuexe.TongTien,
+                TrangThai = donthuexe.TrangThai,
+                ChuXe = chuxe
+            };
+
+            // Trả về View với đối tượng MD_OwnerDetailt
+            return View(ownerDetailt);
+        }
+
+
+
         public ActionResult DeleteRentedCar(int id)
         {
             // Kiểm tra người dùng đã đăng nhập

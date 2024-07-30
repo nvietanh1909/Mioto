@@ -29,7 +29,7 @@
             {
                 <form action="@Url.Action("ChangeAvatarUser", "DetailAccount")" method="post" enctype="multipart/form-data">
                     <div class="avatar avatar--xl has-edit" onclick="document.getElementById('avatarUpload').click();">
-                        <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (guest.HinhAnh ?? "DefaultAvatar.png"))" alt="@guest.Ten">
+                        <img id="avatarImg" loading="lazy" src="@Url.Content("~/AvatarUser/" + (guest.HinhAnh ?? "DefaultAvatar.jpg"))" alt="@guest.Ten">
                         <input type="file" name="avatar" id="avatarUpload" accept="image/*" style="display: none;" onchange="this.form.submit();">
                     </div>
                 </form>

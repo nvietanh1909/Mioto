@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -40,19 +41,21 @@ namespace Mioto.Controllers
             return View();
         }
 
-        // POST: Car/RegisterOwner
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterOwner(MD_ChuXe cx)
         {
             if (!IsLoggedIn)
                 return RedirectToAction("Login", "Account");
+
             ViewBag.TinhThanhPho = tinhThanhPho;
+
             try
             {
                 if (ModelState.IsValid)
                 {
                     var guest = Session["KhachHang"] as KhachHang;
+
                     if (db.Xe.Any(x => x.BienSoXe == cx.BienSoXe))
                     {
                         ModelState.AddModelError("BienSoXe", "Biển số xe đã đăng ký trên hệ thống");
@@ -83,8 +86,22 @@ namespace Mioto.Controllers
                         existingCX = newCX;
                     }
 
-                    // Sử dụng IDCX từ ChuXe để thêm mới Xe
-                    var newCar = new Xe
+                    // Xử lý ảnh
+                    var hinhAnhList = new List<string>();
+                    foreach (string fileName in Request.Files)
+                    {
+                        var file = Request.Files[fileName];
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var uploadedFileName = Path.GetFileName(file.FileName);
+                            var path = Path.Combine(Server.MapPath("~/CarImages/"), uploadedFileName);
+                            file.SaveAs(path);
+                            hinhAnhList.Add(uploadedFileName);
+                        }
+                    }
+
+                    // Lưu thông tin xe vào cơ sở dữ liệu
+                    var xe = new Xe
                     {
                         IDCX = existingCX.IDCX,
                         BienSoXe = cx.BienSoXe,
@@ -96,26 +113,22 @@ namespace Mioto.Controllers
                         NamSanXuat = cx.NamSanXuat,
                         KhuVuc = cx.KhuVuc,
                         DonGiaVanChuyen = 0,
-                        TrangThai = "Sẵn sàng"
+                        TrangThai = "Sẵn sàng",
+                        HinhAnh = string.Join(";", hinhAnhList)
                     };
-                    db.Xe.Add(newCar);
+
+                    db.Xe.Add(xe);
                     db.SaveChanges();
 
-                    var IsGuest = db.KhachHang.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
-                    var IsChuXe = db.ChuXe.SingleOrDefault(s => s.Email == guest.Email && s.MatKhau == guest.MatKhau);
-                    Session["KhachHang"] = IsGuest;
-                    Session["ChuXe"] = IsChuXe;
-                    TempData["Message"] = "Đăng ký thành công!";
                     return RedirectToAction("Home", "Home");
                 }
-                return View(cx);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorRegister = "Đăng ký không thành công. Vui lòng thử lại.";
-                ViewBag.TinhThanhPho = tinhThanhPho;
-                return View(cx);
+                ModelState.AddModelError("", "Có lỗi xảy ra khi lưu dữ liệu: " + ex.Message);
             }
+            return View(cx);
         }
+
     }
 }

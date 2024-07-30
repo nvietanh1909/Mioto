@@ -46,7 +46,7 @@
                         else
                         {
                             <div class="wrap-input">
-                                @Html.TextBoxFor(model => model.SoCCCD, new { @class = "form-control", @Value = "Nhập CCCD của bạn" })
+                                @Html.TextBoxFor(model => model.SoCCCD, new { @class = "form-control", @Value = 0 })
                                 @Html.ValidationMessageFor(model => model.SoCCCD, "", new { @class = "text-danger" })
                             </div>
                         }
