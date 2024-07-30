@@ -330,6 +330,8 @@
     <Content Include="Models\DB_Mioto.edmx.diagram">
       <DependentUpon>DB_Mioto.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\nvietanh1909-001-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\nvietanh1909-001-site1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

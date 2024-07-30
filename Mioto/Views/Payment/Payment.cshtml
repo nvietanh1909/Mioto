@@ -82,28 +82,31 @@
     @Html.HiddenFor(model => model.SoTien)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.MaGiamGia, "Mã giảm giá")
-        @Html.TextBoxFor(model => model.MaGiamGia, new { @class = "form-control", placeholder = "Nhập mã giảm giá", id = "discountCode" })
-        <button type="button" class="btn btn-secondary" id="applyDiscount">Áp dụng mã giảm giá</button>
+            @Html.LabelFor(model => model.MaGiamGia, "Mã giảm giá")
+        <div style="display: flex; justify-content: center; align-items: center;">
+            @Html.TextBoxFor(model => model.MaGiamGia, new { @class = "form-control", placeholder = "Nhập mã giảm giá", id = "discountCode", style = "margin-bottom: 0;" })
+            <button type="button" class="btn btn-secondary" id="applyDiscount" style=" width: 100px; margin-left: 10px; }">Áp dụng</button>
+        </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.PhuongThuc, "Phương thức thanh toán")
+
         @Html.DropDownListFor(model => model.PhuongThuc, new List<SelectListItem>
         {
-            new SelectListItem { Text = "Momo: 0123456789", Value = "Momo" },
             new SelectListItem { Text = "Techcombank: 0123456789", Value = "Techcombank" },
+            new SelectListItem { Text = "Momo: 0123456789", Value = "Momo" },
         }, new { @class = "form-control" })
+        <div style="">Chuyển khoản qua các tài khoản sau và chờ nhân viên xác thực thanh toán!</div>
     </div>
-
-    <div class="form-group">
+    <div class="line-page"></div>
+    <div class="form-group mg-top-m" >
         @Html.LabelFor(model => model.SoTien, "Số tiền")
-        <h6>Hiển thị số tiền đã tính</h6>
         <p id="totalAmount">@Model.SoTien.ToString("N0") VNĐ</p>
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Thanh toán</button>
+        <button type="submit" style="width: 100%;" class="btn btn-primary">Thanh toán</button>
     </div>
 }
 
